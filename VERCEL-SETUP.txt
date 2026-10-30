@@ -1,4 +1,4 @@
-LRT PERFUMES v10 — VERCEL STOREFRONT + HOSTINGER WORDPRESS
+LRT PERFUMES v10.1 — VERCEL STOREFRONT + HOSTINGER WORDPRESS
 
 1. Import this source into Vercel. Root directory: lrt-perfumes (the directory
    containing package.json). Framework: Next.js. Node: 24.x. Install: npm ci.
@@ -26,7 +26,8 @@ LRT PERFUMES v10 — VERCEL STOREFRONT + HOSTINGER WORDPRESS
    Leave NODE_ENV to Vercel; it uses a production build, including on Preview.
 
 4. Default *.vercel.app deployment: leave NEXT_PUBLIC_SITE_URL and CHECKOUT_ORIGIN
-   unset; the exact VERCEL_URL is accepted automatically. For a custom frontend
+   unset; exact VERCEL_URL, VERCEL_BRANCH_URL and VERCEL_PROJECT_PRODUCTION_URL
+   origins are accepted automatically. For any additional custom frontend
    domain, set both to that exact HTTPS origin (no wildcard). Redeploy after any
    environment change. Do not use the WordPress backend origin as the storefront
    origin unless it genuinely serves this Next.js application.

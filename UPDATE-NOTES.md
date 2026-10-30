@@ -1,3 +1,9 @@
+## v10.1 — Checkout origin correction
+
+Accept exact Vercel deployment, branch and production origins from platform configuration. Cross-site requests and unconfigured origins remain blocked. For additional custom domains, set CHECKOUT_ORIGIN to the exact frontend HTTPS origin and redeploy. No bridge update needed for this fix.
+
+Validation: 43 unit tests pass; production build passes. No live order placed.
+
 # Whole-site update v6
 
 - Full-width homepage and media bands with original background colours retained. New occasion edits, fragrance ritual content and Lucide icons.

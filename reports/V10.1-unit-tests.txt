@@ -1,0 +1,56 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> lrt-perfume-store@1.0.0 test
+> node --conditions=react-server --test tests/*.test.js
+
+✔ standalone API returns ten products and labelled simulated checkout (9.247895ms)
+✔ reject cross-origin checkout requests (0.563773ms)
+✔ reject malformed and oversized request bodies (1.228425ms)
+✔ ten unique products, supported sizes and three notes (0.991015ms)
+✔ search matches notes, accents, gender, family and multiple words (1.201104ms)
+✔ prices calculated on server; submitted totals ignored (0.702528ms)
+✔ reject manipulated quantities, sizes, locations and duplicate items (0.461182ms)
+✔ checkout accepts exact Vercel deployment, branch and production aliases (11.165279ms)
+✔ checkout rejects absent, opaque, unrelated, suffix and cross-site origins (2.521356ms)
+✔ Vercel aliases require Vercel runtime; explicit custom origin still works (0.498667ms)
+✔ collection routes separate gender, arrivals and scent families (4.903716ms)
+✔ new backend brands and collections get distinct clean routes (2.358144ms)
+✔ catalogue cache coalesces concurrent requests and expires (11.688442ms)
+✔ backend outage cooldown prevents request storms, then retries (0.64315ms)
+✔ malformed catalogue rejected and optional fields normalized (1.120546ms)
+✔ request guard limits and expires its window (0.261316ms)
+✔ body limit counts bytes and stops chunked bodies (4.713856ms)
+✔ payment destinations must be HTTPS on WooCommerce origin (0.31815ms)
+✔ empty catalogue does not manufacture collections (0.438207ms)
+✔ real catalogue sizes are not restricted to demo sizes (0.280375ms)
+✔ connected commerce remains gated until explicitly configured (2.770203ms)
+✔ each sample has three sizes with independent AED and QAR prices (2.200392ms)
+✔ market and size determine authoritative totals; submitted prices ignored (0.872309ms)
+✔ missing market price is unavailable; zero is a valid explicit price (0.403326ms)
+✔ new scent family terms find the correct catalog (0.479569ms)
+✔ retired sizes and aggregate stock violations are rejected (0.344209ms)
+✔ HTTP preview fallback generates valid unique v4 checkout identifiers (2.479104ms)
+✔ checkout permits configured proxy origin but still rejects unrelated origins (9.509432ms)
+✔ catalogue only exposes allowlisted fields and validated media (3.002547ms)
+✔ catalogue rejects route injection and excessive input (0.477325ms)
+✔ production CSP forbids inline script attributes and unsafe eval (0.205224ms)
+✔ private paths blocked without blocking storefront media (0.694085ms)
+✔ production origin uses configuration, not attacker-controlled request URL (2.34101ms)
+✔ order validator handles hostile shapes without leaking internals (0.795055ms)
+✔ checkout rejects missing Origin and non-JSON bodies (3.469597ms)
+✔ backend requires HTTPS and strong server-only secret (0.904907ms)
+✔ signed backend call prevents redirects and masks backend errors (2.336513ms)
+✔ connected checkout forwards only permitted fields and returns minimal order data (5.491355ms)
+✔ brand filtering combines search, family and favorites (1.654996ms)
+✔ same brand recommendations exclude the current product and other brands (1.538003ms)
+✔ quantity respects variation and shared stock (0.623101ms)
+✔ gallery deduplicates and rejects unsafe schemes (0.39892ms)
+✔ 40 product windows preserve order without duplicates (2.858254ms)
+ℹ tests 43
+ℹ suites 0
+ℹ pass 43
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 270.296389

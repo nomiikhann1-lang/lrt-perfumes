@@ -1,3 +1,10 @@
+v10.1 CHECKOUT ORIGIN FIX — 2026-10-30
+The origin allowlist now includes exact Vercel deployment, branch and production
+aliases from platform environment variables. Request Host and forwarded headers
+are not trusted. Missing/unrelated origins and cross-site requests remain blocked.
+Live deployment was not accessed; no real order was placed.
+The v10 audit below is historical; this addendum supersedes its origin description.
+
 LRT PERFUMES — v10 APPLICATION SECURITY AUDIT
 Date: 30 October 2026 (Asia/Karachi)
 Target: supplied Next.js source and LRT WordPress bridge; local production build
