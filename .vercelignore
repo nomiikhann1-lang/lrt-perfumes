@@ -1,0 +1,9 @@
+.env*
+!.env.example
+wordpress/
+*.zip
+reports/
+tests/
+qa-tools/
+docker-compose.yml
+SECURITY-AUDIT.txt

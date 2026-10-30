@@ -1,0 +1,18 @@
+{
+  "checks": [
+    "Security headers, fresh per-response CSP nonce, production hydration",
+    "Restored About dropdown and Escape",
+    "Compact navbar Search form works",
+    "Brand pages show plain names/counts, no extra marketing hero",
+    "Account removed, private files blocked, minimal status endpoint",
+    "Checkout rejects missing/foreign origin, wrong media type, invalid shape, oversize and wrong method",
+    "No UI overflow at 320",
+    "No UI overflow at 390",
+    "No UI overflow at 768",
+    "No UI overflow at 1440",
+    "Hostile search text stays text; legitimate UI has no CSP violations",
+    "CSP actively blocks HTTP-injected inline scripts and event handlers",
+    "No application JavaScript exceptions"
+  ],
+  "errors": []
+}

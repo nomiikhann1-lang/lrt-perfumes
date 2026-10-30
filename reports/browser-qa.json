@@ -1,0 +1,181 @@
+{
+  "checks": [
+    {
+      "name": "Essential-only consent persisted",
+      "status": "passed"
+    },
+    {
+      "name": "Mobile menu and Escape",
+      "status": "passed"
+    },
+    {
+      "name": "100 ml variant, toast, cart, quantity and total",
+      "status": "passed"
+    },
+    {
+      "name": "Cart persists after reload",
+      "status": "passed"
+    },
+    {
+      "name": "Simulated checkout, correct total; no real payment or order",
+      "status": "passed"
+    },
+    {
+      "name": "Catalogue search",
+      "status": "passed"
+    },
+    {
+      "name": "Consent reopening and footer control removal",
+      "status": "passed"
+    },
+    {
+      "name": "No home/footer overflow at 390",
+      "status": "passed"
+    },
+    {
+      "name": "No home/footer overflow at 768",
+      "status": "passed"
+    },
+    {
+      "name": "No home/footer overflow at 1440",
+      "status": "passed"
+    },
+    {
+      "name": "Footer, product and collection destinations return 200",
+      "status": "passed"
+    },
+    {
+      "name": "Missing product returns 404",
+      "status": "passed"
+    },
+    {
+      "name": "Staging indexing disabled",
+      "status": "passed"
+    },
+    {
+      "name": "Local font loaded",
+      "status": "passed"
+    },
+    {
+      "name": "No lazy-loaded images",
+      "status": "passed"
+    },
+    {
+      "name": "No browser JavaScript errors",
+      "status": "passed"
+    },
+    {
+      "name": "No unexpected failed network requests",
+      "status": "passed"
+    }
+  ],
+  "errors": [],
+  "failedRequests": [],
+  "localResources": [
+    {
+      "url": "/logo.png",
+      "bytes": 300,
+      "durationMs": 5.200000000069849
+    },
+    {
+      "url": "/flags/qa.svg",
+      "bytes": 300,
+      "durationMs": 5.299999999930151
+    },
+    {
+      "url": "/hero-mobile.webp",
+      "bytes": 300,
+      "durationMs": 5.699999999953434
+    },
+    {
+      "url": "/campaign-wide.webp",
+      "bytes": 300,
+      "durationMs": 6.199999999953434
+    },
+    {
+      "url": "/_next/static/css/7d090e0375d33e6d.css",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/webpack-21c0bda91597affb.js",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/4bd1b696-c7408084347438ae.js",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/794-216401842b802bd7.js",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/main-app-0684c7453b5d4e63.js",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/app/error-75b247b119af2aac.js",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/500-fc3b64d9ff4a32a7.js",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/app/not-found-3fd46756656ff887.js",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/app/layout-dfaca122e94b197b.js",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/650-690509df8199a94b.js",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/300-a473c4268e789caa.js",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/app/page-28924cefed29c7de.js",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/campaign-film.mp4",
+      "bytes": 1180566,
+      "durationMs": 3
+    },
+    {
+      "url": "/fonts/dm-sans-latin-wght-normal.woff2",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/fonts/playfair-display-latin-wght-normal.woff2",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/fonts/playfair-display-latin-wght-italic.woff2",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/editorial.webp",
+      "bytes": 0,
+      "durationMs": 0
+    }
+  ]
+}

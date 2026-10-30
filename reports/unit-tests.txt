@@ -1,0 +1,38 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> lrt-perfume-store@1.0.0 test
+> node --test tests/*.test.js
+
+✔ standalone API returns ten products and labelled simulated checkout (16.696415ms)
+✔ reject cross-origin checkout requests (1.642631ms)
+✔ reject malformed and oversized request bodies (2.318589ms)
+✔ ten unique products, supported sizes and three notes (1.670059ms)
+✔ search matches notes, accents, gender, family and multiple words (1.7059ms)
+✔ prices calculated on server; submitted totals ignored (1.716083ms)
+✔ reject manipulated quantities, sizes, locations and duplicate items (0.593573ms)
+✔ collection routes separate gender, arrivals and scent families (5.362381ms)
+✔ new backend brands and collections get distinct clean routes (1.456863ms)
+✔ catalogue cache coalesces concurrent requests and expires (10.999542ms)
+✔ backend outage cooldown prevents request storms, then retries (0.601761ms)
+✔ malformed catalogue rejected and optional fields normalized (1.370814ms)
+✔ request guard limits and expires its window (0.255784ms)
+✔ body limit counts bytes and stops chunked bodies (5.970224ms)
+✔ payment destinations must be HTTPS on WooCommerce origin (0.708336ms)
+✔ empty catalogue does not manufacture collections (1.030096ms)
+✔ real catalogue sizes are not restricted to demo sizes (0.908523ms)
+✔ connected commerce remains gated until explicitly configured (7.866709ms)
+✔ each sample has three sizes with independent AED and QAR prices (3.355905ms)
+✔ market and size determine authoritative totals; submitted prices ignored (1.669826ms)
+✔ missing market price is unavailable; zero is a valid explicit price (0.297333ms)
+✔ new scent family terms find the correct catalog (1.068577ms)
+✔ retired sizes and aggregate stock violations are rejected (0.787467ms)
+✔ HTTP preview fallback generates valid unique v4 checkout identifiers (3.300049ms)
+✔ checkout permits configured proxy origin but still rejects unrelated origins (10.835355ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 320.595911

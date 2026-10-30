@@ -1,0 +1,572 @@
+[
+  {
+    "id": 1,
+    "name": "Saffron Veil",
+    "family": "Amber",
+    "gender": "Unisex",
+    "color": "#bb854b",
+    "notes": [
+      "Saffron",
+      "Jasmine",
+      "Amberwood"
+    ],
+    "price": 145,
+    "sizes": [
+      50,
+      100,
+      200
+    ],
+    "stock": 24,
+    "tag": "Bestseller",
+    "description": "A luminous opening of saffron settles into airy jasmine and the quiet warmth of amberwood. Golden, intimate, unforgettable.",
+    "occasion": "Evenings & special moments",
+    "season": "Autumn / Winter",
+    "variants": [
+      {
+        "size": 50,
+        "variationId": null,
+        "stock": 24,
+        "prices": {
+          "AED": 145,
+          "QAR": 129
+        }
+      },
+      {
+        "size": 100,
+        "variationId": null,
+        "stock": 24,
+        "prices": {
+          "AED": 235,
+          "QAR": 209
+        }
+      },
+      {
+        "size": 200,
+        "variationId": null,
+        "stock": 24,
+        "prices": {
+          "AED": 375,
+          "QAR": 339
+        }
+      }
+    ],
+    "scentFamily": "Warm",
+    "slug": "saffron-veil",
+    "concentration": "Oil-based perfume",
+    "ingredients": "Alcohol Denat., Parfum (Fragrance), Aqua (Water). Sample formula; final ingredient and allergen labels must be supplied before sale.",
+    "care": "Store away from heat and direct sunlight. For external use only. Avoid eyes and broken skin. Keep away from children and flames."
+  },
+  {
+    "id": 2,
+    "name": "Rose Éclipse",
+    "family": "Floral",
+    "gender": "Women",
+    "color": "#be817f",
+    "notes": [
+      "Pink pepper",
+      "Damask rose",
+      "White musk"
+    ],
+    "price": 135,
+    "sizes": [
+      50,
+      100,
+      200
+    ],
+    "stock": 18,
+    "tag": "New",
+    "description": "Dew-kissed rose with a spark of pink pepper. A soft veil of white musk stays close, like the memory of a beautiful evening.",
+    "occasion": "Everyday & date nights",
+    "season": "All seasons",
+    "variants": [
+      {
+        "size": 50,
+        "variationId": null,
+        "stock": 18,
+        "prices": {
+          "AED": 135,
+          "QAR": 119
+        }
+      },
+      {
+        "size": 100,
+        "variationId": null,
+        "stock": 18,
+        "prices": {
+          "AED": 215,
+          "QAR": 195
+        }
+      },
+      {
+        "size": 200,
+        "variationId": null,
+        "stock": 18,
+        "prices": {
+          "AED": 345,
+          "QAR": 315
+        }
+      }
+    ],
+    "scentFamily": "Flowery",
+    "slug": "rose-eclipse",
+    "concentration": "Oil-based perfume",
+    "ingredients": "Alcohol Denat., Parfum (Fragrance), Aqua (Water). Sample formula; final ingredient and allergen labels must be supplied before sale.",
+    "care": "Store away from heat and direct sunlight. For external use only. Avoid eyes and broken skin. Keep away from children and flames."
+  },
+  {
+    "id": 3,
+    "name": "Oud After Hours",
+    "family": "Oud",
+    "gender": "Unisex",
+    "color": "#69523d",
+    "notes": [
+      "Cardamom",
+      "Oud",
+      "Sandalwood"
+    ],
+    "price": 185,
+    "sizes": [
+      50,
+      100,
+      200
+    ],
+    "stock": 12,
+    "tag": "Signature",
+    "description": "Rich oud meets freshly crushed cardamom and creamy sandalwood. A deep, contemplative scent with a beautifully smooth finish.",
+    "occasion": "Evenings & celebrations",
+    "season": "Autumn / Winter",
+    "variants": [
+      {
+        "size": 50,
+        "variationId": null,
+        "stock": 12,
+        "prices": {
+          "AED": 185,
+          "QAR": 169
+        }
+      },
+      {
+        "size": 100,
+        "variationId": null,
+        "stock": 12,
+        "prices": {
+          "AED": 295,
+          "QAR": 275
+        }
+      },
+      {
+        "size": 200,
+        "variationId": null,
+        "stock": 12,
+        "prices": {
+          "AED": 475,
+          "QAR": 445
+        }
+      }
+    ],
+    "scentFamily": "Earthy",
+    "slug": "oud-after-hours",
+    "concentration": "Oil-based perfume",
+    "ingredients": "Alcohol Denat., Parfum (Fragrance), Aqua (Water). Sample formula; final ingredient and allergen labels must be supplied before sale.",
+    "care": "Store away from heat and direct sunlight. For external use only. Avoid eyes and broken skin. Keep away from children and flames."
+  },
+  {
+    "id": 4,
+    "name": "Citrus Reverie",
+    "family": "Fresh",
+    "gender": "Unisex",
+    "color": "#a9ae75",
+    "notes": [
+      "Bergamot",
+      "Neroli",
+      "Vetiver"
+    ],
+    "price": 115,
+    "sizes": [
+      50,
+      100,
+      200
+    ],
+    "stock": 32,
+    "tag": "Bestseller",
+    "description": "Sunlight through an open window. Bright bergamot, green neroli and dry vetiver create an effortless, freshly washed feeling.",
+    "occasion": "Daytime & office",
+    "season": "Spring / Summer",
+    "variants": [
+      {
+        "size": 50,
+        "variationId": null,
+        "stock": 32,
+        "prices": {
+          "AED": 115,
+          "QAR": 99
+        }
+      },
+      {
+        "size": 100,
+        "variationId": null,
+        "stock": 32,
+        "prices": {
+          "AED": 185,
+          "QAR": 169
+        }
+      },
+      {
+        "size": 200,
+        "variationId": null,
+        "stock": 32,
+        "prices": {
+          "AED": 295,
+          "QAR": 269
+        }
+      }
+    ],
+    "scentFamily": "Fresh",
+    "slug": "citrus-reverie",
+    "concentration": "Oil-based perfume",
+    "ingredients": "Alcohol Denat., Parfum (Fragrance), Aqua (Water). Sample formula; final ingredient and allergen labels must be supplied before sale.",
+    "care": "Store away from heat and direct sunlight. For external use only. Avoid eyes and broken skin. Keep away from children and flames."
+  },
+  {
+    "id": 5,
+    "name": "Vanilla Muse",
+    "family": "Gourmand",
+    "gender": "Women",
+    "color": "#c5a272",
+    "notes": [
+      "Pear",
+      "Vanilla",
+      "Tonka bean"
+    ],
+    "price": 140,
+    "sizes": [
+      50,
+      100,
+      200
+    ],
+    "stock": 21,
+    "tag": "",
+    "description": "Juicy pear gives way to enveloping vanilla and velvety tonka. Comforting sweetness with a polished, grown-up edge.",
+    "occasion": "Everyday & evenings",
+    "season": "Autumn / Winter",
+    "variants": [
+      {
+        "size": 50,
+        "variationId": null,
+        "stock": 21,
+        "prices": {
+          "AED": 140,
+          "QAR": 125
+        }
+      },
+      {
+        "size": 100,
+        "variationId": null,
+        "stock": 21,
+        "prices": {
+          "AED": 225,
+          "QAR": 205
+        }
+      },
+      {
+        "size": 200,
+        "variationId": null,
+        "stock": 21,
+        "prices": {
+          "AED": 355,
+          "QAR": 325
+        }
+      }
+    ],
+    "scentFamily": "Gourmand",
+    "slug": "vanilla-muse",
+    "concentration": "Oil-based perfume",
+    "ingredients": "Alcohol Denat., Parfum (Fragrance), Aqua (Water). Sample formula; final ingredient and allergen labels must be supplied before sale.",
+    "care": "Store away from heat and direct sunlight. For external use only. Avoid eyes and broken skin. Keep away from children and flames."
+  },
+  {
+    "id": 6,
+    "name": "Cedar Society",
+    "family": "Woody",
+    "gender": "Men",
+    "color": "#8c987e",
+    "notes": [
+      "Grapefruit",
+      "Cedarwood",
+      "Patchouli"
+    ],
+    "price": 150,
+    "sizes": [
+      50,
+      100,
+      200
+    ],
+    "stock": 19,
+    "tag": "",
+    "description": "Crisp grapefruit over tailored cedarwood and earthy patchouli. Clean lines, warm woods and understated confidence.",
+    "occasion": "Office & evenings",
+    "season": "All seasons",
+    "variants": [
+      {
+        "size": 50,
+        "variationId": null,
+        "stock": 19,
+        "prices": {
+          "AED": 150,
+          "QAR": 139
+        }
+      },
+      {
+        "size": 100,
+        "variationId": null,
+        "stock": 19,
+        "prices": {
+          "AED": 245,
+          "QAR": 225
+        }
+      },
+      {
+        "size": 200,
+        "variationId": null,
+        "stock": 19,
+        "prices": {
+          "AED": 395,
+          "QAR": 365
+        }
+      }
+    ],
+    "scentFamily": "Earthy",
+    "slug": "cedar-society",
+    "concentration": "Oil-based perfume",
+    "ingredients": "Alcohol Denat., Parfum (Fragrance), Aqua (Water). Sample formula; final ingredient and allergen labels must be supplied before sale.",
+    "care": "Store away from heat and direct sunlight. For external use only. Avoid eyes and broken skin. Keep away from children and flames."
+  },
+  {
+    "id": 7,
+    "name": "Neroli Coast",
+    "family": "Fresh",
+    "gender": "Unisex",
+    "color": "#afbdaf",
+    "notes": [
+      "Mandarin",
+      "Neroli",
+      "Sea salt"
+    ],
+    "price": 125,
+    "sizes": [
+      50,
+      100,
+      200
+    ],
+    "stock": 28,
+    "tag": "New",
+    "description": "A salty breeze through citrus groves. Sparkling mandarin and delicate neroli capture the ease of a slow coastal morning.",
+    "occasion": "Daytime & weekends",
+    "season": "Spring / Summer",
+    "variants": [
+      {
+        "size": 50,
+        "variationId": null,
+        "stock": 28,
+        "prices": {
+          "AED": 125,
+          "QAR": 109
+        }
+      },
+      {
+        "size": 100,
+        "variationId": null,
+        "stock": 28,
+        "prices": {
+          "AED": 205,
+          "QAR": 185
+        }
+      },
+      {
+        "size": 200,
+        "variationId": null,
+        "stock": 28,
+        "prices": {
+          "AED": 325,
+          "QAR": 299
+        }
+      }
+    ],
+    "scentFamily": "Herbal",
+    "slug": "neroli-coast",
+    "concentration": "Oil-based perfume",
+    "ingredients": "Alcohol Denat., Parfum (Fragrance), Aqua (Water). Sample formula; final ingredient and allergen labels must be supplied before sale.",
+    "care": "Store away from heat and direct sunlight. For external use only. Avoid eyes and broken skin. Keep away from children and flames."
+  },
+  {
+    "id": 8,
+    "name": "Velvet Iris",
+    "family": "Floral",
+    "gender": "Women",
+    "color": "#aaa0b0",
+    "notes": [
+      "Violet",
+      "Iris",
+      "Musk"
+    ],
+    "price": 155,
+    "sizes": [
+      50,
+      100,
+      200
+    ],
+    "stock": 16,
+    "tag": "",
+    "description": "Powder-soft iris and violet unfold over a clean musk base. Elegant, tactile and as comforting as your favourite knit.",
+    "occasion": "Office & intimate occasions",
+    "season": "All seasons",
+    "variants": [
+      {
+        "size": 50,
+        "variationId": null,
+        "stock": 16,
+        "prices": {
+          "AED": 155,
+          "QAR": 145
+        }
+      },
+      {
+        "size": 100,
+        "variationId": null,
+        "stock": 16,
+        "prices": {
+          "AED": 255,
+          "QAR": 235
+        }
+      },
+      {
+        "size": 200,
+        "variationId": null,
+        "stock": 16,
+        "prices": {
+          "AED": 415,
+          "QAR": 385
+        }
+      }
+    ],
+    "scentFamily": "Flowery",
+    "slug": "velvet-iris",
+    "concentration": "Oil-based perfume",
+    "ingredients": "Alcohol Denat., Parfum (Fragrance), Aqua (Water). Sample formula; final ingredient and allergen labels must be supplied before sale.",
+    "care": "Store away from heat and direct sunlight. For external use only. Avoid eyes and broken skin. Keep away from children and flames."
+  },
+  {
+    "id": 9,
+    "name": "Midnight Ember",
+    "family": "Amber",
+    "gender": "Men",
+    "color": "#986946",
+    "notes": [
+      "Black pepper",
+      "Incense",
+      "Amber"
+    ],
+    "price": 165,
+    "sizes": [
+      50,
+      100,
+      200
+    ],
+    "stock": 14,
+    "tag": "",
+    "description": "A flicker of pepper, a trail of incense, a warm amber glow. A quietly dramatic fragrance for the hours after sunset.",
+    "occasion": "Evenings & formal occasions",
+    "season": "Autumn / Winter",
+    "variants": [
+      {
+        "size": 50,
+        "variationId": null,
+        "stock": 14,
+        "prices": {
+          "AED": 165,
+          "QAR": 149
+        }
+      },
+      {
+        "size": 100,
+        "variationId": null,
+        "stock": 14,
+        "prices": {
+          "AED": 265,
+          "QAR": 245
+        }
+      },
+      {
+        "size": 200,
+        "variationId": null,
+        "stock": 14,
+        "prices": {
+          "AED": 435,
+          "QAR": 399
+        }
+      }
+    ],
+    "scentFamily": "Warm",
+    "slug": "midnight-ember",
+    "concentration": "Oil-based perfume",
+    "ingredients": "Alcohol Denat., Parfum (Fragrance), Aqua (Water). Sample formula; final ingredient and allergen labels must be supplied before sale.",
+    "care": "Store away from heat and direct sunlight. For external use only. Avoid eyes and broken skin. Keep away from children and flames."
+  },
+  {
+    "id": 10,
+    "name": "Pistachio Daydream",
+    "family": "Gourmand",
+    "gender": "Unisex",
+    "color": "#a5b48b",
+    "notes": [
+      "Pistachio",
+      "Orange blossom",
+      "Praline"
+    ],
+    "price": 145,
+    "sizes": [
+      50,
+      100,
+      200
+    ],
+    "stock": 20,
+    "tag": "Limited edit",
+    "description": "Roasted pistachio and airy orange blossom melt into a soft praline finish. Playful, creamy and unexpectedly sophisticated.",
+    "occasion": "Weekends & casual outings",
+    "season": "Spring / Autumn",
+    "variants": [
+      {
+        "size": 50,
+        "variationId": null,
+        "stock": 20,
+        "prices": {
+          "AED": 145,
+          "QAR": 129
+        }
+      },
+      {
+        "size": 100,
+        "variationId": null,
+        "stock": 20,
+        "prices": {
+          "AED": 235,
+          "QAR": 209
+        }
+      },
+      {
+        "size": 200,
+        "variationId": null,
+        "stock": 20,
+        "prices": {
+          "AED": 375,
+          "QAR": 339
+        }
+      }
+    ],
+    "scentFamily": "Gourmand",
+    "slug": "pistachio-daydream",
+    "concentration": "Oil-based perfume",
+    "ingredients": "Alcohol Denat., Parfum (Fragrance), Aqua (Water). Sample formula; final ingredient and allergen labels must be supplied before sale.",
+    "care": "Store away from heat and direct sunlight. For external use only. Avoid eyes and broken skin. Keep away from children and flames."
+  }
+]

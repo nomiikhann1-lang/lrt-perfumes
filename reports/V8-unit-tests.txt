@@ -1,0 +1,43 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> lrt-perfume-store@1.0.0 test
+> node --test tests/*.test.js
+
+✔ standalone API returns ten products and labelled simulated checkout (16.139286ms)
+✔ reject cross-origin checkout requests (1.266107ms)
+✔ reject malformed and oversized request bodies (3.189165ms)
+✔ ten unique products, supported sizes and three notes (4.864639ms)
+✔ search matches notes, accents, gender, family and multiple words (4.790507ms)
+✔ prices calculated on server; submitted totals ignored (1.917218ms)
+✔ reject manipulated quantities, sizes, locations and duplicate items (1.299297ms)
+✔ collection routes separate gender, arrivals and scent families (5.323531ms)
+✔ new backend brands and collections get distinct clean routes (1.651508ms)
+✔ catalogue cache coalesces concurrent requests and expires (32.041586ms)
+✔ backend outage cooldown prevents request storms, then retries (1.045736ms)
+✔ malformed catalogue rejected and optional fields normalized (4.555624ms)
+✔ request guard limits and expires its window (0.631812ms)
+✔ body limit counts bytes and stops chunked bodies (15.389006ms)
+✔ payment destinations must be HTTPS on WooCommerce origin (0.744932ms)
+✔ empty catalogue does not manufacture collections (0.787627ms)
+✔ real catalogue sizes are not restricted to demo sizes (0.332641ms)
+✔ connected commerce remains gated until explicitly configured (4.297365ms)
+✔ each sample has three sizes with independent AED and QAR prices (3.630601ms)
+✔ market and size determine authoritative totals; submitted prices ignored (1.17473ms)
+✔ missing market price is unavailable; zero is a valid explicit price (0.274113ms)
+✔ new scent family terms find the correct catalog (1.005465ms)
+✔ retired sizes and aggregate stock violations are rejected (0.993256ms)
+✔ HTTP preview fallback generates valid unique v4 checkout identifiers (8.062948ms)
+✔ checkout permits configured proxy origin but still rejects unrelated origins (16.940023ms)
+✔ brand filtering combines search, family and favorites (2.417682ms)
+✔ same brand recommendations exclude the current product and other brands (1.143523ms)
+✔ quantity respects variation and shared stock (0.562728ms)
+✔ gallery deduplicates and rejects unsafe schemes (0.428576ms)
+✔ 40 product windows preserve order without duplicates (3.328325ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 450.3211

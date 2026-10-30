@@ -1,0 +1,16 @@
+{
+  "checks": [
+    "Existing v8 consent prompts once for revised preferences",
+    "Consent persists and footer reopens preferences",
+    "Image-led perfume-only dropdown with Escape",
+    "Brand search, empty state and retained checkbox selection",
+    "Quantity stepper, one notes row, valid brand link and purchase-button spacing",
+    "No overflow and checkout checkbox alignment at 320",
+    "No overflow and checkout checkbox alignment at 390",
+    "No overflow and checkout checkbox alignment at 768",
+    "No overflow and checkout checkbox alignment at 1440",
+    "Footer logo and responsive layout",
+    "No browser JavaScript errors"
+  ],
+  "errors": []
+}

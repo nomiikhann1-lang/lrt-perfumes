@@ -1,0 +1,76 @@
+LRT PERFUMES v10 — VERCEL STOREFRONT + HOSTINGER WORDPRESS
+
+1. Import this source into Vercel. Root directory: lrt-perfumes (the directory
+   containing package.json). Framework: Next.js. Node: 24.x. Install: npm ci.
+   Build: npm run build. Leave Output Directory at the framework default.
+   Do not use npm run dev as a deployment command.
+
+2. In Vercel Settings > Environment Variables, add to the environment you will
+   test (Preview and/or Production):
+
+   WORDPRESS_URL       Your existing HTTPS WordPress base URL.
+   LRT_API_SECRET      The SAME secret already defined in wp-config.php.
+                      At least 32 characters. Mark as sensitive where offered.
+
+   These two values are server-only. Never add NEXT_PUBLIC_ to their names.
+   No real secret was present in the supplied files. This package cannot fill
+   your existing secret automatically. Do not paste it into chat or commit it.
+   WordPress stays on Hostinger. There is no new backend or database migration.
+
+3. The included vercel.json sets these non-secret testing defaults:
+   COMMERCE_ENABLED=true  Connected checkout can create REAL WooCommerce orders.
+   ENABLE_DEMO=false      Missing backend configuration never becomes a demo on Vercel.
+   SITE_INDEXING=false    Keep testing deployments out of search indexes.
+   NEXT_TELEMETRY_DISABLED=1
+   Check for old project-level settings that override these values.
+   Leave NODE_ENV to Vercel; it uses a production build, including on Preview.
+
+4. Default *.vercel.app deployment: leave NEXT_PUBLIC_SITE_URL and CHECKOUT_ORIGIN
+   unset; the exact VERCEL_URL is accepted automatically. For a custom frontend
+   domain, set both to that exact HTTPS origin (no wildcard). Redeploy after any
+   environment change. Do not use the WordPress backend origin as the storefront
+   origin unless it genuinely serves this Next.js application.
+
+5. Update the EXISTING LRT bridge with lrt-bridge.zip (v2.4.0), preserving the
+   existing LRT_API_SECRET and catalogue. Do not run the sample importer on an
+   established catalogue. CSV support from v8 remains included.
+   The signature protocol remains compatible with v2.3.0, but install v2.4.0
+   for additional input validation and catalogue field restrictions.
+
+6. In the Vercel project Firewall, configure a distributed rate-limit rule for
+   POST /api/checkout, initially 12 attempts per client IP per 60 seconds, with
+   a 60-second block. Review shared-office/mobile IP behavior before tightening.
+   The application limiter alone is per-process, not a cross-instance guarantee.
+   Consider a separate GET catalogue rule if your plan supports additional rules.
+   Keep Preview deployment protection enabled when testing private work.
+   These dashboard settings were NOT applied by this code update.
+
+7. Verify on the deployed URL:
+   - Real catalogue loads and brand/size prices match WooCommerce.
+   - Browser Network never shows LRT_API_SECRET or X-Lrt-Signature.
+   - Account links are absent; /account returns 404.
+   - Cookie choice works, navigation/search and cart work on phone and desktop.
+   - Use gateway sandbox mode for a card checkout. A COD test creates an order;
+     coordinate with fulfillment and cancel the test order afterward.
+   - Confirm one requestId creates only one order when retried, stock is reserved,
+     all AED/QAR sizes work, and confirmation/payment redirects are correct.
+   - Confirm shipping, tax and gateway rules. The bridge retains the existing
+     flat-rate delivery implementation, NOT automatic WooCommerce shipping zones.
+   - Check browser console for CSP violations after adding any analytics/payment
+     widgets. This update uses hosted WooCommerce payment navigation, not iframes.
+
+8. WordPress/Hostinger checks (requires access, not changed here):
+   WP_DEBUG=false and WP_DEBUG_DISPLAY=false; PHP display_errors=Off.
+   Keep WordPress/WooCommerce/plugins/PHP patched; enforce administrator MFA.
+   Deny public backups, database dumps, wp-config.php and debug.log; use HTTPS.
+   Keep API secrets out of CDN logs and rotate if previously disclosed.
+   Do not disable WordPress accounts or wp-admin: only the Next.js customer
+   account UI/routes were removed.
+
+9. Performance:
+   Vercel catalogue cache revalidates after 60 seconds, so edits can take a little
+   over a minute to appear. Checkout always validates current backend prices and
+   stock. HTML is dynamically rendered with fresh CSP nonces and is not CDN-cached.
+   Public assets remain cacheable. Do not add polling just to force catalogue refresh.
+
+Read SECURITY-AUDIT.txt for findings, evidence and remaining live-system checks.

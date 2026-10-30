@@ -1,0 +1,8 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {products} from '../lib/catalog.js';
+import {filterCatalogue,sameBrandProducts,addToBag,productImages,PAGE_SIZE} from '../lib/storefront-data.js';
+test('brand filtering combines search, family and favorites',()=>{const p=products[0];assert.equal(filterCatalogue([p],{brands:['missing']}).length,0);assert.equal(filterCatalogue([p],{brands:[p.brand||'LRT Perfumes'],families:['Favorites'],favorites:[p.id]}).length,1);assert.equal(filterCatalogue([p],{families:['Favorites']}).length,0);});
+test('same brand recommendations exclude the current product and other brands',()=>{const p={...products[0],brand:'Brand A'};assert.deepEqual(sameBrandProducts([p,{...p,id:999,brand:' brand a '},{...p,id:1000,brand:'Brand B'}],p).map(p=>p.id),[999]);});
+test('quantity respects variation and shared stock',()=>{const p={...products[0],stock:3,independentVariationStock:false};const bag=addToBag([],p,50,2,'QAR');assert.equal(bag[0].qty,2);assert.throws(()=>addToBag(bag,p,100,2,'QAR'));assert.throws(()=>addToBag([],p,50,0,'QAR'));});
+test('gallery deduplicates and rejects unsafe schemes',()=>{assert.deepEqual(productImages({name:'A',image:'https://x.test/a.jpg',images:['javascript:alert(1)','https://x.test/a.jpg']},50).map(i=>i.src),['https://x.test/a.jpg']);});
+test('40 product windows preserve order without duplicates',()=>{const fixture=Array.from({length:121},(_,i)=>({...products[0],id:i+1}));const sorted=filterCatalogue(fixture,{sort:'newest'});assert.equal(PAGE_SIZE,40);assert.equal(sorted.slice(0,PAGE_SIZE).length,40);assert.equal(sorted.slice(0,PAGE_SIZE*2).length,80);assert.equal(new Set(sorted.map(p=>p.id)).size,121);});

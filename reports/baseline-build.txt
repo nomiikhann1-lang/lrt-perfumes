@@ -1,0 +1,48 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> lrt-perfume-store@1.0.0 build
+> next build --webpack
+
+▲ Next.js 16.4.2 (webpack)
+✓ Running next.config.mjs took 21ms
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.0s
+  Running TypeScript ...
+  Finished TypeScript in 2ms ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/8) ...
+  Generating static pages using 8 workers (2/8) 
+  Generating static pages using 8 workers (4/8) 
+  Generating static pages using 8 workers (6/8) 
+✓ Generating static pages using 8 workers (8/8) in 375ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /[page]
+├ ƒ /api/catalog
+├ ƒ /api/checkout
+├ ƒ /api/market
+├ ƒ /api/status
+├ ○ /apple-icon.png
+├ ƒ /collection
+├ ƒ /collection/[slug]
+├ ƒ /collections/[[...slug]]
+├ ○ /icon.png
+├ ƒ /product/[slug]
+├ ○ /robots.txt
+├ ƒ /shop
+└ ƒ /sitemap.xml
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

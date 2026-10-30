@@ -1,0 +1,1 @@
+PASS: PHP 8.1 AST syntax parse using php-parser. PHP runtime and WordPress integration were NOT executed.

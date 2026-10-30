@@ -1,0 +1,250 @@
+LRT PERFUMES — v10 APPLICATION SECURITY AUDIT
+Date: 30 October 2026 (Asia/Karachi)
+Target: supplied Next.js source and LRT WordPress bridge; local production build
+Deployment target: Vercel frontend, existing Hostinger WordPress/WooCommerce backend
+
+EXECUTIVE RESULT
+
+The supplied application has been hardened and locally tested. The identified
+application-level issues below were fixed. The installed npm dependency audit
+reports zero known vulnerabilities. This does NOT certify the deployed site or
+Hostinger server as vulnerability-free. No Vercel project credentials, real
+WordPress secret, server logs, production database or live gateway were available.
+No deployment, real purchase, active attack against Hostinger, secret rotation,
+server setting change or external penetration test was performed.
+
+RELEASE CONTENTS
+
+- Compact navbar Search field, matching coral search action, no inner rectangle.
+- Restored About dropdown; existing primary navigation retained.
+- Brand directory and brand product pages reduced to names/counts and products.
+- Customer account links, panel, state, URL disclosure and /account route removed.
+  WordPress administrator and WooCommerce backend accounts are NOT disabled.
+- Updated Next.js, React, React DOM and icons; server-only module boundary added.
+- Hardened storefront routes, catalogue boundary and existing bridge (2.4.0).
+- VERCEL-SETUP.txt and non-secret environment template included.
+
+1. FINDINGS AND FIXES
+
+F01 — Missing Content Security Policy / browser defense-in-depth
+Severity: Medium. Status: FIXED IN SOURCE; tested on local production build.
+Files: proxy.js, lib/security-policy.js, lib/seo.js, app/layout.js
+A fresh cryptographically random nonce is generated per HTML response. Next.js
+bootstrap scripts and JSON-LD use the request nonce. Inline script attributes,
+object embedding, framing and external frames are denied. Production script
+policy does not allow unsafe-eval or unsafe-inline. Base URI and form targets
+are restricted. JSON-LD still escapes '<' before insertion, and product/search
+text renders through React's text escaping rather than HTML parsing.
+Evidence: real HTTP-response injection of a script tag and onerror attribute
+was blocked by the browser. Hostile search text did not execute. Normal UI
+hydrated without CSP violations. CSP nonce differed between document requests.
+Tradeoff: style-src permits unsafe-inline because existing React style props
+and components use inline styles. This is NOT permission for inline JavaScript.
+HTTPS external product images/media remain allowed for WooCommerce photography.
+Narrow those origins after confirming all live media/CDN hostnames.
+
+F02 — Unrestricted backend catalogue metadata could reach browsers
+Severity: High potential impact if private values were added to product metadata.
+Status: FIXED; no actual secret leak was observed in supplied data.
+Files: lib/catalog-normalize.js, lib/catalog-service.js, wordpress/lrt-bridge.php
+Removed arbitrary object spreading at the public catalogue boundary. Only known
+product fields are returned. Notes, galleries, categories, variants, strings
+and stock are bounded; unsafe image schemes and route-path characters are rejected.
+The bridge also restricts its outgoing catalogue fields. Server-generated prices
+and stock remain authoritative during checkout. Unknown metadata is not forwarded.
+Evidence: tests supplied private/meta_data fields, unsafe image URLs, hostile
+slugs, extra variant fields and invalid prices; they were omitted or rejected.
+
+F03 — Checkout request boundary and Origin handling
+Severity: Medium. Status: FIXED and regression tested.
+Files: app/api/checkout/route.js, lib/request-security.js, lib/catalog.js
+Production accepted origins now come from exact configured storefront origins
+and Vercel's deployment URL, rather than trusting the incoming request URL as an
+authority. Origin is required; cross-site browser requests are rejected. Only
+JSON is accepted. Bodies are limited to 16,000 bytes, including chunked input.
+Validation handles null/non-object items, invalid email/reference types, unsupported
+countries/cities, duplicate lines, invalid quantities and mismatched delivery data.
+Only permitted order fields are sent to WordPress; client totals, customer IDs
+and line prices are stripped. No permissive CORS response has been added.
+Evidence: local HTTP tests returned 403, 415, 400, 413 and 405 for the respective
+negative cases. Mocked connected-checkout test verified allowed fields only.
+
+F04 — Server configuration, signatures, error disclosure and redirects
+Severity: Medium. Status: FIXED / existing protections strengthened.
+Files: lib/wordpress.js, lib/request-security.js, app/api/checkout/route.js
+WordPress access is behind the server-only build boundary. Secrets require at
+least 32 characters. Backend URLs require HTTPS without credentials/query/hash.
+Only the expected backend operations can be called. Fetch redirects are denied,
+so signature headers cannot follow an unexpected redirect. Responses are bounded
+at 4 MB, requests time out, and raw backend errors are not exposed to shoppers.
+Payment navigation is accepted only for HTTPS on the configured WordPress origin.
+Order responses expose only expected confirmation fields, not arbitrary backend data.
+Evidence: HMAC, forbidden operation, redirect setting, weak configuration,
+masked-error and payment-destination tests passed. A synthetic build-time secret
+canary did not appear in any of 36 scanned browser JavaScript files.
+
+F05 — Account functionality and information exposure
+Severity: Low. Status: REMOVED as requested.
+Files: components/Storefront.js, StoreHeader.js, Footer.js, app/[page]/page.js,
+app/api/status/route.js and informational copy.
+/account returns 404. No account link or customer login panel is offered.
+/api/status returns only {"status":"ok"}; it exposes no backend URL or credentials.
+The redundant client account-status fetch was removed.
+
+F06 — Security headers, production/debug and exposed files
+Severity: Medium defense-in-depth. Status: FIXED / verified locally.
+Headers: Content-Security-Policy; HSTS max-age=31536000; nosniff; DENY framing;
+strict-origin-when-cross-origin referrers; same-origin opener policy; restricted
+camera/microphone/geolocation/payment permissions; DNS prefetch disabled.
+X-Powered-By is disabled. Browser production source maps and dev indicators are
+disabled. Vercel uses a production build. No debug endpoint or stack trace is
+intentionally exposed. Sensitive file patterns return 404; build/source/report
+files are outside public/. .gitignore and .vercelignore exclude private config,
+backend sources, archives and audit/test artifacts from deployment upload.
+Evidence: .env, .git/config, package files, plugin sources/ZIP and audit/report
+paths returned 404. Public directory scan found no sensitive file types. Browser
+source-map count was zero. The build canary was absent from client assets.
+Caveat: Vercel runtime settings and Hostinger PHP/WP debug settings require live
+verification; a source review cannot inspect settings on those systems.
+
+F07 — Dependencies and unnecessary packages
+Status: UPDATED and audited; exact versions locked.
+Next.js 16.4.3; React 19.3.1; React DOM 19.3.1; lucide-react 1.64.0;
+server-only 0.0.1. Node major pinned to 24.x; Vercel manages its minor/security patches.
+The npm production audit returned 0 critical/high/moderate/low known vulnerabilities.
+All five direct dependencies serve the framework, UI or server-only security
+boundary. No unused direct runtime package was identified to remove. QA tooling
+is kept outside the application and is not included as an application dependency.
+A zero advisory count is a point-in-time dependency result, not proof against
+unknown vulnerabilities. Preserve package-lock.json and install with npm ci.
+
+F08 — Resource limits, repeated work and CPU behavior
+Status: SOURCE REVIEW COMPLETED; guards added; live CPU diagnosis NOT performed.
+The catalogue has per-process single-flight request coalescing, 60-second cache,
+15-second failure cooldown, and on Vercel a shared Next.js data cache with a
+60-second revalidation setting. Fetching is bounded to 20 pages / 2,000 products,
+a 20-second overall fetch budget, 12 seconds per backend call and 4 MB per response.
+Checkout fetches have a timeout and a 30-second Vercel function maximum.
+Shop still renders 40 product cards per scroll batch; there is no catalogue polling
+loop. Intersection observers/listeners/timers are cleaned up. The old unused
+menu state and pointer listener were removed. User query length is bounded.
+The video component pauses offscreen/hidden media; intentional video loops are
+not network polling. Images remain eager-loaded as previously requested.
+Evidence: cache tests coalesced 30 simultaneous reads into one fetch and verified
+expiry and outage cooldown. Existing scroll-batch tests remain in the source.
+No uncontrolled recurring fetch/retry loop was found in the reviewed code.
+Tradeoff: nonce-protected HTML must render dynamically and is not shared/CDN-cached;
+public assets and catalogue data remain cacheable. Hosting CPU saturation cannot
+be attributed or declared resolved without server metrics, request logs and WP
+plugin/cron/database inspection. Vercel cache behavior still needs live verification.
+
+F09 — WordPress bridge review
+Status: source hardened; PHP hook tests passed; live integration pending.
+Bridge 2.4.0 retains the existing signature protocol and CSV functionality.
+HMAC-SHA256 authenticates timestamp, method, route and request body. Signature
+shape, age and request size are checked; comparisons use hash_equals. Invalid
+contact/item types are rejected before product operations. Inputs are sanitized
+before order persistence. Prices and stock are read from WooCommerce, with stock
+reservation and existing request-ID-based idempotency retained. Admin seed action
+uses capability and nonce checks. No direct SQL concatenation or eval was found.
+Evidence: PHP 8.3 harness tested valid signatures, body tampering, expiry and
+oversize rejection, plus CSV column mapping and round-trip pricing behavior.
+Limitations: harness uses small WP/WooCommerce stubs, not a live WP database.
+The signature's query string is not included (existing protocol); GET pagination
+is independently bounded and exposes only the public catalogue. Checkout data
+is in the signed body. This release does not add an authentication redesign.
+Existing idempotency options remain in the WP database; retention/cleanup and
+stuck processing records need operational monitoring on the connected site.
+
+2. ENDPOINT INVENTORY
+
+GET /api/catalog
+Public catalogue by design; no credentials required by shoppers. Outputs only
+allowlisted fields. Backend errors become a generic 503. No-store response header;
+server-side caches reduce WordPress work. Other mutation methods are not exported.
+
+GET /api/market
+Returns AE or QA from platform region headers. No sensitive data. Private/no-store.
+Region is a convenience preference, not an authorization or price authority;
+checkout country/currency and backend prices are independently validated.
+
+GET /api/status
+Minimal availability response only. No secret/config/account diagnostics.
+
+POST /api/checkout
+Guest order creation. Exact Origin, JSON type, body/shape limits, per-client
+process limiter, allowlisted payload, backend HMAC, no-store confirmation, trusted
+payment URL. Unsupported methods are rejected. On Vercel missing configuration
+fails closed instead of silently returning a simulated order.
+
+GET /account
+Removed; returns 404. No registration, login, password reset or user-management
+API was added to the Next.js application. Existing WP administration is outside
+this customer-facing route removal.
+
+WordPress /wp-json/lrt/v1/products and /checkout
+Require the shared HMAC secret; not exposed to browsers through JavaScript.
+WordPress's other core/plugin endpoints are not certified by this source audit.
+
+3. OUTSTANDING DEPLOYMENT ITEMS / RESIDUAL RISK
+
+R01 — HIGH priority before unrestricted real ordering: distributed abuse control.
+The application limit is 12 attempts/minute per client in one process, bounded to
+2,000 entries with expiration. Vercel may run multiple instances, so this is NOT
+a durable global limit. Configure a Vercel Firewall rate-limit rule for checkout
+and verify it on the deployed site. Platform dashboard access was not available.
+Bot/order spam and resource billing risk remain if the public guest endpoint is
+exposed without effective platform limits. Preview access protection is recommended
+while testing. See VERCEL-SETUP.txt for a concrete starting rule.
+
+R02 — Real environment/secrets and live connection.
+No private .env or actual API key was present in the supplied project. Enter the
+existing WORDPRESS_URL and matching LRT_API_SECRET in Vercel project settings.
+The audit did not inspect old Git history, Vercel settings, previous deployments,
+logs or Hostinger config, so it cannot rule out a historical disclosure there.
+Rotate secrets only if disclosed, updating BOTH ends together.
+
+R03 — WordPress/Hostinger operational security and live commerce.
+Verify WP_DEBUG=false, WP_DEBUG_DISPLAY=false, PHP display_errors=Off, patched
+WP/WooCommerce/plugins/PHP, administrator MFA, backup access restrictions and TLS.
+Perform sandbox card and controlled COD tests. Shipping/tax/gateway rules and
+stock/idempotency behavior must be validated against actual data. This bridge
+retains its custom delivery rates rather than adopting native shipping zones.
+No real order or payment was submitted during this audit.
+
+R04 — CSP/operational compatibility.
+External analytics, embedded payment widgets and Vercel's optional preview toolbar
+may need explicit policy changes. They were not added or broadly allowed here.
+Review violations before enabling any third-party script; keep scripts nonce-based.
+Do not add unsafe-inline to script-src just to silence a console error.
+
+4. TEST EVIDENCE
+
+- 40 Node tests passed (validation, request IDs, prices/stock, catalogue cache,
+  collections, field allowlists, CSP policy, origin handling, server-only backend
+  configuration, signed fetch and connected-checkout response boundaries).
+- 17 existing browser checks passed, including simulated checkout. No live payment.
+- 13 new production-browser security/UI checks passed: headers/nonces, About,
+  search, brand simplification, account/private-path removal, checkout rejection
+  cases, responsive widths 320/390/768/1440, text escaping, HTTP-injected script
+  and event blocking, and absence of application JavaScript errors.
+- PHP 8.3 harness: 38 assertions passed (34 CSV mapping/round-trip checks plus
+  4 signature/request-size checks). Full PHP bridge loaded successfully.
+- npm audit: 0 known vulnerabilities reported for the installed lockfile.
+- Client build scan: 36 JavaScript files; secret canary absent; 0 source maps.
+- Public file scan: no sensitive config/database/archive files in public/.
+- Production Next.js build passed.
+
+Evidence files are under reports/V10-*. The browser injection fixture is a local
+QA interception, not a deployed test route. No QA-only endpoint is shipped.
+
+5. REFERENCES USED FOR IMPLEMENTATION
+
+https://nextjs.org/docs/app/guides/content-security-policy
+https://vercel.com/docs/headers/request-headers
+https://vercel.com/docs/functions/runtimes/node-js/node-js-versions
+https://vercel.com/changelog/vercel-waf-rate-limiting-now-generally-available
+https://woocommerce.com/document/product-csv-importer-exporter/
+
+This is a scoped application audit with evidence and identified limits, not an
+unqualified claim that the production system is secure or mistake-free.

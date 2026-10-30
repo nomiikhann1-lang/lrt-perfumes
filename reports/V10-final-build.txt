@@ -1,0 +1,47 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> lrt-perfume-store@1.0.0 build
+> next build --webpack
+
+▲ Next.js 16.4.3 (webpack)
+✓ Running next.config.mjs took 22ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.7s
+  Running TypeScript ...
+  Finished TypeScript in 2ms ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/7) ...
+  Generating static pages using 8 workers (1/7) 
+  Generating static pages using 8 workers (3/7) 
+  Generating static pages using 8 workers (5/7) 
+✓ Generating static pages using 8 workers (7/7) in 211ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /[page]
+├ ƒ /api/catalog
+├ ƒ /api/checkout
+├ ƒ /api/market
+├ ƒ /api/status
+├ ○ /apple-icon.png
+├ ƒ /brand
+├ ƒ /brand/[slug]
+├ ƒ /collection
+├ ƒ /collection/[slug]
+├ ƒ /collections/[[...slug]]
+├ ○ /icon.png
+├ ƒ /product/[slug]
+├ ○ /robots.txt
+├ ƒ /shop
+└ ƒ /sitemap.xml
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

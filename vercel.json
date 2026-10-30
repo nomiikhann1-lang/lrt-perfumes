@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm ci",
+  "functions": {
+    "app/api/checkout/route.js": {
+      "maxDuration": 30
+    }
+  },
+  "env": {
+    "COMMERCE_ENABLED": "true",
+    "SITE_INDEXING": "false",
+    "ENABLE_DEMO": "false",
+    "NEXT_TELEMETRY_DISABLED": "1"
+  }
+}

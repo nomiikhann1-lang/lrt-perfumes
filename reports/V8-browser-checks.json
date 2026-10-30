@@ -1,0 +1,17 @@
+{
+  "checks": [
+    "Initial 40 cards for 121-product fixture",
+    "Scroll appends next 40",
+    "Scroll reaches last batch without duplicates",
+    "Sort dropdown resets visible window",
+    "Existing brand values filter catalogue",
+    "Brand directory links to real brand pages",
+    "No Brands group on collection directory",
+    "Navigation order and dropdown Escape focus",
+    "Brand/shop/product/checkout no overflow at 390",
+    "Brand/shop/product/checkout no overflow at 768",
+    "Brand/shop/product/checkout no overflow at 1440",
+    "No browser exceptions"
+  ],
+  "errors": []
+}
