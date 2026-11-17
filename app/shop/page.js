@@ -1,8 +1,8 @@
 import { randomInt } from "node:crypto";
 import { canonicalFamily } from "../../lib/store-config";
 import { permanentRedirect } from "next/navigation";
-import { collectionHref } from "../../lib/collections";
-import { pageMeta } from "../../lib/seo";
+import { collectionHref, collectionsFor } from "../../lib/collections";
+import { pageMeta, getCatalog } from "../../lib/seo";
 import { renderStore } from "../../lib/render-store";
 export const dynamic = "force-dynamic";
 export async function generateMetadata({ searchParams }) {
@@ -19,7 +19,14 @@ export default async function Page({ searchParams }) {
   if (Object.keys(q).length === 1) {
     if (["Men", "Women", "Unisex"].includes(q.gender))
       permanentRedirect(collectionHref("All", q.gender));
-    if (canonicalFamily(q.family)) permanentRedirect(collectionHref(q.family));
+    const family = canonicalFamily(q.family);
+    if (
+      family &&
+      collectionsFor(await getCatalog()).some(
+        (c) => c.slug === family.toLowerCase(),
+      )
+    )
+      permanentRedirect(collectionHref(family));
     if (q.q === "New") permanentRedirect("/collection/new-arrivals");
     if (q.q === "Bestseller") permanentRedirect("/collection/bestsellers");
   }

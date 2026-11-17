@@ -40,7 +40,7 @@ Shared desktop/mobile discovery filters, multi-select scent families and genders
 
 Bridge 2.1.0 adds optional Brand and Collection fields in WooCommerce scent details. Defaults are LRT Perfumes and Signature collection; set Product badge to New or Bestseller for those edits. Updating these fields creates the corresponding filtered collection page. Renaming a brand or collection changes its URL: add a permanent redirect when renaming an indexed collection.
 
-`public/campaign-wide.png` is generated conceptual imagery, not a real product photo. `public/campaign-film.mp4` is a 10-second animated pan/zoom of that image. Replace them with final brand campaign assets; the original hero photo/video setting is retained. The new film includes pause/play, reduced-motion handling and poster fallback.
+`public/campaign-wide.png` is generated conceptual imagery, not a real product photo. `public/campaign-film.mp4` is a 10-second animated pan/zoom of that image. Replace them with final brand campaign assets. Shop films include pause/play, reduced-motion handling and poster fallback.
 
 ## WordPress update
 Deactivate the previous bridge before installing `lrt-bridge.zip`. Keep existing products and orders. Set `LRT_API_SECRET` (32+ random characters) in wp-config.php and the same value in Next.js `.env.local`, alongside `WORDPRESS_URL`. The new API uses `/wp-json/lrt/v1/`. Existing scent metadata is read without deleting it. Previously saved browser favourites and bags are migrated; retired sizes are marked unavailable.
@@ -52,7 +52,7 @@ The frontend consumes variants: [{size:50,variationId:null,stock:24,prices:{AED:
 Qatar preview shipping is free. UAE preview shipping is AED 20, free from AED 250. Confirm business delivery rules before launch. Sample products and prices remain illustrative.
 
 ## Hero
-Edit `lib/store-config.js` mobileHero. Default photo: `/hero-mobile.png`. For video, set type to `video`, src to an uploaded public MP4 path and poster to your photo. Video is muted, looping and inline, with pause control and reduced-motion support. The supplied campaign photo is AI-generated concept imagery, not a photograph of your actual bottle.
+The home hero cycles through all ten scent families using the images in `public/scent-families/`. Edit background colours and captions in `lib/scent-slider.js`, and layout styles in `app/scent-slider.css`. It features matching catalogue products when available and keeps every family accessible when the catalogue is empty. See [EDITING.md](EDITING.md) for controls and content settings.
 
 ## Content and verification
 Business summaries in `lib/mobile-pages.js` are based on lrtperfumes.com About, Contact, FAQs, Privacy, Terms and Returns pages. Source links are included. Published policies differ on returns/exchanges and Qatar shipping coverage; those differences are noted. These summaries are now used on all devices, with remaining pages in lib/pages.js.

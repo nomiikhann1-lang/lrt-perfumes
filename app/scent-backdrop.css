@@ -1,0 +1,138 @@
+.product-art,
+.detail-art {
+  isolation: isolate;
+}
+
+.detail-art {
+  position: relative;
+  overflow: hidden;
+}
+
+.pdp .detail-art,
+.modal .detail-art {
+  background: color-mix(
+    in srgb,
+    var(--product-family-tone, #d9cdbf) 12%,
+    #faf8f4
+  );
+}
+
+.product-card .product-art {
+  background: color-mix(in srgb, var(--family-tone, #d9cdbf) 12%, #faf8f4);
+}
+
+.scent-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+
+.scent-family-accent {
+  position: absolute;
+  left: 8%;
+  top: 48%;
+  width: 8%;
+  max-width: 28px;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.18;
+  transform: rotate(-12deg);
+  filter: saturate(0.65);
+}
+
+.scent-ingredient-piece {
+  position: absolute;
+  width: 24%;
+  max-width: 160px;
+  aspect-ratio: 1;
+  opacity: 0.72;
+  transform: translateX(var(--ingredient-shift)) rotate(var(--ingredient-angle));
+  transition: transform 420ms cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+.scent-ingredient-left {
+  left: -5%;
+  top: 14%;
+  --ingredient-shift: -6px;
+  --ingredient-angle: -18deg;
+}
+
+.scent-ingredient-right {
+  right: -5%;
+  top: 58%;
+  --ingredient-shift: 6px;
+  --ingredient-angle: 18deg;
+}
+
+.scent-ingredient {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url("/perfume-ingredients.png") var(--ingredient-position) / 400%
+    300% no-repeat;
+}
+
+.scent-ingredient-right .scent-ingredient {
+  transform: scaleX(-1);
+}
+
+.product-art .art-link,
+.detail-art > .bottle-scene,
+.detail-art > .product-gallery {
+  position: relative;
+  z-index: 1;
+}
+
+.product-art :is(.badge, .heart, .quick-add),
+.detail-art > .art-family-link {
+  z-index: 2;
+}
+
+.detail-art > .scent-backdrop,
+.product-art:focus-within > .scent-backdrop {
+  opacity: 1;
+}
+
+.detail-art > .scent-backdrop .scent-ingredient-piece,
+.product-art:focus-within > .scent-backdrop .scent-ingredient-piece {
+  transform: translateX(0) rotate(var(--ingredient-angle));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .product-card .product-art:is(:hover, :focus-within) {
+    background-color: color-mix(
+      in srgb,
+      var(--family-tone, #d9cdbf) 16%,
+      #faf8f4
+    );
+  }
+  .product-art:hover > .scent-backdrop {
+    opacity: 1;
+  }
+
+  .product-art:hover > .scent-backdrop .scent-ingredient-piece {
+    transform: translateX(0) rotate(var(--ingredient-angle));
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .product-art > .scent-backdrop {
+    opacity: 1;
+  }
+
+  .product-art > .scent-backdrop .scent-ingredient-piece {
+    transform: translateX(0) rotate(var(--ingredient-angle));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scent-backdrop,
+  .scent-ingredient-piece {
+    transition: none;
+  }
+}

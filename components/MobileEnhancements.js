@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Pause, Play } from "lucide-react";
-import { mobileHero, markets, familyColors } from "../lib/store-config";
+import { markets, familyColors } from "../lib/store-config";
 export function ScentIcon({ family, size = 18 }) {
   if (!Object.hasOwn(familyColors, family)) return null;
   return (
@@ -67,61 +66,6 @@ export function MarketPicker({ country, onChange }) {
             </button>
           ))}
         </div>
-      )}
-    </div>
-  );
-}
-export function MobileHero() {
-  const ref = useRef(null);
-  const [playing, setPlaying] = useState(false),
-    [failed, setFailed] = useState(false);
-  useEffect(() => {
-    if (mobileHero.type !== "video") return;
-    const q = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!q.matches)
-      ref.current
-        ?.play()
-        .then(() => setPlaying(true))
-        .catch(() => {});
-  }, []);
-  return (
-    <div className="mobile-hero-media">
-      {mobileHero.type === "video" && !failed ? (
-        <>
-          <video
-            ref={ref}
-            src={mobileHero.src}
-            poster={mobileHero.poster}
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            onError={() => setFailed(true)}
-            aria-label={mobileHero.alt}
-          />
-          <button
-            className="video-toggle"
-            aria-label={playing ? "Pause hero video" : "Play hero video"}
-            onClick={() => {
-              if (playing) {
-                ref.current.pause();
-                setPlaying(false);
-              } else
-                ref.current
-                  .play()
-                  .then(() => setPlaying(true))
-                  .catch(() => setFailed(true));
-            }}
-          >
-            {playing ? <Pause size={18} /> : <Play size={18} />}
-          </button>
-        </>
-      ) : (
-        <img
-          src={mobileHero.type === "video" ? mobileHero.poster : mobileHero.src}
-          alt={mobileHero.alt}
-          fetchPriority="high"
-        />
       )}
     </div>
   );

@@ -1,0 +1,398 @@
+@font-face {
+  font-family: "Scent Display";
+  src: url("/fonts/poppins-latin-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+.scent-slider {
+  --su: 1px;
+  position: relative;
+  height: calc(100svh - 134px);
+  min-height: 560px;
+  max-height: 1100px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #c2b0dc;
+  color: #fff;
+  touch-action: pan-x pan-y;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+.scent-panel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+.scent-frame {
+  position: absolute;
+  width: calc(1440 * var(--su));
+  height: calc(900 * var(--su));
+  left: calc(50% - 720 * var(--su));
+  top: calc(50% - 450 * var(--su));
+}
+.scent-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.scent-word {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Scent Display", var(--sans);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  color: white;
+}
+.scent-shadow {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(60, 40, 80, 0.22),
+    transparent
+  );
+  filter: blur(calc(4 * var(--su)));
+}
+.scent-product {
+  position: absolute;
+  left: calc(615 * var(--su));
+  top: calc(300 * var(--su));
+  width: calc(210 * var(--su));
+  height: calc(270 * var(--su));
+  display: grid;
+  place-items: center;
+}
+.scent-product .bottle-scene {
+  position: absolute;
+  width: 210px;
+  height: 270px;
+  transform: scale(var(--bottle-scale, 2.7));
+  transform-origin: center;
+  transition: none;
+}
+.scent-product .bottle {
+  filter: drop-shadow(8px 12px 5px #4b402820);
+}
+.scent-product .cap {
+  background: linear-gradient(
+    90deg,
+    #24221f,
+    #514b46 45%,
+    #23221f 93%,
+    #77716a
+  );
+}
+.scent-product .bottle-brand {
+  font-family: Georgia, serif;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+.scent-product .label {
+  color: #302633;
+}
+.scent-product .label strong {
+  font-family: Georgia, serif;
+  font-size: 8px;
+  font-weight: 400;
+}
+.scent-product .bottle-shadow {
+  display: none;
+}
+.scent-product.has-photo {
+  left: calc(510 * var(--su));
+  top: calc(130 * var(--su));
+  width: calc(420 * var(--su));
+  height: calc(590 * var(--su));
+}
+.scent-product.has-photo .bottle-scene {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+}
+.scent-product.has-photo .uploaded-bottle {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 12px #42312620);
+}
+.scent-family-art {
+  position: absolute;
+  left: calc(575 * var(--su));
+  top: calc(285 * var(--su));
+  width: calc(290 * var(--su));
+  height: calc(290 * var(--su));
+  object-fit: contain;
+  filter: drop-shadow(0 16px 12px #42312620);
+}
+.scent-piece {
+  position: absolute;
+}
+.scent-piece img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: scent-bob var(--duration) var(--delay) ease-in-out alternate
+    infinite;
+}
+.scent-corners .scent-piece {
+  filter: blur(calc(9 * var(--su)));
+}
+.scent-ui {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  font: 500 14px var(--sans);
+  text-shadow: 0 1px 6px rgba(70, 45, 40, 0.2);
+}
+.scent-ui :is(a, button) {
+  pointer-events: auto;
+  color: white;
+}
+.scent-ui :is(a, button):focus-visible {
+  outline: 2px solid white;
+  outline-offset: 6px;
+}
+.scent-tab-scroll {
+  position: absolute;
+  top: 30px;
+  left: 110px;
+  right: 110px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  pointer-events: auto;
+  touch-action: pan-x pan-y;
+  overscroll-behavior-x: contain;
+}
+.scent-tab-scroll::-webkit-scrollbar {
+  display: none;
+}
+.scent-tabs {
+  position: relative;
+  display: flex;
+  width: max-content;
+  max-width: none;
+  margin-inline: auto;
+  gap: clamp(20px, 2.5vw, 36px);
+  padding-bottom: 3px;
+  font-size: 15px;
+}
+.scent-tabs button {
+  min-height: 44px;
+  padding: 8px 0;
+  font-weight: 500;
+  text-shadow: inherit;
+  white-space: nowrap;
+}
+.scent-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: white;
+  transition:
+    width 0.6s cubic-bezier(0.65, 0, 0.35, 1),
+    transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.scent-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 105px;
+  transform: translateX(-50%);
+  text-align: center;
+  white-space: nowrap;
+}
+.scent-caption a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 600;
+}
+#main-content .scent-caption p {
+  color: #fff;
+  font: 400 12px/1.6 var(--sans);
+  margin: 6px 0 0;
+}
+.scent-shop {
+  position: absolute;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: 0.2em;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  white-space: nowrap;
+}
+.scent-arrow {
+  position: absolute;
+  bottom: 30px;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+}
+.scent-arrow svg {
+  width: 28px;
+  height: 28px;
+  stroke-width: 1.5;
+}
+.scent-prev {
+  left: 32px;
+}
+.scent-next {
+  right: 32px;
+}
+.scent-play {
+  position: absolute;
+  right: 36px;
+  top: 30px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #ffffff80;
+  border-radius: 50%;
+}
+.scent-counter {
+  position: absolute;
+  left: 36px;
+  top: 46px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+.scent-accessible {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@keyframes scent-bob {
+  from {
+    transform: translateY(calc(-7 * var(--su)))
+      rotate(calc(var(--rotation) - 3deg));
+  }
+  to {
+    transform: translateY(calc(7 * var(--su)))
+      rotate(calc(var(--rotation) + 3deg));
+  }
+}
+@media (max-width: 820px), (orientation: portrait) {
+  .scent-slider {
+    height: calc(100svh - 110px);
+    min-height: 490px;
+    max-height: 950px;
+  }
+  .scent-frame {
+    top: calc(50% - 450 * var(--su) + 8px);
+  }
+  .scent-tab-scroll {
+    top: 54px;
+    left: 20px;
+    right: 20px;
+  }
+  .scent-tabs {
+    gap: 25px;
+    font-size: 14px;
+  }
+  .scent-play {
+    top: 10px;
+    right: 14px;
+  }
+  .scent-counter {
+    left: 20px;
+    top: 26px;
+    font-size: 10px;
+  }
+  .scent-caption {
+    bottom: 95px;
+  }
+  .scent-caption a {
+    font-size: 15px;
+  }
+  #main-content .scent-caption p {
+    font-size: 11px;
+  }
+  .scent-shop {
+    bottom: 22px;
+    font-size: 12px;
+    letter-spacing: 0.17em;
+    gap: 8px;
+  }
+  .scent-arrow {
+    bottom: 15px;
+    width: 48px;
+    height: 48px;
+  }
+  .scent-prev {
+    left: 8px;
+  }
+  .scent-next {
+    right: 8px;
+  }
+  .scent-arrow svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+@media (max-height: 500px) and (min-width: 821px) and (orientation: landscape) {
+  .scent-slider {
+    height: calc(100svh - 125px);
+    min-height: 240px;
+  }
+  .scent-tab-scroll {
+    top: 8px;
+    left: 90px;
+    right: 90px;
+  }
+  .scent-tabs {
+    font-size: 12px;
+    gap: 20px;
+  }
+  .scent-counter {
+    top: 25px;
+    font-size: 8px;
+  }
+  .scent-play {
+    top: 8px;
+    right: 20px;
+  }
+  .scent-caption {
+    bottom: 44px;
+  }
+  .scent-caption a {
+    font-size: 12px;
+  }
+  #main-content .scent-caption p {
+    display: none;
+  }
+  .scent-shop {
+    bottom: 7px;
+    font-size: 10px;
+  }
+  .scent-arrow {
+    bottom: 3px;
+    height: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scent-piece img {
+    animation: none;
+    transform: rotate(var(--rotation));
+  }
+  .scent-underline {
+    transition: none;
+  }
+}

@@ -2,6 +2,8 @@
 import Link from "./StoreLink";
 import { StoreLanding, StoreDirectory } from "./StoreVisits";
 import OurStory from "./OurStory";
+import ScentSlider from "./ScentSlider";
+import ScentBackdrop from "./ScentBackdrop";
 import { shopPromotions, promotionSlots } from "../lib/shop-promotions";
 import ShopPromotion from "./ShopPromotion";
 import StoreHeader, { primaryNavigation } from "./StoreHeader";
@@ -28,13 +30,12 @@ import { newRequestId } from "../lib/request-id";
 import { useRouter } from "next/navigation";
 import { mobilePageContent } from "../lib/mobile-pages";
 import {
-  mobileHero,
   markets,
   familyColors,
   scentFamilies,
   scentFamily,
 } from "../lib/store-config";
-import { MarketPicker, MobileHero, ScentIcon } from "./MobileEnhancements";
+import { MarketPicker, ScentIcon } from "./MobileEnhancements";
 import { pageContent } from "../lib/pages";
 import { Fragment, useEffect, useRef, useState } from "react";
 import {
@@ -502,6 +503,7 @@ export default function Storefront({
             "--card-color": familyColors[scentFamily(p)],
           }}
         >
+          <ScentBackdrop product={p} />
           <button
             className="art-link"
             onClick={() => openProduct(p)}
@@ -653,54 +655,7 @@ export default function Storefront({
         )}
         {view === "home" && (
           <>
-            <section className="hero">
-              <div className="hero-copy">
-                <span className="eyebrow">
-                  <span className="tiny-line" /> THE LRT SCENT WARDROBE / 01
-                </span>
-                <h1>
-                  Good scents. <br />
-                  Great <em>feelings.</em>
-                </h1>
-                <p>
-                  A world of inspired fragrance.
-                  <br />
-                  Find the notes that make you, you.
-                </p>
-                <button className="primary" onClick={() => shop()}>
-                  Discover your signature <ArrowUpRight size={18} />
-                </button>
-                <div className="hero-bottom">
-                  <span>EXPRESSIVE SCENTS. EVERYDAY LUXURY.</span>
-                  <span>01 — 10</span>
-                </div>
-              </div>
-              <div className="hero-visual">
-                <MobileHero />
-                <div className="sunlight" />
-                <div className="hero-orbit" />
-                <div className="hero-bottle">
-                  {products[0] && <Bottle product={products[0]} />}
-                </div>
-                <span className="vertical-note">
-                  A NEW WAY TO WEAR YOURSELF
-                </span>
-                <div className="hero-feature">
-                  <div>
-                    <small>MEET YOUR NEXT SIGNATURE</small>
-                    <span>Saffron Veil</span>
-                    <p>Saffron. Jasmine. A little intrigue.</p>
-                  </div>
-                  <button
-                    className="round"
-                    onClick={() => products[0] && openProduct(products[0])}
-                    aria-label="Explore Saffron Veil"
-                  >
-                    <ArrowUpRight />
-                  </button>
-                </div>
-              </div>
-            </section>
+            <ScentSlider products={products} />
             <div className="promise-strip">
               <span>
                 <Truck size={17} /> UAE & Qatar delivery
@@ -1186,9 +1141,10 @@ export default function Storefront({
               <div
                 className="detail-art"
                 style={{
-                  background: familyColors[scentFamily(selected)],
+                  "--product-family-tone": familyColors[scentFamily(selected)],
                 }}
               >
+                <ScentBackdrop product={selected} />
                 <ProductGallery
                   product={selected}
                   size={size}
@@ -1899,7 +1855,13 @@ export default function Storefront({
       {panel === "product" && selected && (
         <Modal wide label={selected.name} onClose={close}>
           <div className="product-detail">
-            <div className="detail-art">
+            <div
+              className="detail-art"
+              style={{
+                "--product-family-tone": familyColors[scentFamily(selected)],
+              }}
+            >
+              <ScentBackdrop product={selected} />
               <Bottle product={selected} volume={size} />
               <span>
                 {scentFamily(selected).toUpperCase()} /{" "}

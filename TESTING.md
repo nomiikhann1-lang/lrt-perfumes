@@ -1,4 +1,15 @@
 # Acceptance checks
+
+## Product scent imagery and expanded demo catalogue
+
+The restrained product scenery uses one faint family icon and two photographic ingredient accents, confined to the outer quarters of each image panel. Browser checks verified this spacing for all ten families, light product-panel colours, desktop hover/focus, continuous touch and product-page visibility, favorites/bag controls, reduced motion, and no overflow at the phone widths below. The home slider is outside these styling rules.
+
+The 30-product demo catalogue has at least two examples in each of the ten scent families. All 47 automated tests pass, including coverage of unique sample IDs/slugs, market prices, sizes, and family coverage. Browser checks verified desktop hover and keyboard-focus reveals for all families, default visibility on touch screens, permanent product-page backgrounds, favorites and bag controls, the new sample products' size selection, reduced motion, and no horizontal page overflow at 320/360/390/430 px. No browser JavaScript errors were observed. These sample additions do not modify the connected WooCommerce catalogue.
+
+## Home scent slider verification
+
+All 47 automated tests pass. The production build and browser checks cover all ten family slides and shop links; the existing family PNGs; desktop, tablet and phone layouts at 1440×900, 820×1180, 844×390, 390×844, 360×640 and 320×640; active-tab visibility; native touch scrolling of the tab row; swipe and keyboard navigation; wraparound; transition click locking; autoplay pause/resume; reduced motion; the shopping bag; and navigation to an empty family without a 404. No browser JavaScript errors were observed. Live WooCommerce and payment testing still require the connected installation.
+
 Run npm test and npm run build.
 Check at 320, 390 and 430px: horizontal product rows, no horizontal page overflow, separate multi-select filters and flag/currency dropdown, drawer close/Escape, search keyboard navigation, favourites, carousel scrolling and product links.
 Choose Qatar: 50ml Saffron Veil QAR129, 100ml QAR209, 200ml QAR339. UAE: AED145 / AED235 / AED375. Check cart and checkout currency and country changes. Missing prices must block purchase. Test reduced motion and video poster fallback.

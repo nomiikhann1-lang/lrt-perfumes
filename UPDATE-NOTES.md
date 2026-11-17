@@ -50,7 +50,7 @@ All future changes apply site-wide unless explicitly labelled mobile-only. Previ
 5. Google controls actual titles, snippets and rich-result eligibility. This update does not submit the website to Google or guarantee rankings.
 
 ## Hero and backend
-lib/store-config.js mobileHero is retained for compatibility and now controls BOTH desktop and mobile. Use type:'video', src:'/your-video.mp4', poster:'/hero-mobile.png' for video. Current hero is a conceptual campaign image. WordPress bridge and 50/100/200 ml independent AED/QAR price support are unchanged; follow README.md for plugin installation.
+The home hero now uses all ten scent families and the PNGs in public/scent-families/. Its colours and captions are configured in lib/scent-slider.js. The former mobileHero setting has been removed. WordPress bridge and 50/100/200 ml independent AED/QAR price support are unchanged; follow README.md for plugin installation.
 
 ## Validation
 Production build and 14 automated tests passed. Simulated card checkout completed end to end in the browser. Desktop four-column cards, automatic bag opening and dedicated checkout were verified; mobile search was visually checked at 390px alongside 320px layout checks. Browser checked desktop homepage, shop navigation, combined scent filters and search, cookie controls, plus mobile 390/320 px iframe previews. Live WordPress/payment and actual geographic hosting headers require deployment verification.

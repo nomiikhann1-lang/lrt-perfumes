@@ -4,3 +4,7 @@ node_modules/
 .env*
 !.env.example
 *.log
+
+# Superseded standalone prototype and generated artwork (not part of LRT).
+/blendy/
+/public/scent-botanicals.png

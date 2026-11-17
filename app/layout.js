@@ -2,6 +2,8 @@ export const dynamic = "force-dynamic";
 import "./globals.css";
 import "./refinements.css";
 import "./storefront-v12.css";
+import "./scent-slider.css";
+import "./scent-backdrop.css";
 import CookiePreferences from "../components/CookiePreferences";
 import { siteUrl, canIndex, JsonLd } from "../lib/seo";
 export const metadata = {
