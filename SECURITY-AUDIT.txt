@@ -1,3 +1,6 @@
+v12 storefront changes — Google Maps and Next.js 16.4.6
+The document frame-src policy permits https://www.google.com/maps/embed so shoppers can navigate from any storefront page to a branch map. Frame ancestors remain disabled. Store page maps use the original branch URLs; scripts and other frame origins are not added to the allowlist. The Next.js patch update resolves the registry advisory GHSA-mfr8-8qww-v76h flagged against the previous dependency. The final npm audit reported zero known vulnerabilities. See reports/v12-npm-audit.json.
+
 v10.1 CHECKOUT ORIGIN FIX — 2026-10-30
 The origin allowlist now includes exact Vercel deployment, branch and production
 aliases from platform environment variables. Request Host and forwarded headers

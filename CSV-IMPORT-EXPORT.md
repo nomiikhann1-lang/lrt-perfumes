@@ -3,7 +3,7 @@
 Update the **existing LRT Perfumes Headless Commerce Bridge** using `lrt-bridge.zip`. There is no second bridge or brand plugin. Back up the database and try a small export/import on staging before a catalogue-wide import.
 
 1. In WooCommerce → Products → Export, export all columns. Standard WooCommerce fields (ID, SKU, name, descriptions, categories, images, stock, type, parent and variation attributes) keep their normal meanings.
-2. The export now also includes every LRT scent-detail field: brand, collection, legacy family, scent family, audience, bottle colour, badge, occasion, season, concentration, ingredients, care, separate top/heart/base notes and sizes.
+2. The export now also includes every LRT scent-detail field: brand, collection, scent family, audience, bottle colour, badge, occasion, season, concentration, ingredients, care, separate top/heart/base notes and sizes.
 3. It includes six editable market-price columns: 50/100/200 ml × QAR/AED. `LRT Perfumes All market prices (JSON)` preserves prices for additional sizes, such as 55 ml. Keep it as exported unless changing those additional sizes. Explicit size-price columns override corresponding JSON entries.
 4. **For simple products, native `Regular price` is the 50 ml QAR price.** If both Regular price and LRT 50ml QAR are imported, Regular price wins. The exporter writes the current 50 ml QAR value into Regular price, even for older records whose native price differs. If importing only the custom 50ml QAR column, it updates the native regular price too.
 5. Keep headers unchanged. Products → Import automatically maps the LRT columns. Choose “Update existing products” to update matching IDs/SKUs. For new products, leave ID blank and assign a new unique SKU. Never reuse an existing product's SKU for a new fragrance.
@@ -26,3 +26,5 @@ Update the **existing LRT Perfumes Headless Commerce Bridge** using `lrt-bridge.
 Implementation uses WooCommerce's native exporter and importer hooks:
 https://woocommerce.com/document/product-csv-importer-exporter/
 https://woocommerce.github.io/code-reference/files/woocommerce-includes-import-class-wc-product-csv-importer.html
+
+Older CSVs can still import the Legacy family column. Scent family takes precedence when both are populated. The editor and new exports use only Scent family.

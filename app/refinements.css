@@ -935,3 +935,230 @@
     padding-top: 36px;
   }
 }
+
+/* Header search occupies the available middle track on small screens. */
+.nav-search-pill {
+  margin-inline-start: auto;
+  position: relative;
+  padding: 4px;
+}
+.nav-search-pill input {
+  text-align: center;
+  padding-inline: 4px;
+}
+.nav-search-pill input::-webkit-search-cancel-button {
+  display: none;
+}
+@media (max-width: 760px) {
+  .store-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: clamp(6px, 2vw, 16px);
+  }
+  .store-header .brand {
+    min-width: 0;
+  }
+  .store-header .nav-search-pill {
+    width: min(100%, 22rem);
+    min-width: 0;
+    justify-self: center;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  .store-header .nav-actions {
+    margin: 0;
+    gap: 2px;
+  }
+}
+.scent-icon {
+  object-fit: contain;
+  flex: none;
+  display: inline-block;
+  vertical-align: middle;
+}
+.result-name {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.shop-promotion {
+  background: #57365a;
+  color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.shop-promotion img,
+.shop-promotion video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  display: block;
+  flex: 1;
+  min-height: 0;
+}
+.shop-promotion a {
+  display: grid;
+  gap: 0.7rem;
+  padding: clamp(0.8rem, 2vw, 1.4rem);
+  color: inherit;
+  text-decoration: none;
+}
+.shop-promotion strong {
+  font:
+    500 clamp(18px, 2vw, 32px)/1.12 Georgia,
+    serif;
+}
+.shop-promotion span {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-size: 0.85rem;
+}
+.lrt-story {
+  color: #302a28;
+  background: #fffdf8;
+}
+.story-opening,
+.story-making {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+.story-opening {
+  background: #f3e9e2;
+}
+.story-opening > div {
+  padding: clamp(28px, 6vw, 100px);
+}
+.lrt-story h1,
+.lrt-story h2,
+.lrt-story h3 {
+  font-family: var(--font-display, Georgia), serif;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  margin: 0.22em 0 0.48em;
+}
+.lrt-story h1 {
+  font-size: clamp(60px, 8vw, 125px);
+  line-height: 1;
+}
+.lrt-story h2 {
+  font-size: clamp(34px, 4.3vw, 67px);
+  line-height: 1.05;
+}
+.lrt-story h3 {
+  font-size: 30px;
+}
+.lrt-story p,
+.lrt-story dd,
+.lrt-story address,
+.story-quotes blockquote {
+  line-height: 1.65;
+}
+.story-opening img {
+  width: 100%;
+  height: 100%;
+  max-height: 620px;
+  min-height: 360px;
+  object-fit: cover;
+}
+.story-section {
+  width: min(1160px, 90%);
+  margin: auto;
+  padding: clamp(32px, 6vw, 88px) 0;
+  border-bottom: 1px solid #d9cfc6;
+  scroll-margin-top: 96px;
+}
+.story-making {
+  gap: 6%;
+}
+.story-principles,
+.story-locations,
+.story-quotes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 28px;
+  margin-top: 28px;
+}
+.story-principles dt {
+  font-weight: 650;
+}
+.story-principles dd,
+.story-quotes blockquote,
+.story-quotes figure {
+  margin: 0;
+}
+.story-locations article,
+.story-quotes figure {
+  padding: 24px;
+  background: #f6f0ea;
+}
+.story-locations address {
+  font-style: normal;
+}
+.story-locations a {
+  display: block;
+  width: fit-content;
+  margin-top: 12px;
+}
+.story-locations span,
+.story-quotes figcaption {
+  font-size: 0.85rem;
+  color: #644a5d;
+}
+.story-quotes figcaption {
+  margin-top: 0.8rem;
+}
+.lrt-story summary {
+  cursor: pointer;
+  padding: 12px 0;
+}
+@media (max-width: 700px) {
+  .story-opening,
+  .story-making {
+    grid-template-columns: 1fr;
+  }
+  .story-opening img {
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 2/1;
+  }
+}
+/* Overlay the submit button so the placeholder centres on the whole pill. */
+.store-header .nav-search-pill {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.store-header .nav-search-pill input {
+  grid-area: 1 / 1;
+  margin: 0;
+  padding: 0 38px 0 8px;
+  text-align: start;
+  line-height: normal;
+}
+.store-header .nav-search-pill input:placeholder-shown {
+  padding-inline: 32px;
+  text-align: center;
+}
+.store-header .nav-search-pill button {
+  grid-area: 1 / 1;
+  justify-self: end;
+  z-index: 1;
+}
+.mobile-scent-badge[data-family] {
+  color: #221c18;
+}
+.promo-image,
+.promo-text {
+  position: relative;
+}
+.promo-image a::after,
+.promo-text a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}

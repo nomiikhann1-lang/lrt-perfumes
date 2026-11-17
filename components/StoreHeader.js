@@ -8,6 +8,7 @@ import {
   ChevronDown,
   ArrowUpRight,
 } from "lucide-react";
+import NavSearch from "./NavSearch";
 import Bottle from "./ProductBottle";
 import { MarketPicker } from "./MobileEnhancements";
 import { collectionsFor } from "../lib/collections";
@@ -87,19 +88,9 @@ export default function StoreHeader({
           </Link>
         ))}
       </nav>
+      <NavSearch products={products} country={country} />
+
       <div className="nav-actions">
-        <form className="nav-search-pill" role="search" action="/shop">
-          <input
-            name="q"
-            type="search"
-            aria-label="Search"
-            placeholder="Search"
-            maxLength={160}
-          />
-          <button aria-label="Submit search">
-            <Search size={17} />
-          </button>
-        </form>
         <div className="about-navigation">
           <button
             className="about-trigger"

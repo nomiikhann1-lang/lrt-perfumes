@@ -1,0 +1,4 @@
+PASS live search and keyboard navigation
+PASS colour match and hover
+PASS mobile full tile, autoplay, loop and pause
+PASS five store routes, map switching, 404, mobile dropdown and no client errors. Maps used a network fixture.

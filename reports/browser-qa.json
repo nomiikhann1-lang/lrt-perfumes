@@ -70,35 +70,79 @@
     }
   ],
   "errors": [],
-  "failedRequests": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:3018/checkout?_rsc=NV_Ko8O6hruSIFD9",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:3018/campaign-film.mp4",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
   "localResources": [
     {
       "url": "/logo.png",
       "bytes": 300,
-      "durationMs": 5.200000000069849
+      "durationMs": 6.099999999976717
     },
     {
       "url": "/flags/qa.svg",
       "bytes": 300,
-      "durationMs": 5.299999999930151
+      "durationMs": 7.2000000000116415
     },
     {
       "url": "/hero-mobile.webp",
       "bytes": 300,
-      "durationMs": 5.699999999953434
+      "durationMs": 7.7000000000116415
+    },
+    {
+      "url": "/scent-families/floral.png",
+      "bytes": 300,
+      "durationMs": 48.59999999997672
+    },
+    {
+      "url": "/scent-families/aromatic.png",
+      "bytes": 300,
+      "durationMs": 49.70000000001164
+    },
+    {
+      "url": "/scent-families/amber.png",
+      "bytes": 300,
+      "durationMs": 52.79999999998836
     },
     {
       "url": "/campaign-wide.webp",
       "bytes": 300,
-      "durationMs": 6.199999999953434
+      "durationMs": 12.700000000011642
     },
     {
-      "url": "/_next/static/css/7d090e0375d33e6d.css",
+      "url": "/scent-families/woody.png",
+      "bytes": 300,
+      "durationMs": 53.79999999998836
+    },
+    {
+      "url": "/scent-families/fresh.png",
+      "bytes": 300,
+      "durationMs": 57.59999999997672
+    },
+    {
+      "url": "/scent-families/sweet.png",
+      "bytes": 300,
+      "durationMs": 58.5
+    },
+    {
+      "url": "/_next/static/css/c5e76f4197aafe5d.css",
       "bytes": 0,
       "durationMs": 0
     },
     {
-      "url": "/_next/static/chunks/webpack-21c0bda91597affb.js",
+      "url": "/_next/static/css/5e02c90638bba7af.css",
+      "bytes": 0,
+      "durationMs": 0
+    },
+    {
+      "url": "/_next/static/chunks/webpack-f54c43384ccbe948.js",
       "bytes": 0,
       "durationMs": 0
     },
@@ -108,17 +152,17 @@
       "durationMs": 0
     },
     {
-      "url": "/_next/static/chunks/794-216401842b802bd7.js",
+      "url": "/_next/static/chunks/794-268803444e87b940.js",
       "bytes": 0,
       "durationMs": 0
     },
     {
-      "url": "/_next/static/chunks/main-app-0684c7453b5d4e63.js",
+      "url": "/_next/static/chunks/main-app-eddef9d127636093.js",
       "bytes": 0,
       "durationMs": 0
     },
     {
-      "url": "/_next/static/chunks/app/error-75b247b119af2aac.js",
+      "url": "/_next/static/chunks/app/error-34e100b7a62f1c0d.js",
       "bytes": 0,
       "durationMs": 0
     },
@@ -128,34 +172,29 @@
       "durationMs": 0
     },
     {
-      "url": "/_next/static/chunks/app/not-found-3fd46756656ff887.js",
+      "url": "/_next/static/chunks/app/not-found-78058d5546171d33.js",
       "bytes": 0,
       "durationMs": 0
     },
     {
-      "url": "/_next/static/chunks/app/layout-dfaca122e94b197b.js",
+      "url": "/_next/static/chunks/app/layout-e915cf3daced33e6.js",
       "bytes": 0,
       "durationMs": 0
     },
     {
-      "url": "/_next/static/chunks/650-690509df8199a94b.js",
+      "url": "/_next/static/chunks/363-51a410a15f941ff8.js",
       "bytes": 0,
       "durationMs": 0
     },
     {
-      "url": "/_next/static/chunks/300-a473c4268e789caa.js",
+      "url": "/_next/static/chunks/274-c6032478d7e9976b.js",
       "bytes": 0,
       "durationMs": 0
     },
     {
-      "url": "/_next/static/chunks/app/page-28924cefed29c7de.js",
+      "url": "/_next/static/chunks/app/page-787a18d865639b36.js",
       "bytes": 0,
       "durationMs": 0
-    },
-    {
-      "url": "/campaign-film.mp4",
-      "bytes": 1180566,
-      "durationMs": 3
     },
     {
       "url": "/fonts/dm-sans-latin-wght-normal.woff2",
@@ -163,12 +202,12 @@
       "durationMs": 0
     },
     {
-      "url": "/fonts/playfair-display-latin-wght-normal.woff2",
+      "url": "/fonts/source-serif-4-latin-wght-normal.woff2",
       "bytes": 0,
       "durationMs": 0
     },
     {
-      "url": "/fonts/playfair-display-latin-wght-italic.woff2",
+      "url": "/fonts/source-serif-4-latin-wght-italic.woff2",
       "bytes": 0,
       "durationMs": 0
     },
@@ -176,6 +215,11 @@
       "url": "/editorial.webp",
       "bytes": 0,
       "durationMs": 0
+    },
+    {
+      "url": "/campaign-film.mp4",
+      "bytes": 1180566,
+      "durationMs": 18
     }
   ]
 }

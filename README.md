@@ -1,3 +1,11 @@
+## v12 storefront update
+
+Deploy the frontend to Vercel. The store pages, map embeds, navbar search and campaign films use the existing v11 WooCommerce bridge. See [EDITING.md](EDITING.md) for campaign and branch settings.
+
+## v11 storefront update
+
+See [EDITING.md](EDITING.md) to edit shop tiles, story content and scent families. Deploy the frontend and update the existing WooCommerce bridge with the included lrt-bridge.zip (2.5.0).
+
 ## v10 — Vercel and security update
 
 Start with `VERCEL-SETUP.txt` and `SECURITY-AUDIT.txt`. Use the included bridge 2.4.0 on your existing WordPress backend. Account functionality has been removed from the storefront. Vercel testing defaults enable connected orders and disable demo fallback and indexing. Enter your existing backend URL and secret in Vercel project settings. Earlier version notes below are historical; v10 instructions take precedence.

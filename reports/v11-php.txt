@@ -1,0 +1,40 @@
+PASS automatic mapping: Regular price
+PASS automatic mapping: LRT Perfumes Brand
+PASS automatic mapping: LRT Perfumes Collection
+PASS automatic mapping: LRT Perfumes Scent family
+PASS automatic mapping: LRT Perfumes Audience
+PASS automatic mapping: LRT Perfumes Bottle colour
+PASS automatic mapping: LRT Perfumes Badge
+PASS automatic mapping: LRT Perfumes Occasion
+PASS automatic mapping: LRT Perfumes Season
+PASS automatic mapping: LRT Perfumes Concentration
+PASS automatic mapping: LRT Perfumes Ingredients
+PASS automatic mapping: LRT Perfumes Care
+PASS automatic mapping: LRT Perfumes Top notes
+PASS automatic mapping: LRT Perfumes Heart notes
+PASS automatic mapping: LRT Perfumes Base notes
+PASS automatic mapping: LRT Perfumes Sizes (ml)
+PASS automatic mapping: LRT Perfumes All market prices (JSON)
+PASS automatic mapping: LRT Perfumes Variation price AED
+PASS automatic mapping: LRT Perfumes Variation price QAR
+PASS automatic mapping: LRT Perfumes 50ml AED
+PASS automatic mapping: LRT Perfumes 100ml AED
+PASS automatic mapping: LRT Perfumes 200ml AED
+PASS automatic mapping: LRT Perfumes 50ml QAR
+PASS automatic mapping: LRT Perfumes 100ml QAR
+PASS automatic mapping: LRT Perfumes 200ml QAR
+PASS all scent fields, commas, multiline care and arbitrary-size market prices round trip
+PASS regular price equals 50ml QAR
+PASS native regular price wins explicit conflict
+PASS omitted columns preserve values
+PASS blank price marks unavailable
+PASS negative prices rejected
+PASS invalid JSON rejected
+PASS variation price uses own size, native QAR wins
+CSV hook harness complete. Live WooCommerce import still requires staging verification.
+PASS valid bridge signature accepted
+PASS tampered body rejected
+PASS expired signature rejected
+PASS oversized signed request rejected before hashing
+PASS legacy CSV import migrates family
+ 

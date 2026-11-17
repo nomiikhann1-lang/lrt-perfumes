@@ -1,4 +1,4 @@
-LRT PERFUMES v10.1 — VERCEL STOREFRONT + HOSTINGER WORDPRESS
+LRT PERFUMES v11 — VERCEL STOREFRONT + HOSTINGER WORDPRESS
 
 1. Import this source into Vercel. Root directory: lrt-perfumes (the directory
    containing package.json). Framework: Next.js. Node: 24.x. Install: npm ci.
@@ -32,11 +32,11 @@ LRT PERFUMES v10.1 — VERCEL STOREFRONT + HOSTINGER WORDPRESS
    environment change. Do not use the WordPress backend origin as the storefront
    origin unless it genuinely serves this Next.js application.
 
-5. Update the EXISTING LRT bridge with lrt-bridge.zip (v2.4.0), preserving the
+5. Update the EXISTING LRT bridge with lrt-bridge.zip (v2.5.0), preserving the
    existing LRT_API_SECRET and catalogue. Do not run the sample importer on an
    established catalogue. CSV support from v8 remains included.
-   The signature protocol remains compatible with v2.3.0, but install v2.4.0
-   for additional input validation and catalogue field restrictions.
+   The signature protocol remains compatible with v2.3.0, but install v2.5.0
+   for the consolidated scent-family editor and CSV support.
 
 6. In the Vercel project Firewall, configure a distributed rate-limit rule for
    POST /api/checkout, initially 12 attempts per client IP per 60 seconds, with

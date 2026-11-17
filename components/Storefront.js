@@ -1,5 +1,9 @@
 "use client";
 import Link from "./StoreLink";
+import { StoreLanding, StoreDirectory } from "./StoreVisits";
+import OurStory from "./OurStory";
+import { shopPromotions, promotionSlots } from "../lib/shop-promotions";
+import ShopPromotion from "./ShopPromotion";
 import StoreHeader, { primaryNavigation } from "./StoreHeader";
 import BrandDirectory from "./BrandDirectory";
 import CollectionHero, { RelatedCollections } from "./CollectionHero";
@@ -26,12 +30,13 @@ import { mobilePageContent } from "../lib/mobile-pages";
 import {
   mobileHero,
   markets,
+  familyColors,
   scentFamilies,
   scentFamily,
 } from "../lib/store-config";
 import { MarketPicker, MobileHero, ScentIcon } from "./MobileEnhancements";
 import { pageContent } from "../lib/pages";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
   Search,
   ShoppingBag,
@@ -128,6 +133,8 @@ function Modal({ children, onClose, label, wide = false, drawer = false }) {
 export default function Storefront({
   commerceEnabled = false,
   initialProducts = [],
+  promotionSeed = 0,
+  storeSlug = "",
   initialMode = "demo",
   initialError = "",
   view = "home",
@@ -295,7 +302,12 @@ export default function Storefront({
         priceFor(i.p, i.size, currency) === null ||
         i.qty > stockFor(i.p, i.size),
     );
-  const activeCollection = collectionsFor(products).find(
+  const catalogueCollections = collectionsFor(products);
+  const representedFamilies = new Set(products.map(scentFamily));
+  const availableFamilies = scentFamilies.filter((name) =>
+    representedFamilies.has(name),
+  );
+  const activeCollection = catalogueCollections.find(
     (c) => c.slug === collectionSlug,
   );
   const results = searchProducts(products, query);
@@ -303,6 +315,20 @@ export default function Storefront({
     activeCollection ? products.filter(activeCollection.match) : products,
     { query, families, genders, brands, favorites: saved, sort, currency },
   );
+  const campaigns = shopPromotions.filter(
+    (promo) =>
+      !promo.href.startsWith("/collection/") ||
+      catalogueCollections.some((c) => "/collection/" + c.slug === promo.href),
+  );
+  const promos =
+    view === "shop" &&
+    !activeCollection &&
+    !query.trim() &&
+    !families.length &&
+    !genders.length &&
+    !brands.length
+      ? promotionSlots(shown.length, campaigns, promotionSeed)
+      : new Map();
   useEffect(() => {
     if (view !== "shop" || visibleCount >= shown.length || !moreRef.current)
       return;
@@ -466,18 +492,14 @@ export default function Storefront({
   function Card({ p }) {
     const firstSize = productSizes(p)[0];
     return (
-      <article className="product-card">
+      <article
+        className="product-card"
+        style={{ "--family-tone": familyColors[scentFamily(p)] || p.color }}
+      >
         <div
           className="product-art"
           style={{
-            "--card-color": {
-              Amber: "#ffba72",
-              Floral: "#efb3cf",
-              Oud: "#b9a7d7",
-              Fresh: "#bde1ba",
-              Gourmand: "#efd581",
-              Woody: "#b6c7e8",
-            }[p.family],
+            "--card-color": familyColors[scentFamily(p)],
           }}
         >
           <button
@@ -521,12 +543,13 @@ export default function Storefront({
           {scentFamily(p)}
         </div>
         <div className="product-meta">
-          <span>
-            {scentFamily(p)} · {p.gender}
-          </span>
+          <span>{p.gender}</span>
           <span>{firstSize} ml</span>
         </div>
         <Link className="product-name" href={"/product/" + p.slug}>
+          {query.trim() && view === "shop" && (
+            <ScentIcon family={scentFamily(p)} />
+          )}{" "}
           {p.name}
         </Link>
         <p className="notes">{p.notes.join(" · ")}</p>
@@ -814,7 +837,7 @@ export default function Storefront({
                 <ChevronDown size={14} />
               </button>
               <button onClick={() => setPanel("family-filter")}>
-                <ScentIcon family="Flowery" /> Scent family{" "}
+                <ScentIcon family="Floral" /> Scent family{" "}
                 {families.length > 0 && `(${families.length})`}
                 <ChevronDown size={14} />
               </button>
@@ -898,8 +921,13 @@ export default function Storefront({
               </div>
             ) : shown.length ? (
               <div className="product-grid">
-                {shown.slice(0, visibleCount).map((p) => (
-                  <Card key={p.id} p={p} />
+                {shown.slice(0, visibleCount).map((p, index) => (
+                  <Fragment key={p.id}>
+                    {promos.has(index) && (
+                      <ShopPromotion promo={promos.get(index)} />
+                    )}
+                    <Card p={p} />
+                  </Fragment>
                 ))}
               </div>
             ) : (
@@ -940,7 +968,7 @@ export default function Storefront({
               <span className="eyebrow">FOLLOW YOUR NOTES</span>
               <h2>Find your fragrance family.</h2>
               <div>
-                {scentFamilies.map((f) => (
+                {availableFamilies.map((f) => (
                   <Link key={f} href={collectionHref(f)}>
                     <ScentIcon family={f} size={28} />
                     <strong>{f}</strong>
@@ -960,18 +988,21 @@ export default function Storefront({
                 {[
                   ["Fresh", "A fresh start."],
                   ["Floral", "In full bloom."],
-                  ["Oud", "After dark."],
-                ].map(([f, t]) => (
-                  <Link
-                    key={f}
-                    href={collectionHref(f)}
-                    className={"story-" + f}
-                  >
-                    <span>{f.toUpperCase()}</span>
-                    <h3>{t}</h3>
-                    <span>Explore the edit ↗</span>
-                  </Link>
-                ))}
+                  ["Woody", "After dark."],
+                ]
+                  .filter(([f]) => representedFamilies.has(f))
+                  .map(([f, t]) => (
+                    <Link
+                      key={f}
+                      href={collectionHref(f)}
+                      className={"story-" + f}
+                      style={{ backgroundColor: familyColors[f] }}
+                    >
+                      <span>{f.toUpperCase()}</span>
+                      <h3>{t}</h3>
+                      <span>Explore the edit ↗</span>
+                    </Link>
+                  ))}
               </div>
             </section>
             <section className="editorial">
@@ -1155,14 +1186,7 @@ export default function Storefront({
               <div
                 className="detail-art"
                 style={{
-                  background: {
-                    Amber: "#ffce92",
-                    Floral: "#efb3cf",
-                    Oud: "#c6b2df",
-                    Fresh: "#c2e6b5",
-                    Gourmand: "#f3dc91",
-                    Woody: "#b7cbed",
-                  }[selected.family],
+                  background: familyColors[scentFamily(selected)],
                 }}
               >
                 <ProductGallery
@@ -1170,13 +1194,15 @@ export default function Storefront({
                   size={size}
                   fallback={<Bottle product={selected} volume={size} />}
                 />
-                <Link
-                  className="art-family-link"
-                  href={collectionHref(scentFamily(selected))}
-                >
-                  <ScentIcon family={scentFamily(selected)} />
-                  {scentFamily(selected)} <ArrowUpRight size={15} />
-                </Link>
+                {scentFamily(selected) && (
+                  <Link
+                    className="art-family-link"
+                    href={collectionHref(scentFamily(selected))}
+                  >
+                    <ScentIcon family={scentFamily(selected)} />
+                    {scentFamily(selected)} <ArrowUpRight size={15} />
+                  </Link>
+                )}
               </div>
               <div className="detail-copy">
                 <span className="eyebrow">
@@ -1228,13 +1254,15 @@ export default function Storefront({
                       {selected.gender} <ArrowUpRight size={13} />
                     </Link>
                   </div>
-                  <div>
-                    <small>Scent family</small>
-                    <Link href={collectionHref(scentFamily(selected))}>
-                      <ScentIcon family={scentFamily(selected)} />
-                      {scentFamily(selected)} <ArrowUpRight size={13} />
-                    </Link>
-                  </div>
+                  {scentFamily(selected) && (
+                    <div>
+                      <small>Scent family</small>
+                      <Link href={collectionHref(scentFamily(selected))}>
+                        <ScentIcon family={scentFamily(selected)} />
+                        {scentFamily(selected)} <ArrowUpRight size={13} />
+                      </Link>
+                    </div>
+                  )}
                 </div>
                 <p>{selected.concentration}</p>
                 <div className="size-options">
@@ -1346,7 +1374,10 @@ export default function Storefront({
             )}
           </section>
         )}
-        {content && (
+        {view === "about" && <OurStory />}
+        {view === "store" && <StoreLanding slug={storeSlug} />}
+        {view === "stores" && <StoreDirectory />}
+        {content && view !== "about" && view !== "stores" && (
           <section className="content-page">
             <span className="eyebrow">THE LRT WORLD</span>
             <h1>{content.title}</h1>
@@ -1787,8 +1818,8 @@ export default function Storefront({
               ))}
               <h4>Shop by mood</h4>
               {(mobile
-                ? scentFamilies
-                : ["Fresh", "Floral", "Woody", "Gourmand"]
+                ? availableFamilies
+                : ["Fresh", "Floral", "Woody", "Sweet"]
               ).map((n) => (
                 <button key={n} onClick={() => setQuery(n)}>
                   {n}
@@ -1841,7 +1872,10 @@ export default function Storefront({
                   >
                     <Bottle product={p} small />
                     <span>
-                      <strong>{p.name}</strong>
+                      <strong className="result-name">
+                        <ScentIcon family={scentFamily(p)} />
+                        {p.name}
+                      </strong>
                       <small>{p.notes.join(" · ")}</small>
                       <small>
                         {scentFamily(p)} · {p.gender}
@@ -1868,7 +1902,7 @@ export default function Storefront({
             <div className="detail-art">
               <Bottle product={selected} volume={size} />
               <span>
-                {selected.family.toUpperCase()} /{" "}
+                {scentFamily(selected).toUpperCase()} /{" "}
                 {selected.gender.toUpperCase()}
               </span>
             </div>
@@ -1980,7 +2014,7 @@ export default function Storefront({
                         {i.p.name}
                       </button>
                       <small>
-                        {i.size} ml · {i.p.family}
+                        {i.size} ml · {scentFamily(i.p)}
                       </small>
                       <div className="quantity">
                         <button
@@ -2110,36 +2144,25 @@ export default function Storefront({
           </h2>
           <p>What kind of scent feels most like you?</p>
           <div className="quiz-options">
-            {(mobile
-              ? [
-                  ["Fresh", "Bright & airy"],
-                  ["Flowery", "Petals & soft blooms"],
-                  ["Earthy", "Woods & depth"],
-                  ["Herbal", "Green & aromatic"],
-                  ["Gourmand", "Sweet & comforting"],
-                  ["Warm", "Amber & spice"],
-                ]
-              : [
-                  ["Fresh", "Bright, breezy & effortless"],
-                  ["Floral", "Soft, romantic & expressive"],
-                  ["Woody", "Grounded, warm & confident"],
-                  ["Oud", "Deep, rich & mysterious"],
-                  ["Gourmand", "Sweet, playful & comforting"],
-                  ["Amber", "Warm, glowing & sensual"],
-                ]
-            ).map(([f, d]) => (
+            {availableFamilies.map((f) => (
               <button
                 className={quiz === f ? "selected" : ""}
                 key={f}
                 onClick={() => setQuiz(f)}
               >
                 <strong>{f}</strong>
-                <small>{d}</small>
+                <ScentIcon family={f} size={26} />
                 {quiz === f && <Check size={16} />}
               </button>
             ))}
           </div>
-          <button className="primary full" onClick={() => shop(quiz)}>
+          <button
+            className="primary full"
+            disabled={!availableFamilies.length}
+            onClick={() =>
+              shop(representedFamilies.has(quiz) ? quiz : availableFamilies[0])
+            }
+          >
             Meet your matches <ArrowRight size={18} />
           </button>
         </Modal>
@@ -2224,7 +2247,7 @@ export default function Storefront({
             {["filters", "family-filter"].includes(panel) && (
               <fieldset>
                 <legend>Scent family</legend>
-                {scentFamilies.map((f) => (
+                {availableFamilies.map((f) => (
                   <label key={f}>
                     <input
                       type="checkbox"
@@ -2360,7 +2383,7 @@ export default function Storefront({
               <summary>
                 Scent families <Plus size={16} />
               </summary>
-              {scentFamilies.map((f) => (
+              {availableFamilies.map((f) => (
                 <button key={f} onClick={() => shop(f)}>
                   <ScentIcon family={f} />
                   {f}
