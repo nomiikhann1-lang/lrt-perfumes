@@ -918,7 +918,7 @@ export default function Storefront({
         )}
         {view === "home" && (
           <>
-            <EditorialMedia />
+            <EditorialMedia video />
             <section className="family-discovery">
               <span className="eyebrow">FOLLOW YOUR NOTES</span>
               <h2>Find your fragrance family.</h2>
@@ -964,7 +964,7 @@ export default function Storefront({
               <div
                 className="editorial-photo"
                 role="img"
-                aria-label="Minimal botanical skincare still life"
+                aria-label="LRT perfume with flowers, citrus and pastel fabric"
               />
               <div className="editorial-copy">
                 <span className="eyebrow">MORE THAN WHAT YOU WEAR</span>
@@ -990,7 +990,6 @@ export default function Storefront({
                 </button>
               </div>
             </section>
-            <EditorialMedia video />
             <section className="home-guide">
               <div>
                 <span className="eyebrow">ONE SIGNATURE. THREE SIZES.</span>

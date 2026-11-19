@@ -2,13 +2,16 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "./StoreLink";
 import { Play, Pause, ArrowUpRight } from "lucide-react";
+import useResponsiveVideo from "./useResponsiveVideo";
 export default function EditorialMedia({ video = false }) {
+  const src = useResponsiveVideo("/campaign-film.mp4", "/Campaign-six.mp4");
+  const poster = src === "/Campaign-six.mp4" ? "/campaign-six.webp" : "/campaign-wide.webp";
   const ref = useRef(null),
     manualPause = useRef(false);
   const [playing, setPlaying] = useState(false),
     [failed, setFailed] = useState(false);
   useEffect(() => {
-    if (!video || failed) return;
+    if (!video || failed || !src) return;
     const el = ref.current;
     if (!el) return;
     const mq = matchMedia("(prefers-reduced-motion: reduce)");
@@ -34,7 +37,7 @@ export default function EditorialMedia({ video = false }) {
       document.removeEventListener("visibilitychange", update);
       el.pause();
     };
-  }, [video, failed]);
+  }, [video, failed, src]);
   function toggle() {
     manualPause.current = playing;
     if (playing) ref.current.pause();
@@ -48,8 +51,8 @@ export default function EditorialMedia({ video = false }) {
       {video && !failed ? (
         <video
           ref={ref}
-          src="/campaign-film.mp4"
-          poster="/campaign-wide.webp"
+          src={src}
+          poster={poster}
           muted
           loop
           playsInline
@@ -60,8 +63,8 @@ export default function EditorialMedia({ video = false }) {
         />
       ) : (
         <img
-          src="/campaign-wide.webp"
-          alt="LRT perfume on sunlit stone beside amber water"
+          src={poster}
+          alt="LRT perfume surrounded by flowers, citrus and flowing pastel fabric"
           loading="eager"
           decoding="async"
         />

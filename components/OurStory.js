@@ -55,7 +55,7 @@ export default function OurStory() {
           </a>
         </div>
         <figure>
-          <img src="/campaign-wide.webp" alt="LRT perfume on sunlit stone" />
+          <img src="/campaign-wide.webp" alt="LRT perfume surrounded by flowers, citrus and flowing pastel fabric" />
           <figcaption>Signature &amp; inspired editions</figcaption>
         </figure>
       </div>
