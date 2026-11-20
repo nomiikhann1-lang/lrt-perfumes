@@ -41,7 +41,6 @@ export default function OurStory() {
     <article className="lrt-story">
       <div className="story-opening atelier-cover">
         <div>
-          <p className="eyebrow">Qatar · Since 2020</p>
           <h1>
             Our <em>story.</em>
           </h1>
@@ -61,7 +60,6 @@ export default function OurStory() {
       </div>
       <section className="story-section story-making">
         <div>
-          <p className="eyebrow">Inside the collection</p>
           <h2>
             From Arabic oud
             <br />
@@ -100,7 +98,6 @@ export default function OurStory() {
         </dl>
       </section>
       <section id="story-stores" className="story-section">
-        <p className="eyebrow">Qatar &amp; United Arab Emirates</p>
         <h2>Visit our stores</h2>
         <p>Open daily, 9 am to midnight.</p>
         <BranchCards />

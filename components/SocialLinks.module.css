@@ -1,0 +1,18 @@
+.links { display: flex; align-items: center; gap: 8px; }
+.links a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--theme-line, #ddd3da);
+  border-radius: 50%;
+  color: var(--theme-ink, #382c3c);
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.links a:hover {
+  background: var(--theme-accent, #382c3c);
+  border-color: var(--theme-accent, #382c3c);
+  color: #fff;
+  transform: translateY(-2px);
+}
+@media (prefers-reduced-motion: reduce) { .links a { transition: none; } }

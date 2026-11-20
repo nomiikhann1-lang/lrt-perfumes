@@ -10,7 +10,6 @@ function lrt_csv_fields()
         "collection" => "Collection",
         "scentFamily" => "Scent family",
         "gender" => "Audience",
-        "color" => "Bottle colour",
         "tag" => "Badge",
         "occasion" => "Occasion",
         "season" => "Season",
@@ -225,6 +224,7 @@ function lrt_csv_import($p, $row)
             $d["notes"] = array_replace(["", "", ""], $d["notes"]);
             ksort($d["notes"]);
         }
+        $d["color"] = lrt_family_color(lrt_product_family($d));
         $p->update_meta_data("_lrt_data", $d);
     }
     return $p;

@@ -70,9 +70,6 @@ export default function EditorialMedia({ video = false }) {
         />
       )}
       <div className="campaign-copy">
-        <span className="eyebrow">
-          {video ? "THE ART OF SLOW MOMENTS" : "A WORLD BEYOND THE BOTTLE"}
-        </span>
         <h2>
           {video ? (
             <>

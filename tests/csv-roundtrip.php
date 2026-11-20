@@ -1,8 +1,8 @@
 <?php
 // Pure hook harness: exercises real bridge code; does not emulate a live WooCommerce installation.
-define('ABSPATH',__DIR__);$hooks=[];
+define('ABSPATH',__DIR__);$hooks=[];$actions=[];
 function add_filter($name,$fn,$priority=10,$args=1){global $hooks;$hooks[$name][]=$fn;}
-function add_action($name,$fn,$priority=10,$args=1){}
+function add_action($name,$fn,$priority=10,$args=1){global $actions;$actions[$name][]=$fn;}
 function sanitize_text_field($s){return trim(strip_tags($s));}
 function sanitize_textarea_field($s){return trim(strip_tags($s));}
 function wp_json_encode($v,$flags=0){return json_encode($v,$flags);}
@@ -12,7 +12,7 @@ function check($value,$message){if(!$value)throw new Exception($message);echo 'P
 $p=new Product();$p->meta['_lrt_data']=['brand'=>'Brand A','collection'=>'Evening','family'=>'Woody','scentFamily'=>'Earthy','gender'=>'Unisex','color'=>'#abc123','tag'=>'New','occasion'=>'Evening','season'=>'Winter','concentration'=>'EDP','ingredients'=>"Alcohol\nFragrance",'care'=>'Store away from sunlight','notes'=>['Rose, saffron','Jasmine, iris','Oud, musk'],'sizes'=>[50,55,100,200],'prices'=>['QAR'=>[50=>125.5,55=>135,100=>209,200=>null],'AED'=>[50=>99,55=>109,100=>0,200=>299]]];
 $columns=lrt_csv_columns([]);$headers=array_merge(['Regular price'],array_values($columns));$values=['125.5'];foreach($columns as $key=>$label)$values[]=lrt_csv_export($p,$key);
 $f=fopen('php://temp','r+');fputcsv($f,$headers,',','"','');fputcsv($f,$values,',','"','');rewind($f);$h=fgetcsv($f,0,',','"','');$v=fgetcsv($f,0,',','"','');$mapping=lrt_csv_mapping(['Regular price'=>'regular_price']);$row=[];foreach($h as $i=>$header){check(isset($mapping[$header]),'automatic mapping: '.$header);$row[$mapping[$header]]=$v[$i];}
-$q=lrt_csv_import(new Product(),$row);$expected=$p->meta['_lrt_data'];unset($expected['family']);$expected['scentFamily']='Woody';check($q->meta['_lrt_data']==$expected,'all scent fields, commas, multiline care and arbitrary-size market prices round trip');check($q->regular==='125.5','regular price equals 50ml QAR');
+$q=lrt_csv_import(new Product(),$row);$expected=$p->meta['_lrt_data'];unset($expected['family']);$expected['scentFamily']='Woody';$expected['color']=lrt_family_color('Woody');check($q->meta['_lrt_data']==$expected,'all scent fields, commas, multiline care and arbitrary-size market prices round trip');check($q->regular==='125.5','regular price equals 50ml QAR');
 $q=lrt_csv_import($q,['regular_price'=>'140','lrt_price_QAR_50'=>'150']);check($q->meta['_lrt_data']['prices']['QAR'][50]===140.0,'native regular price wins explicit conflict');check($q->meta['_lrt_data']['brand']==='Brand A','omitted columns preserve values');
 $q=lrt_csv_import($q,['lrt_price_AED_100'=>'']);check($q->meta['_lrt_data']['prices']['AED'][100]===null,'blank price marks unavailable');
 $bad=false;try{lrt_csv_import($q,['lrt_price_QAR_100'=>'-1']);}catch(Exception $e){$bad=true;}check($bad,'negative prices rejected');
@@ -24,3 +24,20 @@ class WP_Error {function __construct(public $code,public $message,public $data){
 define('LRT_API_SECRET',str_repeat('test-only-',5));$request=new WP_REST_Request();$request->time=(string)time();$request->body='{"items":[]}';$request->signature=hash_hmac('sha256',$request->time."\nPOST\ncheckout\n".$request->body,LRT_API_SECRET);check(lrt_auth($request)===true,'valid bridge signature accepted');$request->body='{"items":[1]}';check(lrt_auth($request) instanceof WP_Error,'tampered body rejected');$request->time=(string)(time()-301);check(lrt_auth($request) instanceof WP_Error,'expired signature rejected');$request->body=str_repeat('x',16001);check(lrt_auth($request)->data['status']===413,'oversized signed request rejected before hashing');
 
 check(lrt_csv_import(new Product(),['lrt_family'=>'Warm'])->meta['_lrt_data']['scentFamily']==='Amber','legacy CSV import migrates family');
+
+check(!isset(lrt_csv_columns([])['lrt_color']), 'CSV no longer exports a custom bottle colour');
+check(lrt_data($p)['color'] === lrt_family_color('Woody'), 'stored custom colours are ignored when reading a product');
+$changed = lrt_csv_import($p, ['lrt_scentFamily'=>'Sweet', 'lrt_color'=>'#000000']);
+check($changed->meta['_lrt_data']['color'] === lrt_family_color('Sweet'), 'CSV derives colour from the new family and ignores legacy colour input');
+check(lrt_family_color('Warm') === '#FDB813', 'legacy family aliases derive the canonical colour');
+check(lrt_family_color('unknown') === '#c7b294', 'unknown family uses neutral colour');
+
+function wp_unslash($value){return stripslashes($value);}
+$editorFields=[];
+function woocommerce_wp_select($field){global $editorFields;$editorFields[]=$field['id'];}
+function woocommerce_wp_text_input($field){global $editorFields;$editorFields[]=$field['id'];}
+function woocommerce_wp_textarea_input($field){global $editorFields;$editorFields[]=$field['id'];}
+$product_object=$p;ob_start();$actions['woocommerce_product_options_general_product_data'][0]();ob_end_clean();
+check(in_array('lrt_scentFamily',$editorFields,true) && !in_array('lrt_color',$editorFields,true), 'product editor exposes scent family without custom bottle colour');
+$_POST=['lrt_scentFamily'=>'Fresh','lrt_color'=>'#000000'];$actions['woocommerce_admin_process_product_object'][0]($p);
+check($p->meta['_lrt_data']['scentFamily']==='Fresh' && $p->meta['_lrt_data']['color']==='#03E6F5', 'product editor save derives colour and ignores a submitted legacy colour');

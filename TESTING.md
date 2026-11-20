@@ -1,5 +1,11 @@
 # Acceptance checks
 
+## Mobile-first theme and bridge 2.6.0
+
+All 50 automated JavaScript tests pass. The production build passes. Browser checks covered 16 routes on 390px and 1440px screens, plus the shop, story, contact and a store page at 320/430/768/1024px, with no horizontal overflow. Production browser checks verified mobile footer expand/collapse, social destinations, cookie settings, mobile navigation, exact three-item desktop perfume navigation, search using arrow keys and Enter, adding a fragrance to the bag, matching primary button colours, store hours, branch-specific WhatsApp numbers and store FAQs. The browser reported no JavaScript errors during the production interaction run. Shared animations honour reduced motion.
+
+The actual plugin modules pass PHP 8.1 syntax parsing and the CSV/editor/signature harness runs successfully on PHP 8.3 WebAssembly. Coverage includes removal of the colour field and CSV column, ignoring legacy custom colours, deriving colour after family edits, alias migration, market prices, variation prices and signed-request rejection. The ZIP uses the existing `lrt-bridge/` plugin root, standard forward-slash paths, and file hashes match the source. A live WordPress installation and actual WooCommerce database update were not available for this verification.
+
 ## Product scent imagery and expanded demo catalogue
 
 The restrained product scenery uses one faint family icon and two photographic ingredient accents, confined to the outer quarters of each image panel. Browser checks verified this spacing for all ten families, light product-panel colours, desktop hover/focus, continuous touch and product-page visibility, favorites/bag controls, reduced motion, and no overflow at the phone widths below. The home slider is outside these styling rules.

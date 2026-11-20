@@ -2,7 +2,7 @@
 /**
  * Plugin Name: LRT Perfumes Headless Commerce Bridge
  * Description: Signed catalog and checkout API for the LRT Perfumes Next.js storefront, with a sample catalog importer.
- * Version: 2.5.0
+ * Version: 2.6.0
  * Requires PHP: 8.1
  * Requires Plugins: woocommerce
  */
@@ -16,7 +16,11 @@ function lrt_data($p)
     if (!is_array($d)) {
         $d = $p->get_meta("_" . "no" . "or" . "_data");
     }
-    return is_array($d) ? $d : [];
+    if (!is_array($d) || !$d) {
+        return [];
+    }
+    $d["color"] = lrt_family_color(lrt_product_family($d));
+    return $d;
 }
 function lrt_number($value)
 {
@@ -623,6 +627,7 @@ add_action("admin_post_lrt_seed", function () {
         }
         $p->set_regular_price($data["prices"]["QAR"][50] ?? "");
         $data["scentFamily"] = lrt_product_family($data);
+        $data["color"] = lrt_family_color($data["scentFamily"]);
         unset($data["family"]);
         $p->update_meta_data("_lrt_data", $data);
         $ids = [];
@@ -667,9 +672,8 @@ add_action("woocommerce_product_options_general_product_data", function () {
     foreach (
         [
             "brand" => "Brand (e.g. LRT Perfumes)",
-            "collection" => "Collection (e.g. Signature collection)",
+            "collection" => "Collection (LRT Collection / Inspired Edition)",
             "gender" => "Audience",
-            "color" => "Bottle colour (hex)",
             "tag" => "Product badge",
             "occasion" => "Occasion",
             "season" => "Season",
@@ -724,7 +728,6 @@ add_action("woocommerce_admin_process_product_object", function ($p) {
             "brand",
             "collection",
             "gender",
-            "color",
             "tag",
             "occasion",
             "season",
@@ -767,6 +770,7 @@ add_action("woocommerce_admin_process_product_object", function ($p) {
         );
         $d["sizes"] = array_values(array_unique(array_merge([50], $sizes)));
     }
+    $d["color"] = lrt_family_color(lrt_product_family($d));
     $p->update_meta_data("_lrt_data", $d);
 });
 

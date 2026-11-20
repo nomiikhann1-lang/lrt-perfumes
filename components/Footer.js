@@ -1,105 +1,72 @@
 "use client";
+import { useState } from "react";
+import { Plus } from "lucide-react";
 import Link from "./StoreLink";
-import { ArrowUpRight } from "lucide-react";
-export default function Footer({ mode, currency, collections = [] }) {
-  const explore = [
-    ["All fragrances", "/shop"],
-    ["Brands", "/brand"],
-    ["Collections & families", "/collection"],
-    ["Fragrance guide", "/fragrance-guide"],
-  ];
-  if (collections.some((c) => c.slug === "new-arrivals"))
-    explore.splice(2, 0, ["New arrivals", "/collection/new-arrivals"]);
+import SocialLinks from "./SocialLinks";
+import styles from "./Footer.module.css";
+
+export default function Footer({ currency, collections = [] }) {
+  const [expanded, setExpanded] = useState({});
   const groups = [
-    ["Explore", explore],
-    [
-      "Customer care",
-      [
-        ["Contact us", "/contact"],
-        ["Questions & answers", "/faq"],
-        ["Delivery", "/shipping"],
-        ["Returns & refunds", "/returns"],
-        ["Payment methods", "/payment-methods"],
-      ],
-    ],
-    [
-      "The house",
-      [
-        ["Our story", "/about"],
-        ["Our stores", "/stores"],
-        ["Product care", "/product-care"],
-      ],
-    ],
+    ["Explore", [
+      ["Shop all", "/shop"],
+      ["Inspired Edition", "/collection/inspired-edition"],
+      ["LRT Collection", "/collection/lrt-collection"],
+      ["Brands", "/brand"],
+      ...(collections.some((c) => c.slug === "new-arrivals") ? [["New arrivals", "/collection/new-arrivals"]] : []),
+    ]],
+    ["Customer care", [
+      ["Contact us", "/contact"],
+      ["Questions & answers", "/faq"],
+      ["Delivery", "/shipping"],
+      ["Returns & refunds", "/returns"],
+      ["Payment methods", "/payment-methods"],
+    ]],
+    ["Our house", [
+      ["Our story", "/about"],
+      ["Our stores", "/stores"],
+      ["Fragrance guide", "/fragrance-guide"],
+      ["Product care", "/product-care"],
+    ]],
   ];
   return (
-    <footer className="luxury-footer">
-      <div className="footer-invitation">
-        <span className="eyebrow">THE WORLD OF LRT</span>
-        <Link href="/collection">
-          Find a scent that feels like you.
-          <ArrowUpRight aria-hidden="true" />
-        </Link>
-      </div>
-      <div className="footer-grid">
-        <div className="footer-identity">
-          <Link
-            href="/"
-            className="footer-brand-lockup"
-            aria-label="LRT Perfumes homepage"
-          >
-            <img src="/logo.png" width="64" height="64" alt="" />
-            <span className="footer-wordmark">
-              LRT<span>PERFUMES</span>
-            </span>
+    <footer className={styles.footer}>
+      <div className={styles.main}>
+        <div className={styles.identity}>
+          <Link href="/" className={styles.brand} aria-label="LRT Perfumes homepage">
+            <img src="/logo.png" width="44" height="44" alt="" />
+            <span>LRT<small>PERFUMES</small></span>
           </Link>
-          <p>
-            Signature & inspired fragrances.
-            <br />A little closer to you.
-          </p>
-          <Link href="/contact">
-            Connect with our team <ArrowUpRight size={15} />
-          </Link>
+          <p>Luxury in every scent.</p>
+          <a className={styles.email} href="mailto:info@lrtperfumes.com">info@lrtperfumes.com</a>
         </div>
-        {groups.map(([title, links]) => (
-          <nav aria-label={title + " footer"} key={title}>
-            <h2>{title}</h2>
-            {links.map(([label, href]) => (
-              <Link key={href} href={href}>
-                {label}
-              </Link>
-            ))}
+        {groups.map(([title, links], index) => (
+          <nav key={title} className={styles.group} aria-label={`${title} footer`}>
+            <h2>
+              <span>{title}</span>
+              <button type="button" aria-expanded={Boolean(expanded[index])} aria-controls={`footer-group-${index}`} onClick={() => setExpanded((value) => ({ ...value, [index]: !value[index] }))}>
+                {title}<Plus size={17} />
+              </button>
+            </h2>
+            <div id={`footer-group-${index}`} data-open={Boolean(expanded[index])}>
+              {links.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
+            </div>
           </nav>
         ))}
       </div>
-      <div className="footer-service-row">
-        <span>
-          Find your signature <small>Explore by family, brand or mood</small>
-        </span>
-        <Link href="/stores">
-          Visit LRT <small>Discover our stores ↗</small>
-        </Link>
-        <Link href="/contact">
-          A personal touch <small>Speak with our fragrance team ↗</small>
-        </Link>
-      </div>
-      <div className="footer-utility">
-        <small>
-          © {new Date().getFullYear()} LRT Perfumes
-          {mode === "demo" ? " · Demonstration catalogue" : ""}
-        </small>
+      <div className={styles.socialRow}><SocialLinks /></div>
+      <div className={styles.utility}>
         <nav aria-label="Legal">
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms & conditions</Link>
           <Link href="/disclaimer">Inspired fragrance</Link>
           <Link href="/accessibility">Accessibility</Link>
-          <button
-            className="footer-cookie-control"
-            onClick={() => window.dispatchEvent(new Event("lrt:open-consent"))}
-          >
-            Cookie preferences
-          </button>
+          <button type="button" onClick={() => window.dispatchEvent(new Event("lrt:open-consent"))}>Cookie preferences</button>
         </nav>
-        <small>{currency} · UAE & QATAR</small>
+        <div className={styles.copyright}>
+          <span>{currency} · Qatar & UAE</span>
+          <span>© {new Date().getFullYear()} LRT Perfumes. All rights reserved.</span>
+        </div>
       </div>
     </footer>
   );

@@ -2,6 +2,7 @@
 import Link from "./StoreLink";
 import { StoreLanding, StoreDirectory } from "./StoreVisits";
 import OurStory from "./OurStory";
+import ContactPage from "./ContactPage";
 import ScentSlider from "./ScentSlider";
 import ScentBackdrop from "./ScentBackdrop";
 import { shopPromotions, promotionSlots } from "../lib/shop-promotions";
@@ -25,6 +26,7 @@ import {
   taxonomyHref,
   productBrand,
   productCollection,
+  perfumeNavigation,
 } from "../lib/collections";
 import { newRequestId } from "../lib/request-id";
 import { useRouter } from "next/navigation";
@@ -495,7 +497,7 @@ export default function Storefront({
     return (
       <article
         className="product-card"
-        style={{ "--family-tone": familyColors[scentFamily(p)] || p.color }}
+        style={{ "--family-tone": familyColors[scentFamily(p)] || "#c7b294" }}
       >
         <div
           className="product-art"
@@ -618,7 +620,6 @@ export default function Storefront({
           <section className="collection-directory">
             <div className="directory-heading">
               <Compass size={32} />
-              <span className="eyebrow">THE LRT FRAGRANCE LIBRARY</span>
               <h1>
                 A world of <em>possibility.</em>
               </h1>
@@ -675,7 +676,6 @@ export default function Storefront({
             <section className="latest-drops">
               <div className="drops-heading">
                 <div>
-                  <span className="eyebrow">SOMETHING NEW TO LOVE</span>
                   <h2>Our latest drops.</h2>
                 </div>
                 <Link href="/collection/new-arrivals">
@@ -734,7 +734,6 @@ export default function Storefront({
             ) : (
               <div className="section-head">
                 <div>
-                  <span className="eyebrow">THE SCENT WARDROBE</span>
                   <h1>
                     Find your kind of <em>extraordinary.</em>
                   </h1>
@@ -920,7 +919,6 @@ export default function Storefront({
           <>
             <EditorialMedia video />
             <section className="family-discovery">
-              <span className="eyebrow">FOLLOW YOUR NOTES</span>
               <h2>Find your fragrance family.</h2>
               <div>
                 {availableFamilies.map((f) => (
@@ -935,7 +933,6 @@ export default function Storefront({
               </div>
             </section>
             <section className="colour-stories">
-              <span className="eyebrow">A SCENT FOR EVERY SIDE OF YOU</span>
               <h2>
                 What colour is your <em>mood?</em>
               </h2>
@@ -967,7 +964,6 @@ export default function Storefront({
                 aria-label="LRT perfume with flowers, citrus and pastel fabric"
               />
               <div className="editorial-copy">
-                <span className="eyebrow">MORE THAN WHAT YOU WEAR</span>
                 <h2>
                   Some things
                   <br />
@@ -992,7 +988,6 @@ export default function Storefront({
             </section>
             <section className="home-guide">
               <div>
-                <span className="eyebrow">ONE SIGNATURE. THREE SIZES.</span>
                 <h2>Made for your everyday.</h2>
                 <p>
                   Choose 50 ml for your bag, 100 ml for your dressing table or
@@ -1003,7 +998,6 @@ export default function Storefront({
                 </Link>
               </div>
               <div>
-                <span className="eyebrow">COME SAY HELLO</span>
                 <h2>A personal touch.</h2>
                 <p>
                   Visit LRT in Doha, Al Wakrah, Al Khor or Dubai. Discover a
@@ -1016,7 +1010,6 @@ export default function Storefront({
             </section>
             <section className="occasion-edit">
               <div>
-                <span className="eyebrow">EVERY DAY, A DIFFERENT YOU</span>
                 <h2>
                   Dress for the <em>moment.</em>
                 </h2>
@@ -1056,7 +1049,6 @@ export default function Storefront({
             <section className="scent-ritual">
               <div>
                 <Droplets size={36} />
-                <span className="eyebrow">THE SMALL RITUALS</span>
                 <h2>
                   Make your signature
                   <br />
@@ -1104,7 +1096,6 @@ export default function Storefront({
               </div>
             </section>
             <section className="scent-invite">
-              <span className="eyebrow">FOLLOW YOUR FEELING</span>
               <h2>
                 Your next favourite is
                 <br />
@@ -1132,10 +1123,6 @@ export default function Storefront({
         )}
         {view === "product" && selected && (
           <section className="pdp">
-            <div className="breadcrumbs">
-              <Link href="/">Home</Link> / <Link href="/shop">Perfumes</Link> /{" "}
-              {selected.name}
-            </div>
             <div className="product-detail">
               <div
                 className="detail-art"
@@ -1160,12 +1147,6 @@ export default function Storefront({
                 )}
               </div>
               <div className="detail-copy">
-                <span className="eyebrow">
-                  LRT ·{" "}
-                  {mode === "demo"
-                    ? "THE SAMPLE COLLECTION"
-                    : "YOUR SIGNATURE SCENT"}
-                </span>
                 <h1>{selected.name}</h1>
                 <p>{selected.description}</p>
                 <div className="note-breakdown">
@@ -1316,7 +1297,6 @@ export default function Storefront({
             </div>
             {sameBrandProducts(products, selected).length > 0 && (
               <section className="related">
-                <span className="eyebrow">KEEP EXPLORING</span>
                 <h2>
                   A little more <em>for you.</em>
                 </h2>
@@ -1330,11 +1310,11 @@ export default function Storefront({
           </section>
         )}
         {view === "about" && <OurStory />}
+        {view === "contact" && <ContactPage />}
         {view === "store" && <StoreLanding slug={storeSlug} />}
         {view === "stores" && <StoreDirectory />}
-        {content && view !== "about" && view !== "stores" && (
+        {content && view !== "about" && view !== "stores" && view !== "contact" && (
           <section className="content-page">
-            <span className="eyebrow">THE LRT WORLD</span>
             <h1>{content.title}</h1>
             <p className="intro">{content.intro}</p>
             <div className="content-sections">
@@ -1345,21 +1325,6 @@ export default function Storefront({
                 </section>
               ))}
             </div>
-            {view === "contact" && (
-              <div className="contact-actions">
-                <a
-                  className="primary"
-                  href="https://wa.me/97430100850"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Chat on WhatsApp ↗
-                </a>
-                <a className="text-link" href="tel:+97430100850">
-                  Call +974 3010 0850
-                </a>
-              </div>
-            )}
             {content.source && (
               <p className="source-note">
                 <a href={content.source} target="_blank" rel="noreferrer">
@@ -1378,7 +1343,6 @@ export default function Storefront({
               <Link className="text-link" href="/shop">
                 <ArrowLeft size={16} /> Continue shopping
               </Link>
-              <span className="eyebrow">YOUR NEXT SIGNATURE</span>
               <h1>
                 A little luxury.
                 <br />
@@ -1593,7 +1557,6 @@ export default function Storefront({
                   </form>
                 </section>
                 <aside className="checkout-summary">
-                  <span className="eyebrow">SELECTED BY YOU</span>
                   <h2>
                     Your scent wardrobe <small>({count})</small>
                   </h2>
@@ -1701,7 +1664,6 @@ export default function Storefront({
       {panel === "search" && (
         <Modal wide label="Search fragrances" onClose={close}>
           <div className="search-heading">
-            <span className="eyebrow">LET YOUR NOTES LEAD YOU</span>
             <h2>
               What speaks to <em>you?</em>
             </h2>
@@ -1868,13 +1830,9 @@ export default function Storefront({
               </span>
             </div>
             <div className="detail-copy">
-              <span className="eyebrow">
-                LRT Perfumes COLLECTION · NO.{" "}
-                {String(selected.id).padStart(2, "0")}
-              </span>
               <h2>{selected.name}</h2>
               <p>{selected.description}</p>
-              <span className="eyebrow">{selected.concentration}</span>
+              <span className="product-concentration">{selected.concentration}</span>
               <div className="size-options">
                 {productSizes(selected).map((s) => (
                   <button
@@ -1942,7 +1900,6 @@ export default function Storefront({
       )}
       {panel === "bag" && (
         <Modal label="Shopping bag" onClose={close}>
-          <span className="eyebrow">YOUR SCENT WARDROBE</span>
           <h2>
             The bag <em>({count})</em>
           </h2>
@@ -2071,9 +2028,6 @@ export default function Storefront({
             <div className="success-circle">
               <Check />
             </div>
-            <span className="eyebrow">
-              {receipt.mode === "demo" ? "TEST COMPLETE" : "THANK YOU"}
-            </span>
             <h2>
               {receipt.mode === "demo"
                 ? "A little trial run."
@@ -2099,7 +2053,6 @@ export default function Storefront({
       )}
       {panel === "quiz" && (
         <Modal label="Find your scent" onClose={close}>
-          <span className="eyebrow">A MOMENT OF DISCOVERY</span>
           <h2>
             Follow your <em>feeling.</em>
           </h2>
@@ -2322,9 +2275,14 @@ export default function Storefront({
             <Search size={18} /> Find your next scent
           </button>
           <div className="mobile-links">
-            <Link href="/shop" onClick={close}>
-              Perfumes
-            </Link>
+            <details open>
+              <summary>Perfumes <Plus size={16} /></summary>
+              <div className="mobile-perfume-links">
+                {perfumeNavigation.map(({ title, href }) => (
+                  <Link key={href} href={href} onClick={close}>{title}</Link>
+                ))}
+              </div>
+            </details>
             {primaryNavigation.map(([label, href]) => (
               <Link key={href} href={href} onClick={close}>
                 {label}
@@ -2382,7 +2340,6 @@ export default function Storefront({
       )}
       {panel === "info" && (
         <Modal label={info} onClose={close}>
-          <span className="eyebrow">THE LRT WORLD</span>
           <h2>{info}</h2>
           {info === "Our story" ? (
             <>

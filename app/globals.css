@@ -3402,7 +3402,7 @@ header nav > a:hover:after {
   text-decoration: underline;
 }
 .checkout-form .primary.full {
-  background: #64356e;
+  background: var(--theme-accent, #51364c);
   justify-content: space-between;
 }
 .checkout-empty {
@@ -3955,7 +3955,7 @@ main {
   font-size: 19px;
 }
 .modal[aria-label="Shopping bag"] .primary {
-  background: #66366e;
+  background: var(--theme-accent, #51364c);
 }
 @media (min-width: 1100px) {
   header nav {

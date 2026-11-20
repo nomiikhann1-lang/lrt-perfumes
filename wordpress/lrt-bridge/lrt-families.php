@@ -47,3 +47,20 @@ function lrt_product_family($data)
     return lrt_family_name($data["scentFamily"] ?? "") ?:
         lrt_family_name($data["family"] ?? "");
 }
+
+function lrt_family_color($family)
+{
+    $colors = [
+        "Leather" => "#BC5F28",
+        "Aromatic" => "#4BBB0F",
+        "Amber" => "#FDB813",
+        "Sweet" => "#FE9EC4",
+        "Fruity" => "#FE9004",
+        "Fresh" => "#03E6F5",
+        "Citrus" => "#FEE703",
+        "Spicy" => "#FA2423",
+        "Floral" => "#A153DA",
+        "Woody" => "#E9B199"
+    ];
+    return $colors[lrt_family_name($family)] ?? "#c7b294";
+}

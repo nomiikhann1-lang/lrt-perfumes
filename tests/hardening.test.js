@@ -8,7 +8,7 @@ test('malformed catalogue rejected and optional fields normalized',()=>{assert.t
 test('request guard limits and expires its window',()=>{for(let i=0;i<12;i++)assert.equal(allowRequest('test',100),true);assert.equal(allowRequest('test',100),false);assert.equal(allowRequest('test',60101),true);});
 test('body limit counts bytes and stops chunked bodies',async()=>{const request=new Request('http://localhost',{method:'POST',headers:{Origin:'http://localhost:3000','Content-Type':'application/json'},body:'é'.repeat(9000)});await assert.rejects(readLimitedBody(request),e=>e.status===413);});
 test('payment destinations must be HTTPS on WooCommerce origin',()=>{process.env.WORDPRESS_URL='https://commerce.example';assert.equal(trustedPaymentUrl('https://commerce.example/checkout/order-pay/1'),'https://commerce.example/checkout/order-pay/1');for(const url of ['https://attacker.example/pay','javascript:alert(1)','http://commerce.example/pay'])assert.throws(()=>trustedPaymentUrl(url));delete process.env.WORDPRESS_URL;});
-test('empty catalogue does not manufacture collections',()=>assert.deepEqual(collectionsFor([]),[]));
+test('empty catalogue keeps only the two explicit navigation collections',()=>{const collections=collectionsFor([]);assert.deepEqual(collections.map(c=>c.slug),['inspired-edition','lrt-collection']);assert.ok(collections.every(c=>c.navigation));});
 import {productSizes} from '../lib/catalog.js';
 test('real catalogue sizes are not restricted to demo sizes',()=>assert.deepEqual(productSizes({variants:[{size:100},{size:55},{size:55},{size:0}]}),[55,100]));
 import {POST} from '../app/api/checkout/route.js';

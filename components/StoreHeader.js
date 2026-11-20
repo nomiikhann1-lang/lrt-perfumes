@@ -11,7 +11,7 @@ import {
 import NavSearch from "./NavSearch";
 import Bottle from "./ProductBottle";
 import { MarketPicker } from "./MobileEnhancements";
-import { collectionsFor } from "../lib/collections";
+import { perfumeNavigation } from "../lib/collections";
 export const primaryNavigation = [
   ["Shop", "/shop"],
   ["Brand", "/brand"],
@@ -42,9 +42,6 @@ export default function StoreHeader({
     document.addEventListener("pointerdown", outside);
     return () => document.removeEventListener("pointerdown", outside);
   }, []);
-  const collections = collectionsFor(products).filter(
-    (c) => c.group !== "Brands",
-  );
   return (
     <header
       className="store-header"
@@ -148,100 +145,26 @@ export default function StoreHeader({
           aria-label="Explore perfumes"
         >
           <div className="perfume-menu-visuals">
-            {[
-              {
-                title: "Shop all perfumes",
-                href: "/shop",
-                product: products[0],
-              },
-              ...collections
-                .filter(
-                  (c) =>
-                    c.group === "Collections" || c.group === "Scent families",
-                )
-                .slice(0, 2)
-                .map((c) => ({
-                  title: c.title,
-                  href: "/collection/" + c.slug,
-                  product: products.find(c.match),
-                })),
-            ]
-              .filter((c) => c.product)
-              .map((c, i) => (
+            {perfumeNavigation.map((c, i) => {
+              const product = products.find(c.match);
+              return (
                 <Link
                   className="perfume-menu-card"
                   key={c.href}
                   href={c.href}
+                  aria-label={c.title}
                   onClick={() => setOpen(false)}
                 >
                   <div className={"perfume-menu-art tone-" + i}>
-                    <Bottle product={c.product} />
+                    {product ? <Bottle product={product} /> : <img src={i === 1 ? "/hero-mobile.webp" : "/editorial.webp"} alt="" />}
                   </div>
                   <span>
                     {c.title}
                     <ArrowUpRight size={14} />
                   </span>
                 </Link>
-              ))}
-          </div>
-          <div className="perfume-menu-links">
-            <h2>Shop by gender</h2>
-            {collections
-              .filter((c) => c.group === "Shop by gender")
-              .map((c) => (
-                <Link
-                  key={c.slug}
-                  href={"/collection/" + c.slug}
-                  onClick={() => setOpen(false)}
-                >
-                  {c.title}
-                </Link>
-              ))}
-          </div>
-          <div className="perfume-menu-links">
-            <h2>The edits</h2>
-            {collections
-              .filter((c) => c.group === "Discover" && c.slug !== "all")
-              .map((c) => (
-                <Link
-                  key={c.slug}
-                  href={"/collection/" + c.slug}
-                  onClick={() => setOpen(false)}
-                >
-                  {c.title}
-                </Link>
-              ))}
-            <Link href="/shop?family=Favorites" onClick={() => setOpen(false)}>
-              Your favorites
-            </Link>
-            <Link href="/brand" onClick={() => setOpen(false)}>
-              Explore brands
-            </Link>
-          </div>
-          <div className="perfume-menu-links">
-            <h2>Discover your scent</h2>
-            <Link href="/fragrance-guide" onClick={() => setOpen(false)}>
-              Fragrance guide
-            </Link>
-            <details>
-              <summary>
-                Scent families <ChevronDown size={14} />
-              </summary>
-              {collections
-                .filter((c) => c.group === "Scent families")
-                .map((c) => (
-                  <Link
-                    key={c.slug}
-                    href={"/collection/" + c.slug}
-                    onClick={() => setOpen(false)}
-                  >
-                    {c.title}
-                  </Link>
-                ))}
-            </details>
-            <Link href="/collection" onClick={() => setOpen(false)}>
-              All collections
-            </Link>
+              );
+            })}
           </div>
         </nav>
       )}

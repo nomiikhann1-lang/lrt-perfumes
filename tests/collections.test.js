@@ -4,6 +4,7 @@ import {
   collectionsFor,
   collectionHref,
   taxonomyHref,
+  perfumeNavigation,
 } from "../lib/collections.js";
 import { products } from "../lib/catalog.js";
 test("collection routes separate gender, arrivals and scent families", () => {
@@ -23,6 +24,20 @@ test("collection routes separate gender, arrivals and scent families", () => {
     4,
   );
   assert.equal(collectionHref("Floral"), "/collection/floral");
+});
+
+test("the three perfume destinations separate inspired and LRT fragrances", () => {
+  const catalogue = [
+    { id: 1, collection: "Inspired Edition" },
+    { id: 2, collection: "Evening", categories: [{ name: "Inspired Editions", slug: "inspired-editions" }] },
+    { id: 3, collection: "LRT Collection" },
+    { id: 4, brand: "LRT Perfumes" },
+  ];
+  assert.deepEqual(perfumeNavigation.map((item) => item.title), ["Shop All", "Inspired Edition", "LRT Collection"]);
+  const collections = collectionsFor(catalogue);
+  assert.deepEqual(catalogue.filter(collections.find((item) => item.slug === "inspired-edition").match).map((p) => p.id), [1, 2]);
+  assert.deepEqual(catalogue.filter(collections.find((item) => item.slug === "lrt-collection").match).map((p) => p.id), [3, 4]);
+  assert.deepEqual(collectionsFor([]).map((item) => item.slug), ["inspired-edition", "lrt-collection"]);
 });
 test("new backend brands and collections get distinct clean routes", () => {
   const p = [

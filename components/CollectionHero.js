@@ -8,11 +8,6 @@ export default function CollectionHero({ collection, products }) {
   if (isBrand)
     return (
       <div className="brand-collection-heading">
-        <nav className="breadcrumbs" aria-label="Breadcrumb">
-          <Link href="/brand">Brands</Link>
-          <span>/</span>
-          <span aria-current="page">{collection.title}</span>
-        </nav>
         <h1>{collection.title}</h1>
         <p>{match.length} fragrances</p>
       </div>
@@ -20,18 +15,6 @@ export default function CollectionHero({ collection, products }) {
   return (
     <div className={"collection-hero " + (image ? "with-image" : "")}>
       <div>
-        <nav className="breadcrumbs" aria-label="Breadcrumb">
-          <Link href="/">Home</Link>
-          <span>/</span>
-          <Link href={isBrand ? "/brand" : "/collection"}>
-            {isBrand ? "Brands" : "Collections"}
-          </Link>
-          <span>/</span>
-          <span aria-current="page">{collection.title}</span>
-        </nav>
-        <span className="eyebrow">
-          {isBrand ? "THE BRAND EDIT" : collection.group}
-        </span>
         <h1>{collection.title}</h1>
         <p>{collection.description}</p>
         <span className="collection-count">
@@ -66,7 +49,6 @@ export function RelatedCollections({ collections, current }) {
     .slice(0, 4);
   return related.length ? (
     <section className="related-collections">
-      <span className="eyebrow">CONTINUE YOUR DISCOVERY</span>
       <h2>Another way to find your scent.</h2>
       <div>
         {related.map((c) => (

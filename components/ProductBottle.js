@@ -1,8 +1,10 @@
+import { bottleColor } from "../lib/store-config";
+
 export default function Bottle({ product: p, small = false, volume = 50 }) {
   return (
     <div
       className={"bottle-scene " + (small ? "small" : "")}
-      style={{ "--juice": p.color }}
+      style={{ "--juice": bottleColor(p) }}
       aria-label={`${p.name} perfume bottle`}
       role="img"
     >

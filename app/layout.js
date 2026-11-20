@@ -4,6 +4,7 @@ import "./refinements.css";
 import "./storefront-v12.css";
 import "./scent-slider.css";
 import "./scent-backdrop.css";
+import "./theme.css";
 import CookiePreferences from "../components/CookiePreferences";
 import { siteUrl, canIndex, JsonLd } from "../lib/seo";
 export const metadata = {
