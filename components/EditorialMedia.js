@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "./StoreLink";
-import { Play, Pause, ArrowUpRight } from "lucide-react";
+import { Play, Pause } from "lucide-react";
 import useResponsiveVideo from "./useResponsiveVideo";
 export default function EditorialMedia({ video = false }) {
   const src = useResponsiveVideo("/campaign-film.mp4", "/Campaign-six.mp4");
@@ -75,19 +75,19 @@ export default function EditorialMedia({ video = false }) {
             <>
               Let the moment
               <br />
-              <em>linger.</em>
+              linger.
             </>
           ) : (
             <>
               Wear a feeling.
               <br />
-              <em>Keep a memory.</em>
+              Keep a memory.
             </>
           )}
         </h2>
         <Link href={video ? "/collection/amber" : "/collection"}>
           {video ? "Explore amber fragrances" : "Discover the collections"}{" "}
-          <ArrowUpRight size={18} />
+
         </Link>
       </div>
       {video && !failed && (

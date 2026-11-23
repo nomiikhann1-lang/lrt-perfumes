@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "./StoreLink";
-import { ArrowUpRight, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { collectionsFor } from "../lib/collections";
 export default function BrandDirectory({ products }) {
   const [query, setQuery] = useState("");
@@ -33,7 +33,7 @@ export default function BrandDirectory({ products }) {
             <h2>{b.title}</h2>
             <span className="brand-tile-bottom">
               {products.filter(b.match).length} fragrances{" "}
-              <ArrowUpRight size={22} />
+
             </span>
           </Link>
         ))}

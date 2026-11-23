@@ -54,8 +54,8 @@ export function MarketPicker({ country, onChange }) {
             <button
               className="flag-circle"
               key={code}
-              title={m.label + " · " + m.currency}
-              aria-label={m.label + " · " + m.currency}
+              title={m.label + ", " + m.currency}
+              aria-label={m.label + ", " + m.currency}
               aria-pressed={country === code}
               onClick={() => {
                 onChange(code);

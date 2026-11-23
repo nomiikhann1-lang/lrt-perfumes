@@ -24,6 +24,7 @@ export default function ShopPromotion({ promo }) {
         ref={ref}
         src={src}
         poster={src === promo.mobileSrc && promo.mobilePoster ? promo.mobilePoster : promo.poster}
+        autoPlay
         muted
         loop
         playsInline
@@ -34,7 +35,7 @@ export default function ShopPromotion({ promo }) {
       />
       <Link href={promo.href}>
         {promo.title && <strong>{promo.title}</strong>}
-        <span>{promo.button} ↗</span>
+        <span>{promo.button}</span>
       </Link>
       <button
         aria-label={(playing ? "Pause " : "Resume ") + (promo.title || "campaign") + " film"}
@@ -42,7 +43,7 @@ export default function ShopPromotion({ promo }) {
           playing ? ref.current.pause() : ref.current.play().catch(() => {})
         }
       >
-        {playing ? "Still" : "Motion"}
+        {playing ? "Freeze frame" : "Keep watching"}
       </button>
     </aside>
   );

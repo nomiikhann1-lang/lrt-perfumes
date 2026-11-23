@@ -1,44 +1,6 @@
 import Link from "./StoreLink";
-import { ArrowUpRight } from "lucide-react";
-export default function CollectionHero({ collection, products }) {
-  if (!collection) return null;
-  const match = products.filter(collection.match),
-    image = match.find((p) => p.image)?.image;
-  const isBrand = collection.group === "Brands";
-  if (isBrand)
-    return (
-      <div className="brand-collection-heading">
-        <h1>{collection.title}</h1>
-        <p>{match.length} fragrances</p>
-      </div>
-    );
-  return (
-    <div className={"collection-hero " + (image ? "with-image" : "")}>
-      <div>
-        <h1>{collection.title}</h1>
-        <p>{collection.description}</p>
-        <span className="collection-count">
-          {match.length} fragrances · Explore your next signature
-        </span>
-        {isBrand && (
-          <small>
-            Inspired editions are independent creations. Brand references do not
-            imply affiliation.
-          </small>
-        )}
-      </div>
-      {image && (
-        <div className="collection-hero-art">
-          <img
-            src={image}
-            alt={match.find((p) => p.image === image).name}
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-      )}
-    </div>
-  );
+export default function CollectionHero({ collection }) {
+  return collection ? <h1 className="collection-title">{collection.title}</h1> : null;
 }
 export function RelatedCollections({ collections, current }) {
   const related = collections
@@ -54,7 +16,7 @@ export function RelatedCollections({ collections, current }) {
         {related.map((c) => (
           <Link href={"/collection/" + c.slug} key={c.slug}>
             <span>{c.title}</span>
-            <ArrowUpRight size={18} />
+
           </Link>
         ))}
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Pause, Play } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 import Link from "./StoreLink";
 import Bottle from "./ProductBottle";
 import { createScentSlides } from "../lib/scent-slider";
@@ -282,7 +282,7 @@ export default function ScentSlider({ products }) {
     window.addEventListener("pointerup", up);
     window.addEventListener("pointercancel", cancel);
     document.addEventListener("keydown", key);
-    // Shopping, search and navigation interactions also give visitors a quiet six seconds.
+    // Shopping, search and navigation interactions also give visitors a soft six seconds.
     document.addEventListener("click", interact);
     document.addEventListener("keydown", interact);
     const onMotion = () => {
@@ -439,7 +439,7 @@ export default function ScentSlider({ products }) {
           >
             {selected.product?.name ||
               `Explore ${selected.name.toLowerCase()} perfumes`}{" "}
-            <ArrowUpRight size={15} />
+
           </Link>
           <p>{selected.description}</p>
         </div>
@@ -451,7 +451,7 @@ export default function ScentSlider({ products }) {
           <ArrowLeft />
         </button>
         <Link className="scent-shop" href={selected.href}>
-          SHOP {selected.name.toUpperCase()} <ArrowUpRight size={17} />
+          SHOP {selected.name.toUpperCase()}
         </Link>
         <button
           className="scent-arrow scent-next"

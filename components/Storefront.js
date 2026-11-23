@@ -1,4 +1,6 @@
 "use client";
+import usePopularSearches, { recordSearch } from "./usePopularSearches";
+import { canSearch } from "../lib/search-index";
 import Link from "./StoreLink";
 import { StoreLanding, StoreDirectory } from "./StoreVisits";
 import OurStory from "./OurStory";
@@ -19,6 +21,7 @@ import {
 import ProductGallery from "./ProductGallery";
 import Bottle from "./ProductBottle";
 import Footer from "./Footer";
+import { WhatsAppIcon } from "./SocialLinks";
 import EditorialMedia from "./EditorialMedia";
 import {
   collectionsFor,
@@ -43,7 +46,6 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import {
   Search,
   ShoppingBag,
-  ArrowUpRight,
   ArrowRight,
   X,
   Plus,
@@ -313,7 +315,13 @@ export default function Storefront({
   const activeCollection = catalogueCollections.find(
     (c) => c.slug === collectionSlug,
   );
-  const results = searchProducts(products, query);
+  const results = canSearch(query) ? searchProducts(products, query) : [];
+  const popular = usePopularSearches(products);
+  useEffect(() => {
+    if (!canSearch(query) || !searchProducts(products, query).length) return;
+    const timer = setTimeout(() => recordSearch(query), 1200);
+    return () => clearTimeout(timer);
+  }, [query, products]);
   const shown = filterCatalogue(
     activeCollection ? products.filter(activeCollection.match) : products,
     { query, families, genders, brands, favorites: saved, sort, currency },
@@ -551,20 +559,13 @@ export default function Storefront({
           <span>{firstSize} ml</span>
         </div>
         <Link className="product-name" href={"/product/" + p.slug}>
-          {query.trim() && view === "shop" && (
-            <ScentIcon family={scentFamily(p)} />
-          )}{" "}
+
           {p.name}
         </Link>
-        <p className="notes">{p.notes.join(" · ")}</p>
+        <p className="notes">{p.notes.join(", ")}</p>
         <div className="price-row">
           <span>{money(priceFor(p, firstSize, currency))}</span>
-          <button
-            onClick={() => openProduct(p)}
-            aria-label={`Discover ${p.name}`}
-          >
-            <ArrowUpRight size={20} />
-          </button>
+
         </div>
         <button
           className="list-add"
@@ -585,8 +586,8 @@ export default function Storefront({
   return (
     <>
       <div className="announcement">
-        LUXURY IN EVERY SCENT · Explore the LRT fragrance world{" "}
-        <ArrowRight size={13} />
+        LRT Perfumes, available in Qatar and the UAE{" "}
+
       </div>
       <StoreHeader
         products={products}
@@ -621,7 +622,7 @@ export default function Storefront({
             <div className="directory-heading">
               <Compass size={32} />
               <h1>
-                A world of <em>possibility.</em>
+                A world of possibility.
               </h1>
               <p>Follow a note, a mood, or a name you love.</p>
             </div>
@@ -645,7 +646,7 @@ export default function Storefront({
                         <h3>{c.title}</h3>
                         <span>
                           {products.filter(c.match).length} fragrances{" "}
-                          <ArrowUpRight size={18} />
+
                         </span>
                       </Link>
                     ))}
@@ -669,7 +670,7 @@ export default function Storefront({
               </span>
               <span className="demo-marker">
                 {mode === "demo"
-                  ? "DEMO BOUTIQUE · NO REAL PAYMENTS"
+                  ? "DEMO BOUTIQUE, NO REAL PAYMENTS"
                   : "CONNECTED TO WOOCOMMERCE"}
               </span>
             </div>
@@ -679,7 +680,7 @@ export default function Storefront({
                   <h2>Our latest drops.</h2>
                 </div>
                 <Link href="/collection/new-arrivals">
-                  View all <ArrowUpRight size={15} />
+                  View all
                 </Link>
               </div>
               <div
@@ -735,7 +736,7 @@ export default function Storefront({
               <div className="section-head">
                 <div>
                   <h1>
-                    Find your kind of <em>extraordinary.</em>
+                    Shop perfumes
                   </h1>
                 </div>
               </div>
@@ -761,16 +762,9 @@ export default function Storefront({
                 <Search className="search-submit-icon" size={20} />
               </label>
               <div className="popular-shop">
-                <strong>POPULAR SEARCHES</strong>
+                <strong>SEARCH SUGGESTIONS</strong>
                 <div>
-                  {[
-                    "Vanilla",
-                    "Oud",
-                    "Rose",
-                    "Saffron",
-                    "Bergamot",
-                    "Musk",
-                  ].map((n) => (
+                  {popular.map((n) => (
                     <button key={n} onClick={() => setQuery(n)}>
                       {n}
                     </button>
@@ -838,8 +832,8 @@ export default function Storefront({
                 {loading
                   ? "Opening the collection…"
                   : `${shown.length} fragrances`}
-                {gender !== "All" && ` · ${gender}`}
-                {query && ` · “${query}”`}
+                {gender !== "All" && `, ${gender}`}
+                {query && `, “${query}”`}
               </span>
               {Boolean(
                 query || genders.length || families.length || brands.length,
@@ -886,7 +880,7 @@ export default function Storefront({
               </div>
             ) : (
               <div className="empty">
-                <h3>No scents found, yet.</h3>
+                <h3>{query && !canSearch(query) ? "Enter at least three letters or a SKU number" : "No perfumes match your search"}</h3>
                 <p>Try “vanilla”, “oud” or a different scent family.</p>
                 <button className="primary" onClick={() => shop()}>
                   Explore all fragrances
@@ -926,7 +920,7 @@ export default function Storefront({
                     <ScentIcon family={f} size={28} />
                     <strong>{f}</strong>
                     <span>
-                      Explore fragrances <ArrowUpRight size={14} />
+                      Explore fragrances
                     </span>
                   </Link>
                 ))}
@@ -934,7 +928,7 @@ export default function Storefront({
             </section>
             <section className="colour-stories">
               <h2>
-                What colour is your <em>mood?</em>
+                What colour is your mood?
               </h2>
               <div>
                 {[
@@ -948,11 +942,10 @@ export default function Storefront({
                       key={f}
                       href={collectionHref(f)}
                       className={"story-" + f}
-                      style={{ backgroundColor: familyColors[f] }}
                     >
-                      <span>{f.toUpperCase()}</span>
-                      <h3>{t}</h3>
-                      <span>Explore the edit ↗</span>
+                      <ScentIcon family={f} size={72} />
+                      <div><span>{f}</span><h3>{t}</h3></div>
+                      <span>Explore the edit</span>
                     </Link>
                   ))}
               </div>
@@ -967,7 +960,7 @@ export default function Storefront({
                 <h2>
                   Some things
                   <br />
-                  are better <em>felt.</em>
+                  are better felt.
                 </h2>
                 <p>
                   The first spray. The familiar warmth. The way a scent stays
@@ -982,7 +975,7 @@ export default function Storefront({
                   className="text-link"
                   onClick={() => router.push("/about")}
                 >
-                  Step into our world <ArrowUpRight size={18} />
+                  Step into our world
                 </button>
               </div>
             </section>
@@ -994,7 +987,7 @@ export default function Storefront({
                   200 ml for the scent you always come back to.
                 </p>
                 <Link className="text-link" href="/shop">
-                  Explore the collection <ArrowUpRight size={16} />
+                  Explore the collection
                 </Link>
               </div>
               <div>
@@ -1004,14 +997,14 @@ export default function Storefront({
                   favourite or speak to our team about a custom blend.
                 </p>
                 <Link className="text-link" href="/contact">
-                  Find your nearest store <ArrowUpRight size={16} />
+                  Find your nearest store
                 </Link>
               </div>
             </section>
             <section className="occasion-edit">
               <div>
                 <h2>
-                  Dress for the <em>moment.</em>
+                  Dress for the moment.
                 </h2>
               </div>
               <div className="occasion-grid">
@@ -1040,7 +1033,7 @@ export default function Storefront({
                     <h3>{title}</h3>
                     <p>{text}</p>
                     <span>
-                      Explore the edit <ArrowUpRight size={18} />
+                      Explore the edit
                     </span>
                   </Link>
                 ))}
@@ -1052,7 +1045,7 @@ export default function Storefront({
                 <h2>
                   Make your signature
                   <br />
-                  <em>your own.</em>
+                  your own.
                 </h2>
                 <p>
                   Start with the notes you love. Try a little on your skin, let
@@ -1060,7 +1053,7 @@ export default function Storefront({
                   day.
                 </p>
                 <Link className="text-link" href="/fragrance-guide">
-                  Explore the fragrance guide <ArrowUpRight size={18} />
+                  Explore the fragrance guide
                 </Link>
               </div>
               <div className="ritual-steps">
@@ -1069,7 +1062,7 @@ export default function Storefront({
                     Compass,
                     "01",
                     "Follow your notes",
-                    "Explore six scent families and find your starting point.",
+                    "Explore ten scent families and find your starting point.",
                   ],
                   [
                     Droplets,
@@ -1078,7 +1071,7 @@ export default function Storefront({
                     "Let the opening settle before discovering the heart and base.",
                   ],
                   [
-                    Sparkles,
+                    Gift,
                     "03",
                     "Build a scent wardrobe",
                     "Choose different fragrances for the moments that matter to you.",
@@ -1087,7 +1080,6 @@ export default function Storefront({
                   <article key={n}>
                     <Icon size={24} />
                     <div>
-                      <small>{n}</small>
                       <h3>{t}</h3>
                       <p>{d}</p>
                     </div>
@@ -1099,7 +1091,7 @@ export default function Storefront({
               <h2>
                 Your next favourite is
                 <br />
-                one discovery <em>away.</em>
+                one discovery away.
               </h2>
               <button className="primary" onClick={() => setPanel("search")}>
                 Find your scent <Search size={17} />
@@ -1114,7 +1106,7 @@ export default function Storefront({
                     }}
                   >
                     {n}
-                    <ArrowUpRight size={13} />
+
                   </button>
                 ))}
               </div>
@@ -1142,7 +1134,7 @@ export default function Storefront({
                     href={collectionHref(scentFamily(selected))}
                   >
                     <ScentIcon family={scentFamily(selected)} />
-                    {scentFamily(selected)} <ArrowUpRight size={15} />
+                    {scentFamily(selected)}
                   </Link>
                 )}
               </div>
@@ -1169,7 +1161,7 @@ export default function Storefront({
                         productBrand(selected),
                       )}
                     >
-                      {productBrand(selected)} <ArrowUpRight size={13} />
+                      {productBrand(selected)}
                     </Link>
                   </div>
                   <div>
@@ -1181,13 +1173,13 @@ export default function Storefront({
                         productCollection(selected),
                       )}
                     >
-                      {productCollection(selected)} <ArrowUpRight size={13} />
+                      {productCollection(selected)}
                     </Link>
                   </div>
                   <div>
                     <small>For</small>
                     <Link href={collectionHref("All", selected.gender)}>
-                      {selected.gender} <ArrowUpRight size={13} />
+                      {selected.gender}
                     </Link>
                   </div>
                   {scentFamily(selected) && (
@@ -1195,7 +1187,7 @@ export default function Storefront({
                       <small>Scent family</small>
                       <Link href={collectionHref(scentFamily(selected))}>
                         <ScentIcon family={scentFamily(selected)} />
-                        {scentFamily(selected)} <ArrowUpRight size={13} />
+                        {scentFamily(selected)}
                       </Link>
                     </div>
                   )}
@@ -1273,7 +1265,7 @@ export default function Storefront({
                     When to wear it <Plus size={15} />
                   </summary>
                   <p>
-                    {selected.occasion} · {selected.season}
+                    {selected.occasion}, {selected.season}
                   </p>
                 </details>
                 <details>
@@ -1298,7 +1290,7 @@ export default function Storefront({
             {sameBrandProducts(products, selected).length > 0 && (
               <section className="related">
                 <h2>
-                  A little more <em>for you.</em>
+                  A little more for you.
                 </h2>
                 <div className="product-grid">
                   {sameBrandProducts(products, selected).map((p) => (
@@ -1328,12 +1320,12 @@ export default function Storefront({
             {content.source && (
               <p className="source-note">
                 <a href={content.source} target="_blank" rel="noreferrer">
-                  Read the full LRT Perfumes information ↗
+                  Read the full LRT Perfumes information
                 </a>
               </p>
             )}
             <Link className="primary" href="/shop">
-              Explore all fragrances <ArrowRight size={18} />
+              Explore all fragrances
             </Link>
           </section>
         )}
@@ -1346,7 +1338,7 @@ export default function Storefront({
               <h1>
                 A little luxury.
                 <br />
-                <em>Almost yours.</em>
+                Almost yours.
               </h1>
               <p>
                 Delivery details, your preferred payment, and one final look.
@@ -1360,13 +1352,13 @@ export default function Storefront({
                 <h2>Your bag is waiting.</h2>
                 <p>Choose your fragrance before checking out.</p>
                 <Link className="primary" href="/shop">
-                  Discover the collection <ArrowRight size={18} />
+                  Discover the collection
                 </Link>
               </div>
             ) : (
               <div className="checkout-layout">
                 <section className="checkout-form">
-                  <h2>01 · Delivery details</h2>
+                  <h2>01, Delivery details</h2>
                   <p className="notice">
                     {mode === "wordpress" && !commerceEnabled
                       ? "Online ordering is not yet available. Please contact our team for assistance."
@@ -1452,7 +1444,7 @@ export default function Storefront({
                       <textarea name="note" maxLength={500} />
                     </label>
                     <fieldset className="payment-cards">
-                      <legend>02 · Choose your payment</legend>
+                      <legend>02, Choose your payment</legend>
                       {[
                         [
                           "cod",
@@ -1566,7 +1558,7 @@ export default function Storefront({
                       <div>
                         <Link href={"/product/" + i.p.slug}>{i.p.name}</Link>
                         <small>
-                          {i.size} ml · Qty {i.qty}
+                          {i.size} ml, Qty {i.qty}
                         </small>
                       </div>
                       <strong>
@@ -1606,13 +1598,14 @@ export default function Storefront({
                   <p className="checkout-assurance">
                     <LockKeyhole size={17} />{" "}
                     {mode === "demo"
-                      ? "Demonstration only · No payment collected"
+                      ? "Demonstration only, No payment collected"
                       : "Payment processed by your selected provider"}
                   </p>
                   <div className="checkout-help">
                     <strong>Need a hand?</strong>
                     <a href="https://wa.me/97430100850">
-                      Chat with LRT · +974 3010 0850 ↗
+                      <WhatsAppIcon size={18} />
+                      Chat with LRT, +974 3010 0850
                     </a>
                     <Link href="/shipping">Delivery information</Link>
                   </div>
@@ -1650,7 +1643,7 @@ export default function Storefront({
                 setToast("");
               }}
             >
-              View cart <ArrowRight size={15} />
+              View cart
             </button>
           )}
           <button
@@ -1665,7 +1658,7 @@ export default function Storefront({
         <Modal wide label="Search fragrances" onClose={close}>
           <div className="search-heading">
             <h2>
-              What speaks to <em>you?</em>
+              Find a perfume
             </h2>
           </div>
           <div className="search-box">
@@ -1677,7 +1670,7 @@ export default function Storefront({
               value={query}
               aria-label="Search scents"
               role="combobox"
-              aria-expanded={Boolean(query.trim())}
+              aria-expanded={canSearch(query)}
               aria-controls="search-results"
               aria-activedescendant={
                 activeResult >= 0 ? `result-${activeResult}` : undefined
@@ -1720,8 +1713,8 @@ export default function Storefront({
           </div>
           <div className="search-content">
             <aside>
-              <h4>{query ? "Explore by note" : "Popular searches"}</h4>
-              {["Vanilla", "Oud", "Rose", "Saffron", "Bergamot"].map((n) => (
+              <h4>{query ? "Explore by note" : "Search suggestions"}</h4>
+              {popular.map((n) => (
                 <button
                   key={n}
                   onClick={() => {
@@ -1730,7 +1723,7 @@ export default function Storefront({
                   }}
                 >
                   {n}
-                  <ArrowUpRight size={14} />
+
                 </button>
               ))}
               <h4>Shop by mood</h4>
@@ -1765,7 +1758,7 @@ export default function Storefront({
                     : "Discover the collection"}
                 </span>
                 <button onClick={viewResults}>
-                  View all <ArrowRight size={14} />
+                  View all
                 </button>
               </div>
               <div
@@ -1793,19 +1786,19 @@ export default function Storefront({
                         <ScentIcon family={scentFamily(p)} />
                         {p.name}
                       </strong>
-                      <small>{p.notes.join(" · ")}</small>
+                      <small>{p.notes.join(", ")}</small>
                       <small>
-                        {scentFamily(p)} · {p.gender}
+                        {scentFamily(p)}, {p.gender}
                       </small>
                     </span>
-                    <b>{money(priceFor(p, 50, currency))}</b>
-                    <ArrowUpRight size={18} />
+                    <b>{money(priceFor(p, productSizes(p)[0], currency))}</b>
+
                   </button>
                 ))}
               </div>
               {!results.length && (
                 <div className="empty">
-                  <h3>No matches for “{query}”</h3>
+                  <h3>{canSearch(query) ? `No matches for “${query}”` : "Type at least three letters or a SKU number"}</h3>
                   <p>Try a note such as musk or vanilla.</p>
                 </div>
               )}
@@ -1847,7 +1840,7 @@ export default function Storefront({
               <div className="detail-price">
                 {money(priceFor(selected, size, currency))}
                 <small>
-                  {selected.stock > 0 ? "Available" : "Sold out"} · Sample
+                  {selected.stock > 0 ? "Available" : "Sold out"}, Sample
                   product
                 </small>
               </div>
@@ -1875,7 +1868,7 @@ export default function Storefront({
                   The feeling <Plus size={15} />
                 </summary>
                 <p>
-                  {selected.occasion} · {selected.season}
+                  {selected.occasion}, {selected.season}
                 </p>
               </details>
               <details>
@@ -1901,7 +1894,7 @@ export default function Storefront({
       {panel === "bag" && (
         <Modal label="Shopping bag" onClose={close}>
           <h2>
-            The bag <em>({count})</em>
+            The bag ({count})
           </h2>
           {lines.length ? (
             <>
@@ -1932,7 +1925,7 @@ export default function Storefront({
                         {i.p.name}
                       </button>
                       <small>
-                        {i.size} ml · {scentFamily(i.p)}
+                        {i.size} ml, {scentFamily(i.p)}
                       </small>
                       <div className="quantity">
                         <button
@@ -2002,7 +1995,7 @@ export default function Storefront({
                   router.push("/checkout");
                 }}
               >
-                Continue to checkout <ArrowRight size={18} />
+                Continue to checkout
               </button>
               <p className="fine">
                 {mode === "demo"
@@ -2046,7 +2039,7 @@ export default function Storefront({
               Total: {money(receipt.total, receipt.currency)}
             </div>
             <button className="primary" onClick={() => shop()}>
-              Back to the collection <ArrowRight size={18} />
+              Back to the collection
             </button>
           </div>
         </Modal>
@@ -2054,7 +2047,7 @@ export default function Storefront({
       {panel === "quiz" && (
         <Modal label="Find your scent" onClose={close}>
           <h2>
-            Follow your <em>feeling.</em>
+            Follow your feeling.
           </h2>
           <p>What kind of scent feels most like you?</p>
           <div className="quiz-options">
@@ -2259,7 +2252,7 @@ export default function Storefront({
                 Clear all
               </button>
               <button className="primary" onClick={() => setPanel(null)}>
-                Show {shown.length} results <ArrowRight size={16} />
+                Show {shown.length} results
               </button>
             </div>
           </div>
@@ -2413,6 +2406,8 @@ export default function Storefront({
                 className="text-link"
                 onClick={() => {
                   localStorage.removeItem("lrt-recent");
+                  localStorage.removeItem("lrt-search-frequency");
+                  window.dispatchEvent(new Event("lrt:search"));
                   setRecent([]);
                   setFavorites([]);
                   setBag([]);

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { MapPin, Phone, Clock, Droplets, Gift, Sparkles } from "lucide-react";
+import { MapPin, Phone, Clock, Droplets, Gift } from "lucide-react";
 import Link from "./StoreLink";
 import { WhatsAppIcon } from "./SocialLinks";
 import { stores } from "../lib/story-content";
@@ -19,7 +19,7 @@ export function BranchCards({ branches = stores }) {
           </div>
           <div className={styles.awning} aria-hidden="true" />
           <div className={styles.cardBody}>
-            <div className={styles.location}>{store.country} · {store.area}</div>
+            <div className={styles.location}>{store.country}, {store.area}</div>
             <h3><Link href={"/stores/" + store.slug}>{store.name}</Link></h3>
             <address>{store.address}</address>
             <p className={styles.hours}><Clock size={16} aria-hidden="true" /><span>{openingHours}</span></p>
@@ -41,7 +41,7 @@ export function MapRoom({ branch }) {
   return (
     <section className={styles.mapRoom} aria-label="Store directions">
       <div className={styles.mapIndex}>
-        <h2>Find us on the map.</h2>
+        <h2>Find your store</h2>
         {!branch && (
           <div className={styles.mapChoices}>
             {stores.map((item) => (
@@ -82,7 +82,7 @@ export function StoreLanding({ slug }) {
       <section className={styles.hero} style={{ "--branch": store.tint }}>
         <div className={styles.heroImage}><img src={store.hero} alt="LRT perfume and fragrance ingredients" fetchPriority="high" /></div>
         <div className={styles.heroCopy}>
-          <h1>LRT Perfumes<br /><em>{store.name}.</em></h1>
+          <h1>LRT Perfumes<br />{store.name}.</h1>
           <p>{store.intro}</p>
           <p className={styles.heroHours}><Clock size={18} aria-hidden="true" />{openingHours}</p>
           <div className={styles.actions}>
@@ -98,7 +98,7 @@ export function StoreLanding({ slug }) {
       </section>
 
       <section className={`${styles.section} ${styles.plan}`}>
-        <h2>Plan your visit.</h2>
+        <h2>Plan your visit</h2>
         <dl className={styles.facts}>
           <div><MapPin aria-hidden="true" /><dt>Find the store</dt><dd>{store.address}</dd></div>
           <div><Clock aria-hidden="true" /><dt>Opening hours</dt><dd>{openingHours}<br />Monday to Sunday</dd></div>
@@ -109,27 +109,33 @@ export function StoreLanding({ slug }) {
       <section className={styles.discovery}>
         <img src={experience.image} alt="LRT perfume surrounded by scent ingredients" loading="lazy" />
         <div>
-          <h2>A little time at<br /><em>the perfume counter.</em></h2>
+          <h2>Try a fragrance on your skin</h2>
           <ul className={styles.experiences}>
             <li><Droplets aria-hidden="true" /><div><h3>Discover your notes</h3><p>Fresh, floral, woody or warm. Explore the families you’re drawn to.</p></div></li>
-            <li><Sparkles aria-hidden="true" /><div><h3>Make it personal</h3><p>Tell us about your favourite scents and ask the team about a custom blend.</p></div></li>
+            <li><Droplets aria-hidden="true" /><div><h3>Compare on skin</h3><p>Try your shortlist on your skin and give the opening notes time to settle before choosing.</p></div></li>
             <li><Gift aria-hidden="true" /><div><h3>Choose a thoughtful gift</h3><p>Share a little about the person you’re choosing for. We’ll help you find a starting point.</p></div></li>
           </ul>
           <Link className="text-link" href="/shop">Explore the perfumes</Link>
         </div>
       </section>
 
+      <section className={`${styles.section} ${styles.visitNotes}`}>
+        <div><h2>Bring a starting point. Leave room for a surprise.</h2><p>A photo of a favourite bottle, a fragrance name or a note you enjoy can help the {store.name} team understand your taste. If you are buying a gift, bring an idea of what the person already wears.</p><a className={styles.chatLink} href={whatsapp(store)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon />Send your shortlist to {store.name}</a></div>
+        <div className={styles.visitChecklist}><h3>Make the most of your visit</h3><ul><li>Try a few fragrances at a time so you can compare them comfortably.</li><li>Let a fragrance dry on your skin without rubbing it in.</li><li>Take a walk and revisit your favourite as the notes develop.</li><li>Ask the team about the available bottle sizes and current prices.</li></ul></div>
+      </section>
       <MapRoom branch={store} />
       <section className={`${styles.section} ${styles.questions}`}>
-        <h2>Before you stop by.</h2>
+        <h2>Before you visit</h2>
         <div>
           <details><summary>How do I find the shop?</summary><p>{experience.note}</p></details>
           <details><summary>Can I check a fragrance before visiting?</summary><p>Of course. Send the {store.name} team a WhatsApp message with the fragrance name and size you have in mind. They can confirm availability for your visit.</p></details>
           <details><summary>Do I need to know what I’m looking for?</summary><p>Come with a favourite note, a perfume you enjoy, or just a little curiosity. We can explore a few options together.</p></details>
+          <details><summary>Can you help me choose a gift?</summary><p>Tell the team about the recipient’s favourite scents and your budget. Message ahead if you would like to check gift packaging or a particular bottle size.</p></details>
+          <details><summary>Where should I park or get dropped off?</summary><p>Contact the {store.name} team for the current access and parking options near {store.area}. They can share directions to the entrance before you leave.</p></details>
         </div>
       </section>
       <section className={styles.section}>
-        <h2>A little closer to you.</h2>
+        <h2>Other LRT stores</h2>
         <p>Explore our other stores in Qatar and the UAE.</p>
         <BranchCards branches={stores.filter((item) => item.slug !== slug)} />
       </section>

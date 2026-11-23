@@ -1,0 +1,29 @@
+{
+  "checks": [
+    "/shop no overflow at 320",
+    "/about no overflow at 320",
+    "/stores/doha no overflow at 320",
+    "/collection/amber no overflow at 320",
+    "/shop no overflow at 390",
+    "/about no overflow at 390",
+    "/stores/doha no overflow at 390",
+    "/collection/amber no overflow at 390",
+    "/shop no overflow at 768",
+    "/about no overflow at 768",
+    "/stores/doha no overflow at 768",
+    "/collection/amber no overflow at 768",
+    "/shop no overflow at 1440",
+    "/about no overflow at 1440",
+    "/stores/doha no overflow at 1440",
+    "/collection/amber no overflow at 1440",
+    "Header threshold, live results, family, price and keyboard navigation",
+    "Search suggestions update after use",
+    "Promotion positions are outside columns and after first four tiles",
+    "Videos autoplay muted in a loop without native controls; freeze action works",
+    "Product hover darkens background",
+    "Mobile single-tile video and menu keyboard dismissal",
+    "Store WhatsApp links, switchable map, social assets and scroll to top",
+    "Reduced-motion preference respected"
+  ],
+  "errors": []
+}

@@ -36,3 +36,15 @@ For the optional browser harness, install Playwright in a separate QA tools dire
 The test environment's initial unconfigured-origin browser attempt failed with 403. Correctly configuring the exact test origin resolves this without weakening the cross-origin check. See final browser results for the completed run.
 
 PHP syntax was parsed with php-parser. No PHP runtime, WordPress database or payment sandbox was available. Those checks are blocked, not passing.
+## November 2026 storefront polish
+
+Verified on the final local Vercel project build:
+
+- 53 Node tests pass, including strict number matching, parent/variation SKU normalization and search thresholds. The threshold tests were rerun after tightening the alphabetic character count.
+- `npm run build` passes.
+- Production Chrome: 24 checks pass with no JavaScript errors. Shop, story, Doha store and Amber collection have no horizontal overflow at 320, 390, 768 and 1440px. Header search, keyboard selection, adaptive local suggestions, video positions/playback, hover, mobile drawer, WhatsApp links, map switching, social assets, scroll-to-top and reduced motion are covered.
+- Additional homepage/footer checks pass at 320, 390 and 1440px with no JavaScript errors.
+- Bridge PHP syntax and the PHP 8.3 WASM CSV/auth/family-colour harness pass. ZIP entries use portable forward-slash paths under `lrt-bridge/`.
+- Screenshots and browser results: `reports/ui-polish/`. Browser harness: `scripts/ui-polish-qa.mjs`, using the existing `QA_PLAYWRIGHT`, `CHROME_PATH` and optional `QA_BASE_URL` environment variables.
+
+Live WordPress installation, payment processing and Vercel publication were not performed.

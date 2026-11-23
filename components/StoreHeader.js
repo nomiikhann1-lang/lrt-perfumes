@@ -3,13 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import Link from "./StoreLink";
 import {
   Menu,
-  Search,
   ShoppingBag,
   ChevronDown,
-  ArrowUpRight,
 } from "lucide-react";
 import NavSearch from "./NavSearch";
-import Bottle from "./ProductBottle";
 import { MarketPicker } from "./MobileEnhancements";
 import { perfumeNavigation } from "../lib/collections";
 export const primaryNavigation = [
@@ -145,8 +142,7 @@ export default function StoreHeader({
           aria-label="Explore perfumes"
         >
           <div className="perfume-menu-visuals">
-            {perfumeNavigation.map((c, i) => {
-              const product = products.find(c.match);
+            {perfumeNavigation.map((c) => {
               return (
                 <Link
                   className="perfume-menu-card"
@@ -155,12 +151,9 @@ export default function StoreHeader({
                   aria-label={c.title}
                   onClick={() => setOpen(false)}
                 >
-                  <div className={"perfume-menu-art tone-" + i}>
-                    {product ? <Bottle product={product} /> : <img src={i === 1 ? "/hero-mobile.webp" : "/editorial.webp"} alt="" />}
-                  </div>
                   <span>
                     {c.title}
-                    <ArrowUpRight size={14} />
+
                   </span>
                 </Link>
               );

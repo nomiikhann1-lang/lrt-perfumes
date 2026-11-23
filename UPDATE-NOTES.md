@@ -1,3 +1,13 @@
+## November 2026 — Storefront design and bridge 2.7.0
+
+- Consistent Source Serif 4 / DM Sans type scale, plain headings, restrained navigation, compact footer and supplied social SVGs.
+- Header search shows product thumbnails, prices and scent families after three letters, or immediately for numeric tokens. Parent and variation SKUs are indexed. A search for `1` does not match `10`, `100` or `001`.
+- Search suggestions rank the visitor's completed searches in local browser storage, with frequently occurring catalogue notes as initial suggestions. They are not shared cross-visitor analytics.
+- Mobile catalogue uses two columns. Videos occupy one tile, loop muted, and offer a text freeze/resume action without native player controls. Reduced-motion preferences stop automatic playback.
+- New story opening and animated ingredient section; storefront-shaped branch cards, daily hours, WhatsApp, separate map room and expanded store visit guidance.
+- Bridge 2.7.0 exposes parent and variation SKUs. Bottle colour remains automatically derived from scent family; the legacy custom colour editor stays removed. Replace the installed plugin with `lrt-bridge.zip` through WordPress Plugins → Add New → Upload Plugin.
+- This change updates the Vercel project locally. Live WordPress installation and Vercel publication are separate from the local checks.
+
 ## v10.1 — Checkout origin correction
 
 Accept exact Vercel deployment, branch and production origins from platform configuration. Cross-site requests and unconfigured origins remain blocked. For additional custom domains, set CHECKOUT_ORIGIN to the exact frontend HTTPS origin and redeploy. No bridge update needed for this fix.

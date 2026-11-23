@@ -2,7 +2,7 @@
 /**
  * Plugin Name: LRT Perfumes Headless Commerce Bridge
  * Description: Signed catalog and checkout API for the LRT Perfumes Next.js storefront, with a sample catalog importer.
- * Version: 2.6.0
+ * Version: 2.7.0
  * Requires PHP: 8.1
  * Requires Plugins: woocommerce
  */
@@ -96,6 +96,7 @@ function lrt_variants($p)
         }
         $out[] = [
             "size" => $size,
+            "sku" => $v->get_sku(),
             "variationId" => $v->is_type("variation") ? $v->get_id() : null,
             "stock" => $v->is_in_stock()
                 ? ($v->managing_stock()
@@ -210,6 +211,7 @@ function lrt_products(WP_REST_Request $r)
         );
         $data["id"] = $p->get_id();
         $data["name"] = $p->get_name();
+        $data["sku"] = $p->get_sku();
         $data["slug"] = $p->get_slug();
         $data["description"] = wp_strip_all_tags($p->get_description());
         $data["price"] = (float) $p->get_price();

@@ -31,7 +31,7 @@ export default function ContactPage() {
     <section className={styles.contact} aria-labelledby="contact-title">
       <img className={styles.backdrop} src="/editorial.webp" alt="" fetchPriority="high" />
       <div className={styles.panel}>
-        <h1 id="contact-title">Contact <em>us.</em></h1>
+        <h1 id="contact-title">Contact us.</h1>
         <p className={styles.intro}>
           A question about your order, a scent, or something else?
           We’d love to hear from you.

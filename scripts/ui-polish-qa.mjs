@@ -1,0 +1,100 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const { chromium } = await import(process.env.QA_PLAYWRIGHT || 'playwright');
+const browser = await chromium.launch({headless:true, executablePath:process.env.CHROME_PATH});
+const base = process.env.QA_BASE_URL || 'http://localhost:3002';
+const page = await browser.newPage({viewport:{width:390,height:844}});
+await page.context().addCookies([{name:'lrt_cookie_consent',value:'essential',url:base},{name:'lrt_consent_version',value:'2',url:base}]);
+const errors=[], checks=[];
+const go = async route => {
+  await page.goto(base+route,{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(() => {
+    const input = document.querySelector('input[aria-label="Search perfumes or SKU"]');
+    return input && Object.keys(input).some(key => key.startsWith('__reactProps$'));
+  });
+};
+page.on('pageerror', error=>errors.push(error.message));
+fs.mkdirSync('reports/ui-polish',{recursive:true});
+try {
+  await go('/shop');
+  const consent=page.getByRole('button',{name:'Essential only',exact:true});
+  if(await consent.count()) await consent.click();
+  for(const width of [320,390,768,1440]){
+    await page.setViewportSize({width,height:900});
+    for(const route of ['/shop','/about','/stores/doha','/collection/amber']){
+      await go(route);
+      await page.evaluate(()=>document.fonts.ready);
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,route+' overflow at '+width);
+      checks.push(route+' no overflow at '+width);
+      if(width===390 || width===1440) await page.screenshot({path:`reports/ui-polish/${route.replaceAll('/','-')}-${width}.png`});
+    }
+  }
+  await go('/shop');
+  const search=page.getByRole('combobox',{name:'Search perfumes or SKU'});
+  await search.fill('ro');
+  await page.waitForTimeout(250);
+  assert.equal(await page.locator('#nav-matches [role=option]').count(),0);
+  await search.fill('saffron');
+  await page.locator('#nav-matches [role=option]').first().waitFor();
+  assert.match(await page.locator('#nav-matches').innerText(),/Saffron Veil/);
+  assert.match(await page.locator('#nav-matches').innerText(),/QAR/);
+  assert.match(await page.locator('#nav-matches').innerText(),/Amber/);
+  await search.press('ArrowDown');
+  await search.press('Enter');
+  await page.waitForURL('**/product/saffron-veil');
+  checks.push('Header threshold, live results, family, price and keyboard navigation');
+  await go('/shop');
+  await page.getByRole('combobox',{name:'Search perfumes or SKU'}).focus();
+  assert.match(await page.locator('.nav-suggestions').innerText(),/saffron/);
+  await page.keyboard.press('Escape');
+  checks.push('Search suggestions update after use');
+  const children=await page.locator('.collection .product-grid').evaluate(el=>[...el.children].map(x=>x.className));
+  children.forEach((name,i)=>{if(name==='shop-film')assert(i>=4 && ((i+1)%4===0 || (i+1)%4===1));});
+  assert(children.includes('shop-film'));
+  checks.push('Promotion positions are outside columns and after first four tiles');
+  await page.locator('.shop-film').first().scrollIntoViewIfNeeded();
+  await page.waitForTimeout(500);
+  assert(await page.locator('.shop-film video').first().evaluate(v=>v.autoplay&&v.loop&&v.muted&&!v.controls));
+  const freeze=page.locator('.shop-film button').first();
+  if((await freeze.innerText())==='Freeze frame') {await freeze.click();assert(await page.locator('.shop-film video').first().evaluate(v=>v.paused));}
+  checks.push('Videos autoplay muted in a loop without native controls; freeze action works');
+  await page.locator('.product-card').first().scrollIntoViewIfNeeded();
+  const art=page.locator('.product-art').first();
+  await page.mouse.move(0,0);
+  const before=await art.evaluate(el=>getComputedStyle(el).backgroundColor);
+  await art.hover();await page.waitForTimeout(700);
+  assert.notEqual(await art.evaluate(el=>getComputedStyle(el).backgroundColor),before);
+  const tones=await page.locator('.product-card').first().evaluate(el=>({tone:getComputedStyle(el).getPropertyValue('--family-tone').trim(),badge:getComputedStyle(el.querySelector('.mobile-scent-badge')).backgroundColor}));
+  assert(tones.tone && tones.badge);
+  checks.push('Product hover darkens background');
+  await page.setViewportSize({width:390,height:844});
+  await go('/shop');
+  assert.equal(await page.locator('.shop-film').first().evaluate(el=>getComputedStyle(el).gridColumn),'auto');
+  await page.getByRole('button',{name:'Open menu',exact:true}).click();
+  await page.getByRole('dialog',{name:'Navigation'}).waitFor();
+  await page.screenshot({path:'reports/ui-polish/menu-390.png'});
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('dialog',{name:'Navigation'}).count(),0);
+  checks.push('Mobile single-tile video and menu keyboard dismissal');
+  await go('/about');
+  assert.equal(await page.locator('a[href^="https://wa.me/"]').count(),5);
+  assert.equal(await page.locator('iframe[title^="Map to LRT"]').count(),1);
+  await page.getByRole('button',{name:'Al Wakrah',exact:true}).click();
+  await page.locator('iframe[title="Map to LRT Perfumes Al Wakrah"]').waitFor();
+  assert.match(await page.locator('iframe').getAttribute('title'),/Al Wakrah/);
+  await page.locator('footer').scrollIntoViewIfNeeded();
+  await page.screenshot({path:'reports/ui-polish/footer-390.png'});
+  assert.equal(await page.locator('footer img[src$="-icon.svg"]').count(),4);
+  await page.getByRole('button',{name:'Scroll to top',exact:true}).click();
+  await page.waitForTimeout(1500);
+  assert(await page.evaluate(()=>scrollY<10));
+  checks.push('Store WhatsApp links, switchable map, social assets and scroll to top');
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await go('/shop');
+  await page.waitForTimeout(600);
+  assert(await page.locator('.shop-film video').first().evaluate(v=>v.paused));
+  checks.push('Reduced-motion preference respected');
+  assert.deepEqual(errors,[]);
+  fs.writeFileSync('reports/ui-polish/results.json',JSON.stringify({checks,errors},null,2));
+  console.log(JSON.stringify({passed:checks.length,errors}));
+} finally {await browser.close();}
