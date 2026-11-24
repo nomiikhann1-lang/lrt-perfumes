@@ -40,10 +40,7 @@ body { font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 .shop-search input { font-size: 16px; }
 .search-caption { display: none; }
 .popular-shop strong { font-size: .75rem; letter-spacing: .06em; }
-.product-card > .mobile-scent-badge[data-family] { background: var(--family-tone); color: #211827; font-size: .8125rem; padding: 5px 10px; margin-top: 12px; }
-.product-card .product-name { font-size: 1rem !important; line-height: 1.4 !important; }
-.product-card .notes { font-size: .8125rem; }
-.product-card .price-row { font-size: .9375rem; }
+.product-card > .mobile-scent-badge[data-family] { background: var(--family-tone); color: #211827; }
 .product-card .product-art { border-radius: 10px; transition: background-color .4s ease; }
 .product-card .art-link { perspective: 800px; }
 .product-card .bottle-scene { transition: transform .65s cubic-bezier(.2,.7,.25,1); }
@@ -57,7 +54,6 @@ body { font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 .store-header .nav-search-pill input { font-size: .875rem; line-height: 1.4; height: 44px; padding: 0; }
 .store-header .nav-search-pill input:placeholder-shown { text-align: left; }
 .shop-search .search-submit-icon { background: var(--theme-accent); }
-.product-art .quick-add { font-size: .875rem; border-radius: 6px; background: var(--theme-paper); }
 .store-header .nav-search-pill > button { width: 38px; flex-basis: 38px; border-radius: 6px; }
 .store-header .nav-search-pill > .nav-clear { width: 28px; flex-basis: 28px; }
 .nav-search-pill input::-webkit-search-cancel-button { display: none; }
@@ -153,19 +149,29 @@ body { font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
   .story-store-heading { flex-direction: row; align-items: baseline; }
 }
 @media (max-width:760px) {
-  .store-header { display: grid; grid-template-columns: 28px minmax(0,1fr) auto; gap: 12px; height: auto; min-height: 64px; padding: 10px 12px; }
+  .store-header { display: grid; grid-template-columns: 28px minmax(0,1fr) auto; gap: 20px; height: auto; min-height: 64px; padding: 10px 12px; }
   .store-header .brand { min-width: 0; }
   .store-header .brand img { width: 28px; height: 28px; }
   .store-header .brand span { display: none; }
-  .store-header form.nav-search-pill { order: initial; width: 100%; min-width: 0; max-width: 100%; margin: 0; height: 40px; border-radius: 24px; padding-left: 12px; position: static; }
-  .store-header .nav-search-pill input { height: 38px; }
-  .store-header .nav-search-pill > button { height: 36px; width: 30px; flex-basis: 30px; }
+  .store-header form.nav-search-pill { order: initial; width: 100%; min-width: 0; max-width: 100%; margin: 0; height: 36px; border-radius: 24px; padding-left: 12px; position: static; }
+  .store-header .nav-search-pill input { height: 34px; }
+  .store-header .nav-search-pill > button { height: 32px; width: 30px; flex-basis: 30px; }
   .store-header .nav-actions { gap: 2px; }
   .store-header .nav-actions .icon { min-width: 30px; width: 30px; padding: 3px; }
   .store-header .nav-actions .flag-circle { width: 28px; height: 28px; }
   .store-header .nav-results { width: auto; max-height: 60svh; inset-inline: 12px; }
-  .store-header .nav-search-pill input { font-size: 16px; }
-  .collection .shop-film { grid-column: auto; width: auto; height: auto; min-height: 260px; }
+  .store-header .nav-search-pill input { font-size: 14px; }
+  /* Preserve the supplied backup card proportions, including compact copy. */
+  #main-content .product-card .product-name { font-size: 14px; line-height: 1.3; }
+  .product-card > .mobile-scent-badge[data-family] { font-size: 10px; padding: 5px 9px; }
+  .collection .product-card { grid-template-columns: 38% minmax(0,1fr); grid-template-rows: auto auto auto auto auto; column-gap: 12px; padding: 9px; min-height: 192px; }
+  .collection .product-card > .mobile-scent-badge[data-family] { margin: 0 0 5px; padding: 3px 6px; font-size: 10px; }
+  #main-content .collection .product-card .notes { font-size: 9px; line-height: 1.4; }
+  .collection .product-card .price-row { font-size: 12px; }
+  .drops-track .product-art .quick-add { border-radius: 25px; font-size: 10px; }
+  .drops-track .product-art .bottle-scene { transform: scale(.7); }
+  .product-art > .scent-backdrop { opacity: 1; }
+  .collection .shop-film { grid-column: auto; width: auto; height: auto; min-height: 0; aspect-ratio: 2 / 1; }
   .shop-film > a { padding: 12px; }
   .shop-film a span { padding: 8px 10px; font-size: .75rem; }
   .shop-film strong { font-size: 1.2rem; }
