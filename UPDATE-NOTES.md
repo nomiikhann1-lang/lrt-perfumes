@@ -64,3 +64,13 @@ The home hero now uses all ten scent families and the PNGs in public/scent-famil
 
 ## Validation
 Production build and 14 automated tests passed. Simulated card checkout completed end to end in the browser. Desktop four-column cards, automatic bag opening and dedicated checkout were verified; mobile search was visually checked at 390px alongside 320px layout checks. Browser checked desktop homepage, shop navigation, combined scent filters and search, cookie controls, plus mobile 390/320 px iframe previews. Live WordPress/payment and actual geographic hosting headers require deployment verification.
+
+## November 24 restoration update (supersedes earlier layout/shipping notes)
+
+Restored the mobile horizontal product tiles and desktop four-column cards. AGENTS.md now records these as protected layouts. Restored non-home card treatments while retaining the current homepage layout. Removed the homepage occasion and colour sections.
+
+The Perfumes menu again includes bottle imagery, family links and dynamic search suggestions. Mobile navigation uses one row with the search in the middle. Family imagery in search results is limited to header search. The fragrance guide includes all ten families with images and guidance.
+
+Product details now show SKU with brand, collection, gender and scent family; the concentration line is removed. Removed the accessibility page and links. Footer market copy reads AED, Qatar & United Arab Emirates. Shipping is free in both supported markets without a minimum.
+
+Install lrt-bridge.zip (version 2.8.0) to apply the matching free-delivery calculation in WordPress. This archive replaces the earlier 2.7.0 package. Local changes have not been deployed to Vercel or installed on live WordPress.

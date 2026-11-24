@@ -60,11 +60,10 @@ export default function Footer({ currency, collections = [] }) {
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms & conditions</Link>
           <Link href="/disclaimer">Inspired fragrance</Link>
-          <Link href="/accessibility">Accessibility</Link>
           <button type="button" onClick={() => window.dispatchEvent(new Event("lrt:open-consent"))}>Cookie preferences</button>
         </nav>
         <div className={styles.copyright}>
-          <span>{currency}, Qatar & UAE</span>
+          <span>AED, Qatar & United Arab Emirates</span>
           <span>© {new Date().getFullYear()} LRT Perfumes. All rights reserved.</span>
         </div>
       </div>

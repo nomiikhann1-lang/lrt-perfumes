@@ -3,6 +3,7 @@ import usePopularSearches, { recordSearch } from "./usePopularSearches";
 import { canSearch } from "../lib/search-index";
 import Link from "./StoreLink";
 import { StoreLanding, StoreDirectory } from "./StoreVisits";
+import FragranceGuide from "./FragranceGuide";
 import OurStory from "./OurStory";
 import ContactPage from "./ContactPage";
 import ScentSlider from "./ScentSlider";
@@ -640,7 +641,7 @@ export default function Storefront({
                     .map((c) => (
                       <Link href={"/collection/" + c.slug} key={c.slug}>
                         <ScentIcon
-                          family={c.title.replace(" perfumes", "")}
+                          family={c.title.replace(" Perfumes", "")}
                           size={28}
                         />
                         <h3>{c.title}</h3>
@@ -736,7 +737,7 @@ export default function Storefront({
               <div className="section-head">
                 <div>
                   <h1>
-                    Shop perfumes
+                    Shop Perfumes
                   </h1>
                 </div>
               </div>
@@ -926,30 +927,7 @@ export default function Storefront({
                 ))}
               </div>
             </section>
-            <section className="colour-stories">
-              <h2>
-                What colour is your mood?
-              </h2>
-              <div>
-                {[
-                  ["Fresh", "A fresh start."],
-                  ["Floral", "In full bloom."],
-                  ["Woody", "After dark."],
-                ]
-                  .filter(([f]) => representedFamilies.has(f))
-                  .map(([f, t]) => (
-                    <Link
-                      key={f}
-                      href={collectionHref(f)}
-                      className={"story-" + f}
-                    >
-                      <ScentIcon family={f} size={72} />
-                      <div><span>{f}</span><h3>{t}</h3></div>
-                      <span>Explore the edit</span>
-                    </Link>
-                  ))}
-              </div>
-            </section>
+
             <section className="editorial">
               <div
                 className="editorial-photo"
@@ -1001,44 +979,7 @@ export default function Storefront({
                 </Link>
               </div>
             </section>
-            <section className="occasion-edit">
-              <div>
-                <h2>
-                  Dress for the moment.
-                </h2>
-              </div>
-              <div className="occasion-grid">
-                {[
-                  [
-                    Sun,
-                    "The everyday escape",
-                    "Fresh, bright notes for a lighter start.",
-                    "fresh",
-                  ],
-                  [
-                    Moon,
-                    "After the sun sets",
-                    "Warm notes and woods for evening moments.",
-                    "warm",
-                  ],
-                  [
-                    Gift,
-                    "A thoughtful discovery",
-                    "Find a scent to make their everyday special.",
-                    "all",
-                  ],
-                ].map(([Icon, title, text, slug]) => (
-                  <Link key={slug} href={"/collection/" + slug}>
-                    <Icon size={33} />
-                    <h3>{title}</h3>
-                    <p>{text}</p>
-                    <span>
-                      Explore the edit
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </section>
+
             <section className="scent-ritual">
               <div>
                 <Droplets size={36} />
@@ -1152,6 +1093,7 @@ export default function Storefront({
                   )}
                 </div>
                 <div className="product-taxonomy">
+                  <div><small>SKU</small><span>{selected.sku || "Not assigned"}</span></div>
                   <div>
                     <small>Brand</small>
                     <Link
@@ -1192,7 +1134,7 @@ export default function Storefront({
                     </div>
                   )}
                 </div>
-                <p>{selected.concentration}</p>
+
                 <div className="size-options">
                   {productSizes(selected).map((n) => (
                     <button
@@ -1305,7 +1247,8 @@ export default function Storefront({
         {view === "contact" && <ContactPage />}
         {view === "store" && <StoreLanding slug={storeSlug} />}
         {view === "stores" && <StoreDirectory />}
-        {content && view !== "about" && view !== "stores" && view !== "contact" && (
+        {view === "fragrance-guide" && <FragranceGuide />}
+        {content && view !== "fragrance-guide" && view !== "about" && view !== "stores" && view !== "contact" && (
           <section className="content-page">
             <h1>{content.title}</h1>
             <p className="intro">{content.intro}</p>
@@ -1493,7 +1436,7 @@ export default function Storefront({
                       <p>
                         <span>Delivery</span>
                         <span>
-                          {shipping ? money(shipping) : "Complimentary"}
+                          {shipping ? money(shipping) : "Free"}
                         </span>
                       </p>
                       <p className="total">
@@ -1578,7 +1521,7 @@ export default function Storefront({
                     <p>
                       <span>Delivery</span>
                       <span>
-                        {shipping ? money(shipping) : "Complimentary"}
+                        {shipping ? money(shipping) : "Free"}
                       </span>
                     </p>
                     <p className="total">
@@ -1783,7 +1726,6 @@ export default function Storefront({
                     <Bottle product={p} small />
                     <span>
                       <strong className="result-name">
-                        <ScentIcon family={scentFamily(p)} />
                         {p.name}
                       </strong>
                       <small>{p.notes.join(", ")}</small>
@@ -1825,7 +1767,7 @@ export default function Storefront({
             <div className="detail-copy">
               <h2>{selected.name}</h2>
               <p>{selected.description}</p>
-              <span className="product-concentration">{selected.concentration}</span>
+
               <div className="size-options">
                 {productSizes(selected).map((s) => (
                   <button
@@ -1883,8 +1825,7 @@ export default function Storefront({
                   Delivery <Plus size={15} />
                 </summary>
                 <p>
-                  Qatar: complimentary delivery. UAE preview: AED 20, free from
-                  AED 250. Your selected market determines your currency.
+                  Free delivery in Qatar and the United Arab Emirates. Your selected market determines your currency.
                 </p>
               </details>
             </div>
@@ -1898,21 +1839,7 @@ export default function Storefront({
           </h2>
           {lines.length ? (
             <>
-              <p className="shipping-note">
-                {subtotal >= market.freeAt
-                  ? "Your order qualifies for complimentary shipping."
-                  : `${money(market.freeAt - subtotal)} away from complimentary shipping.`}
-              </p>
-              <div className="progress">
-                <i
-                  style={{
-                    width:
-                      (market.freeAt
-                        ? Math.min((subtotal / market.freeAt) * 100, 100)
-                        : 100) + "%",
-                  }}
-                />
-              </div>
+              <p className="shipping-note">Free delivery in Qatar and the United Arab Emirates.</p>
               <div className="bag-lines">
                 {lines.map((i) => (
                   <div className="bag-line" key={i.id + "-" + i.size}>
@@ -1974,7 +1901,7 @@ export default function Storefront({
                 </p>
                 <p>
                   <span>Delivery to {country === "AE" ? "UAE" : "Qatar"}</span>
-                  <span>{shipping ? money(shipping) : "Complimentary"}</span>
+                  <span>{shipping ? money(shipping) : "Free"}</span>
                 </p>
                 <p className="total">
                   <span>Estimated total</span>
@@ -2351,9 +2278,7 @@ export default function Storefront({
                 {cities.QA.join(", ")}.
               </p>
               <p>
-                Qatar delivery is complimentary in this preview. UAE preview
-                delivery costs AED 20, free from AED 250. Prices use the
-                selected market currency.
+                Delivery is free in Qatar and the United Arab Emirates. Prices use the selected market currency.
               </p>
               <h3>Returns</h3>
               <p>

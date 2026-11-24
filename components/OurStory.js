@@ -24,7 +24,7 @@ export default function OurStory() {
     </section>
     <section className="story-section story-notebook">
       <div><h2>There is no single way to wear a fragrance.</h2><p>Some people return to the same bottle for years. Others choose a different scent for the evening, the season or the occasion. Our collection leaves room for both.</p></div>
-      <div><p>Start with what you enjoy. Compare a fresh citrus with a warm wood, or a familiar floral with an amber blend. Give each one time on your skin before you decide.</p><Link className="text-link" href="/shop">Browse our perfumes</Link></div>
+      <div><p>Start with what you enjoy. Compare a fresh citrus with a warm wood, or a familiar floral with an amber blend. Give each one time on your skin before you decide.</p><Link className="text-link" href="/shop">Browse our Perfumes</Link></div>
     </section>
     <section className="story-section story-ingredients"><h2>What goes into a bottle</h2><p>A fragrance changes as you wear it. Get to know the notes that shape its opening, heart and finish.</p>
       <div className="ingredient-library">{ingredients.map(([name, title, copy, slug]) => <Link key={slug} href={'/collection/' + slug} className="ingredient-entry">

@@ -1,7 +1,7 @@
 === LRT Perfumes Headless Commerce Bridge ===
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 2.7.0
+Stable tag: 2.8.0
 
 Signed catalogue and checkout endpoints, scent details, market pricing and WooCommerce CSV support for LRT Perfumes.
 
@@ -21,6 +21,9 @@ Other fragrances appear under LRT Collection. Brand and individual collection pa
 Uploaded product photos remain unchanged; automatic colour affects the rendered fallback bottle and family scenery.
 
 == Changelog ==
+= 2.8.0 =
+* Free delivery in Qatar and the United Arab Emirates, with no minimum spend.
+
 = 2.7.0 =
 * Expose parent and variation SKUs to the storefront search index.
 * Retain automatic scent-family colours and all existing product data.

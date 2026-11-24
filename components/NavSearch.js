@@ -35,7 +35,7 @@ export default function NavSearch({ products, country }) {
       choose();
       router.push(matches[active] ? '/product/' + matches[active].slug : '/shop?q=' + encodeURIComponent(query));
     }}>
-    <input ref={input} type="search" name="q" value={query} placeholder="Search perfumes or SKU" aria-label="Search perfumes or SKU"
+    <input ref={input} type="search" name="q" value={query} placeholder="Search" aria-label="Search perfumes or SKU"
       role="combobox" aria-autocomplete="list" aria-controls="nav-matches" aria-expanded={open}
       aria-activedescendant={matches[active] ? 'nav-match-' + active : undefined} autoComplete="off" maxLength={100}
       onFocus={() => setOpen(true)} onChange={e => { setQuery(e.target.value); setOpen(true); setActive(-1); }}

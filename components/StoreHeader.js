@@ -7,6 +7,9 @@ import {
   ChevronDown,
 } from "lucide-react";
 import NavSearch from "./NavSearch";
+import Bottle from "./ProductBottle";
+import usePopularSearches from "./usePopularSearches";
+import { scentFamilies } from "../lib/store-config";
 import { MarketPicker } from "./MobileEnhancements";
 import { perfumeNavigation } from "../lib/collections";
 export const primaryNavigation = [
@@ -26,6 +29,7 @@ export default function StoreHeader({
   count,
 }) {
   const [aboutOpen, setAboutOpen] = useState(false);
+  const suggestions = usePopularSearches(products);
   const [open, setOpen] = useState(false),
     ref = useRef(null),
     trigger = useRef(null);
@@ -142,7 +146,8 @@ export default function StoreHeader({
           aria-label="Explore perfumes"
         >
           <div className="perfume-menu-visuals">
-            {perfumeNavigation.map((c) => {
+            {perfumeNavigation.map((c, i) => {
+              const product = products.find(c.match);
               return (
                 <Link
                   className="perfume-menu-card"
@@ -151,6 +156,9 @@ export default function StoreHeader({
                   aria-label={c.title}
                   onClick={() => setOpen(false)}
                 >
+                  <div className={"perfume-menu-art tone-" + i}>
+                    {product ? <Bottle product={product} /> : <img src={i === 1 ? "/hero-mobile.webp" : "/editorial.webp"} alt="" />}
+                  </div>
                   <span>
                     {c.title}
 
@@ -159,6 +167,8 @@ export default function StoreHeader({
               );
             })}
           </div>
+          <div className="perfume-menu-links"><h2>Fragrance families</h2><div>{scentFamilies.map(family => <Link key={family} href={'/collection/' + family.toLowerCase()} onClick={() => setOpen(false)}>{family}</Link>)}</div></div>
+          <div className="perfume-menu-links"><h2>Search suggestions</h2><div>{suggestions.map(term => <Link key={term} href={'/shop?q=' + encodeURIComponent(term)} onClick={() => setOpen(false)}>{term}</Link>)}</div></div>
         </nav>
       )}
     </header>

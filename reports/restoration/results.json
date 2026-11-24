@@ -1,0 +1,24 @@
+{
+  "checks": [
+    "/shop at 320",
+    "/product/saffron-veil at 320",
+    "/contact at 320",
+    "/collection at 320",
+    "/brand at 320",
+    "/fragrance-guide at 320",
+    "/shop at 390",
+    "/product/saffron-veil at 390",
+    "/contact at 390",
+    "/collection at 390",
+    "/brand at 390",
+    "/fragrance-guide at 390",
+    "/shop at 1440",
+    "/product/saffron-veil at 1440",
+    "/contact at 1440",
+    "/collection at 1440",
+    "/brand at 1440",
+    "/fragrance-guide at 1440",
+    "Dropdown images, all family links, dynamic suggestions, header-only search family icons, removed home sections, footer and removed accessibility route"
+  ],
+  "errors": []
+}

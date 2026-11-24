@@ -62,7 +62,7 @@
 .questions details p { margin: 0 0 20px; font-size: 15px; }
 .visitNotes { display: grid; gap: 28px; }
 .visitNotes p { max-width: 58ch; font-size: 16px; }
-.visitChecklist { padding: 24px 0 0; border-top: 1px solid var(--theme-line); }
+.visitChecklist { padding: 28px; background: var(--theme-surface); border-radius: 10px; }
 .visitChecklist ul { padding-left: 20px; margin: 20px 0 0; }
 .visitChecklist li { margin-bottom: 14px; font-size: 15px; line-height: 1.6; }
 @media (min-width:800px) { .visitNotes { grid-template-columns: 1fr 1fr; gap: 8%; align-items: center; } }

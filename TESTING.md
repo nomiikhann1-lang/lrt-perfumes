@@ -48,3 +48,9 @@ Verified on the final local Vercel project build:
 - Screenshots and browser results: `reports/ui-polish/`. Browser harness: `scripts/ui-polish-qa.mjs`, using the existing `QA_PLAYWRIGHT`, `CHROME_PATH` and optional `QA_BASE_URL` environment variables.
 
 Live WordPress installation, payment processing and Vercel publication were not performed.
+
+## November 24 restoration verification
+
+54 Node tests pass, including free shipping in both markets. Production build passes. The restoration browser harness covers shop, product, contact, collections, brands and fragrance guide at 320, 390 and 1440 pixels, plus dropdown imagery/links, header-only search imagery, homepage removals, footer copy and accessibility 404. Results: 19 checks, no JavaScript errors, in reports/restoration/results.json. Run scripts/restoration-qa.mjs using the same external Playwright/Chrome environment variables described above.
+
+Bridge 2.8.0 passes PHP syntax and the PHP 8.3 WASM CSV/auth/family-colour harness. The ZIP uses portable paths under lrt-bridge/. Live WordPress checkout and deployment remain unverified.

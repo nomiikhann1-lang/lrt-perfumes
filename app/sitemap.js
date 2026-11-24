@@ -20,7 +20,6 @@ export default async function sitemap() {
     "/stores",
     "/payment-methods",
     "/product-care",
-    "/accessibility",
   ]
     .concat(
       collectionsFor(products)

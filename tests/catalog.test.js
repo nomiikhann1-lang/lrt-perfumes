@@ -48,7 +48,7 @@ test("search matches notes, accents, gender, family and multiple words", () => {
 });
 test("prices calculated on server; submitted totals ignored", () => {
   assert.equal(priceFor(products[0], 100), 235);
-  assert.equal(demoTotals({ ...order, total: 1 }).total, 165);
+  assert.equal(demoTotals({ ...order, total: 1 }).total, 145);
   assert.equal(
     demoTotals({ ...order, country: "QA", city: "Doha" }).total,
     129,
@@ -57,6 +57,14 @@ test("prices calculated on server; submitted totals ignored", () => {
     demoTotals({ ...order, items: [{ id: 1, size: 50, qty: 2 }] }).shipping,
     0,
   );
+});
+
+test("delivery is free in both markets without a minimum spend", () => {
+  for (const [country, city] of [["AE", "Dubai"], ["QA", "Doha"]]) {
+    const totals = demoTotals({ ...order, country, city });
+    assert.equal(totals.shipping, 0);
+    assert.equal(totals.total, totals.subtotal);
+  }
 });
 test("reject manipulated quantities, sizes, locations and duplicate items", () => {
   for (const change of [
